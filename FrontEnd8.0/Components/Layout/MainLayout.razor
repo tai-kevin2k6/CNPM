@@ -2,15 +2,11 @@
 @inject NavigationManager Navigation
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
     <main>
         <div class="top-row px-4">
-            <!-- Đăng nhập góc phải -->
-            <a href="/login">Đăng nhập</a>
-            <a href="/register">Đăng kí</a>
+            <div class="me-auto fw-bold">NHÓM 9</div>
+            <NavLink class="me-3" href="/">Home</NavLink>
+            <NavLink href="/login">Đăng nhập</NavLink>
         </div>
         <article class="content px-4">
             @Body

@@ -3,7 +3,9 @@
     align-items: center;
     justify-content: space-between;
 }
-
+.top-row .me-auto{
+    font-size: 30px;
+}
 .login-btn {
     background-color: #2563eb;
     color: white;
