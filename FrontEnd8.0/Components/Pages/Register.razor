@@ -1,0 +1,27 @@
+﻿@page "/register"
+
+<h3 class="title">Đăng ký</h3>
+
+<div class="form mt-4">
+    <div class="row">
+        <label>Họ và tên</label>
+        <input @bind="Name" />
+    </div>
+
+    <div class="row">
+        <label>Số điện thoại</label>
+        <input type="tel" @bind="Number" />
+    </div>
+
+    <div class="row">
+        <label>Email</label>
+        <input type="email" @bind="Email" />
+    </div>
+</div>
+
+@code {
+    public string Name { get; set; } = "";
+    public string Number { get; set; } = "";   // ⚠ nên là string
+    public string Email { get; set; } = "";
+}
+

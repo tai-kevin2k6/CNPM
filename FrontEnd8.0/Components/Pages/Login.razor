@@ -1,0 +1,47 @@
+﻿@page "/login"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+<h3 class="title">Đăng nhập</h3>
+<div class="mt-3">
+    <div class="form mt-4">
+        <div class="row">
+            <label>Tài khoản: </label>
+            <input @bind="username" />
+        </div>
+
+        <div class="row">
+            <label>Mật khẩu: </label>
+            <input type="password" @bind="password" />
+        </div>
+    </div>
+    <button class="btn btn-primary mt-3" @onclick="loginfunc">Đăng nhập</button>
+</div>
+@code {
+    public string username = "";
+    public string password = "";
+    public class LoginRequest
+    {
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
+    }
+    private void OnchangeUser(ChangeEventArgs args) => username = (string)args.Value!;
+    private void OnchangePass(ChangeEventArgs args) => password = (string)args.Value!;
+    private async Task loginfunc()
+    {
+        var request = new LoginRequest
+        {
+            Username = username,
+            Password = password
+        };
+
+        var response = await Http.PostAsJsonAsync(
+           "https:localhost:5001/api/auth/login",
+            request
+        );
+
+        if (response.IsSuccessStatusCode)
+        {
+            Navigation.NavigateTo("/");
+        }
+    }
+}
