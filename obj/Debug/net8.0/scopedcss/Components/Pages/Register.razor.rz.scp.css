@@ -5,6 +5,7 @@
     text-align: center;
 }
 .form[b-5t3fhlf0r1] {
+    max-height: 1000px;
     max-width: 600px;
     display: grid;
     grid-template-columns: 140px 1fr;
@@ -26,10 +27,23 @@
     align-items:center;
 }
 
-label[b-5t3fhlf0r1] {
+label[b-5t3fhlf0r1] { 
     font-weight: 600;
 }
 
 input[b-5t3fhlf0r1] {
     padding: 6px 8px;
+}
+.form[b-5t3fhlf0r1]{
+    margin-bottom:  10px;
+}
+.role-radio[b-5t3fhlf0r1] {
+    transform: scale(1.2);
+}
+a[b-5t3fhlf0r1] {
+    text-decoration: none; /* bỏ gạch chân */
+    color: inherit;
+}
+.textA[b-5t3fhlf0r1]{
+    margin-left: 30px;
 }

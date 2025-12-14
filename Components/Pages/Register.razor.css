@@ -5,6 +5,7 @@
     text-align: center;
 }
 .form {
+    max-height: 1000px;
     max-width: 600px;
     display: grid;
     grid-template-columns: 140px 1fr;
@@ -26,10 +27,23 @@
     align-items:center;
 }
 
-label {
+label { 
     font-weight: 600;
 }
 
 input {
     padding: 6px 8px;
+}
+.form{
+    margin-bottom:  10px;
+}
+.role-radio {
+    transform: scale(1.2);
+}
+a {
+    text-decoration: none; /* bỏ gạch chân */
+    color: inherit;
+}
+.textA{
+    margin-left: 30px;
 }
