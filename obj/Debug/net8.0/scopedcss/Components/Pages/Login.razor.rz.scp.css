@@ -1,0 +1,62 @@
+/* bọc toàn màn hình (trừ sidebar) */
+.login-wrapper[b-8jzusy9o0u] {
+    height: calc(100vh - 56px); /* trừ top bar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.center-block-button[b-8jzusy9o0u] {
+    /* Bắt buộc phải là block */
+    display: block;
+    /* Bắt buộc phải có chiều rộng cố định */
+    width: 200px;
+    /* Căn giữa tự động */
+    margin: 0 auto;
+}
+.title[b-8jzusy9o0u] {
+    text-align: center;
+    font-size: 50px; /* làm chữ to */
+    font-weight: 700; /* in đậm */
+    margin-bottom: 16px;
+}
+
+.form[b-8jzusy9o0u] {
+    max-width: 600px;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    row-gap: 16px;
+    column-gap: 12px;
+}
+
+.row[b-8jzusy9o0u] {
+    display: contents;
+}
+
+label[b-8jzusy9o0u] {
+    font-weight: 600;
+}
+
+input[b-8jzusy9o0u] {
+    padding: 6px 8px;
+}
+/* nút */
+.login-btn[b-8jzusy9o0u] {
+    width: 100%;
+    padding: 10px;
+    padding-top: 30px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center;
+}
+
+    .login-btn:hover[b-8jzusy9o0u] {
+        background-color: #1d4ed8;
+    }
+.mt-3 .form[b-8jzusy9o0u] {
+    margin: 0 auto;
+
+}

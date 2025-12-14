@@ -1,0 +1,23 @@
+.hero[b-huq88x9v2b] {
+    position: relative;
+    height: 100vh; /* full màn hình */
+    background-image: url("/background.png"); /* đổi thành ảnh của bạn*/
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+    display: flex;
+    align-items: center; /* căn giữa theo chiều dọc */
+    padding-left: 80px; /* đẩy chữ sang phải */
+}
+
+.hero-content[b-huq88x9v2b] {
+    min-height: 100vh; /* cao full màn hình */
+    display: flex;
+    justify-content: center; /* căn giữa ngang */
+    align-items: center;
+    font-size: 50px;
+    max-width: 600px;
+    color: rgb(250, 247, 247);
+    text-transform: uppercase;
+    font-weight: bold;
+}

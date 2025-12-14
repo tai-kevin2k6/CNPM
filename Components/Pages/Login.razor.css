@@ -1,0 +1,62 @@
+﻿/* bọc toàn màn hình (trừ sidebar) */
+.login-wrapper {
+    height: calc(100vh - 56px); /* trừ top bar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.center-block-button {
+    /* Bắt buộc phải là block */
+    display: block;
+    /* Bắt buộc phải có chiều rộng cố định */
+    width: 200px;
+    /* Căn giữa tự động */
+    margin: 0 auto;
+}
+.title {
+    text-align: center;
+    font-size: 50px; /* làm chữ to */
+    font-weight: 700; /* in đậm */
+    margin-bottom: 16px;
+}
+
+.form {
+    max-width: 600px;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    row-gap: 16px;
+    column-gap: 12px;
+}
+
+.row {
+    display: contents;
+}
+
+label {
+    font-weight: 600;
+}
+
+input {
+    padding: 6px 8px;
+}
+/* nút */
+.login-btn {
+    width: 100%;
+    padding: 10px;
+    padding-top: 30px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center;
+}
+
+    .login-btn:hover {
+        background-color: #1d4ed8;
+    }
+.mt-3 .form {
+    margin: 0 auto;
+
+}
