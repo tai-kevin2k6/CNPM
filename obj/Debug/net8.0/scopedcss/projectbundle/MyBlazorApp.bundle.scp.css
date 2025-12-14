@@ -396,6 +396,30 @@ input[b-8jzusy9o0u] {
     margin: 0 auto;
 
 }
+/* /Components/Pages/LoginHome.razor.rz.scp.css */
+.hero[b-3inmui9vzp] {
+    position: relative;
+    height: 100vh; /* full màn hình */
+    background-image: url("/background.png"); /* đổi thành ảnh của bạn*/
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+    display: flex;
+    align-items: center; /* căn giữa theo chiều dọc */
+    padding-left: 80px; /* đẩy chữ sang phải */
+}
+
+.hero-content[b-3inmui9vzp] {
+    min-height: 100vh; /* cao full màn hình */
+    display: flex;
+    justify-content: center; /* căn giữa ngang */
+    align-items: center;
+    font-size: 50px;
+    max-width: 600px;
+    color: rgb(250, 247, 247);
+    text-transform: uppercase;
+    font-weight: bold;
+}
 /* /Components/Pages/Register.razor.rz.scp.css */
 .title[b-5t3fhlf0r1] {
     font-size: 50px; /* làm chữ to */
