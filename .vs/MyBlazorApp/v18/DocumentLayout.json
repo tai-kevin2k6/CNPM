@@ -11,24 +11,24 @@
       "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|c:\\users\\administrator\\documents\\blazor\\components\\pages\\register.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\pages\\register.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|c:\\users\\administrator\\documents\\blazor\\components\\pages\\loginhome.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\pages\\loginhome.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|c:\\users\\administrator\\documents\\blazor\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|c:\\users\\administrator\\documents\\blazor\\components\\layout\\loginlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\layout\\loginlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|c:\\users\\administrator\\documents\\blazor\\components\\pages\\loginhome.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\pages\\loginhome.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|c:\\users\\administrator\\documents\\blazor\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|c:\\users\\administrator\\documents\\blazor\\components\\pages\\register.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\pages\\register.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|c:\\users\\administrator\\documents\\blazor\\components\\layout\\loginlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{48A0C3EE-651A-AC57-8CFA-65ABA0FADF21}|MyBlazorApp.csproj|solutionrelative:components\\layout\\loginlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,7 +42,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "LoginHome.razor.css",
               "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\Blazor\\Components\\Pages\\LoginHome.razor.css",
               "RelativeDocumentMoniker": "Components\\Pages\\LoginHome.razor.css",
@@ -55,7 +55,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "Home.razor",
               "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\Blazor\\Components\\Pages\\Home.razor",
               "RelativeDocumentMoniker": "Components\\Pages\\Home.razor",
@@ -74,7 +74,7 @@
               "RelativeDocumentMoniker": "Components\\Layout\\MainLayout.razor",
               "ToolTip": "C:\\Users\\Administrator\\Documents\\Blazor\\Components\\Layout\\MainLayout.razor",
               "RelativeToolTip": "Components\\Layout\\MainLayout.razor",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAYAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-14T14:16:39.99Z",
               "EditorCaption": ""
@@ -100,14 +100,14 @@
               "RelativeDocumentMoniker": "Components\\Pages\\Register.razor",
               "ToolTip": "C:\\Users\\Administrator\\Documents\\Blazor\\Components\\Pages\\Register.razor",
               "RelativeToolTip": "Components\\Pages\\Register.razor",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-14T13:12:37.554Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "LoginLayout.razor.css",
               "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\Blazor\\Components\\Layout\\LoginLayout.razor.css",
               "RelativeDocumentMoniker": "Components\\Layout\\LoginLayout.razor.css",
@@ -115,12 +115,11 @@
               "RelativeToolTip": "Components\\Layout\\LoginLayout.razor.css",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAADEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-12-14T13:12:10.248Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-14T13:12:10.248Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Register.razor.css",
               "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\Blazor\\Components\\Pages\\Register.razor.css",
               "RelativeDocumentMoniker": "Components\\Pages\\Register.razor.css",
@@ -128,8 +127,7 @@
               "RelativeToolTip": "Components\\Pages\\Register.razor.css",
               "ViewState": "AgIAABIAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-12-14T13:08:18.353Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-14T13:08:18.353Z"
             }
           ]
         }
