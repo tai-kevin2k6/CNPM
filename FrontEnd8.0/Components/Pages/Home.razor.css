@@ -1,0 +1,22 @@
+﻿.hero {
+    position: relative;
+    height: 100vh; /* full màn hình */
+    /*background-image: url("/images/hero.png");*/ /* đổi thành ảnh của bạn */
+/*    background-size: cover;
+    background-position: center;*/
+    display: flex;
+    align-items: center; /* căn giữa theo chiều dọc */
+    padding-left: 80px; /* đẩy chữ sang phải */
+}
+
+.hero-content {
+    min-height: 100vh; /* cao full màn hình */
+    display: flex;
+    justify-content: center; /* căn giữa ngang */
+    align-items: center;
+    font-size: 50px;
+    max-width: 600px;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+}

@@ -1,0 +1,49 @@
+﻿@page "/register"
+@inject HttpClient Http
+@layout Layout.LoginLayout
+@using MyBlazorApp.Components.Model
+<h3 class="title">Đăng ký</h3>
+
+<div class="form mt-4">
+    <div class="row">
+        <label>Họ và tên</label>
+        <input @bind="model.FullName" />
+    </div>
+
+    <div class="row">
+        <label>Số điện thoại</label>
+        <input type="tel" @bind="model.PhoneNumber" />
+    </div>
+
+    <div class="row">
+        <label>Username/Email: </label>
+        <input type="text" @bind="model.Username" />
+
+    </div><div class="row">
+        <label>Mật khẩu:</label>
+        <input type="password" @bind="model.Password" />
+    </div>
+</div>
+<p>@message</p>
+<button class="btn btn-primary mt-3 center-block-button" @onclick="RegisterUser">Đăng ký</button>
+
+@code {
+    RegisterRequest model = new();
+    string message = "";
+
+    async Task RegisterUser()
+    {
+        var response = await Http.PostAsJsonAsync(
+            "api/auth/register", model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            message = await response.Content.ReadAsStringAsync();
+        }
+        else
+        {
+            message = await response.Content.ReadAsStringAsync();
+        }
+    }
+}
+

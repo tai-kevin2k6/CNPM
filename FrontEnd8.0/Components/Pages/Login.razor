@@ -1,0 +1,52 @@
+﻿@page "/login"
+@layout Layout.LoginLayout
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using MyBlazorApp.Components.Model
+<h3 class="title">Đăng nhập</h3>
+<div class="mt-3">
+    <div class="form mt-4">
+        <div class="row">
+            <label class="mt-2">Username/Email: </label>
+            <input @bind="username" />
+        </div>
+
+        <div class="row">
+            <label class="mt-2">Nhập mật khẩu: </label>
+            <input type="password" @bind="password" />
+        </div>
+    </div><div class="text-center mt-3">
+        <NavLink class="Regis" href="/register">Bạn chưa có tài khoản? Đăng kí ngay</NavLink>
+    </div>
+    <button class="btn btn-primary mt-3 center-block-button" @onclick="loginfunc">Đăng nhập</button>
+</div>
+@code {
+    string error = "";
+    public string username = "";
+    public string password = "";
+    private void OnchangeUser(ChangeEventArgs args) => username = (string)args.Value!;
+    private void OnchangePass(ChangeEventArgs args) => password = (string)args.Value!;
+    private async Task loginfunc()
+    {   
+       
+        var model = new LoginRequest
+        {
+            Username = username,
+            Password = password
+        };
+        var response = await Http.PostAsJsonAsync(
+           "api/auth/login", model);
+        if (response.IsSuccessStatusCode)
+        {
+            var user = await response.Content
+                .ReadFromJsonAsync<User>();
+
+            // Lưu user (session/localStorage tuỳ bạn)
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            error = await response.Content.ReadAsStringAsync();
+        }
+    }    
+}
