@@ -8,9 +8,11 @@
                 <div class="logo">NHÓM 9</div>
                 <nav class="nav-links">
                     <NavLink class="me-3" href="/loginhome">Home</NavLink>
-                    <NavLink href="/login">Đăng nhập</NavLink>
+                    <div class="user-icon">
+                        <img src="/user-icon.png" alt="user-icon" />
+                    </div>
                 </nav>
-                
+
             </div>
 
             <article class="content px-4">
@@ -25,10 +27,3 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
-
-@code {
-    private void GoToLogin()
-    {
-        Navigation.NavigateTo("/login");
-    }
-}
