@@ -1,4 +1,4 @@
-/* /Components/Layout/LoginHomeLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/LoginHomeLayout.razor.rz.scp.css */
 .user-icon[b-8rsmks82p6] {
     text-align: center;
     font-size: 60px;
@@ -164,8 +164,38 @@ main[b-8rsmks82p6] {
         .nav-links a:hover[b-8rsmks82p6] {
             text-decoration: underline;
         }
-    
-/* /Components/Layout/LoginLayout.razor.rz.scp.css */
+        .popup-box[b-8rsmks82p6] {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        
+            width: 360px;
+            padding: 24px;
+        
+            background: rgba(255, 255, 255, 0.85); /* trắng + mờ */
+            backdrop-filter: blur(10px);           /* hiệu ứng kính mờ */
+            -webkit-backdrop-filter: blur(10px);
+        
+            border-radius: 16px;                   /* bo góc */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        
+            z-index: 1000;
+        }
+        .close-btn[b-8rsmks82p6] {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+        
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        
+            color: #333;
+        }
+                
+/* _content/MyBlazorApp/Components/Layout/LoginLayout.razor.rz.scp.css */
 .me-auto[b-raz5ou31td] {
     position: absolute;
     top: 50px;
@@ -215,7 +245,7 @@ a[b-raz5ou31td] {
     box-sizing: border-box;
 }
 
-/* /Components/Layout/MainLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
 /* .top-row {
     display: flex;
     align-items: center;
@@ -370,7 +400,7 @@ main[b-8h0dmotat2] {
         text-decoration: underline;
     }
     
-/* /Components/Layout/NavMenu.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-wa7oawb2kj] {
     appearance: none;
     cursor: pointer;
@@ -476,7 +506,7 @@ main[b-8h0dmotat2] {
         overflow-y: auto;
     }
 }
-/* /Components/Pages/Home.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Home.razor.rz.scp.css */
 .hero[b-huq88x9v2b] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -500,7 +530,7 @@ main[b-8h0dmotat2] {
     text-transform: uppercase;
     font-weight: bold;
 }
-/* /Components/Pages/Login.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Login.razor.rz.scp.css */
 /* bọc toàn màn hình (trừ sidebar) */
 .login-wrapper[b-8jzusy9o0u] {
     height: calc(100vh - 56px); /* trừ top bar */
@@ -563,7 +593,7 @@ input[b-8jzusy9o0u] {
     margin: 0 auto;
 
 }
-/* /Components/Pages/LoginHome.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/LoginHome.razor.rz.scp.css */
 .hero[b-3inmui9vzp] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -587,7 +617,7 @@ input[b-8jzusy9o0u] {
     text-transform: uppercase;
     font-weight: bold;
 }
-/* /Components/Pages/Register.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Register.razor.rz.scp.css */
 .title[b-5t3fhlf0r1] {
     font-size: 50px; /* làm chữ to */
     font-weight: 700; /* in đậm */

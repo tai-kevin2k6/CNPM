@@ -1,18 +1,50 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Navigation
-
+@using MyBlazorApp.Components.Model
 <div class="layout-bg">
     <div class="page">
         <main>
             <div class="top-row px-4">
-                <div class="logo">NHÓM 9</div>
+                <div class="logo"><a href="/">NHÓM 9</a></div>
                 <nav class="nav-links">
                     <NavLink class="me-3" href="/loginhome">Home</NavLink>
                     <div class="user-icon">
                         <img src="/user-icon.png" alt="user-icon" />
                     </div>
                 </nav>
+                <!-- Button bên ngoài -->
+            <button class="btn btn-secondary" @onclick="Open">
+                Mở hộp thoại
+            </button>
 
+            <!-- Thẻ div -->
+            @if (isVisible)
+            {
+                <div class="popup-box">
+                    <!-- Close -->
+                    <button class="close-btn"
+                            @onclick="Close">✖</button>
+
+                    <p>Nội dung thông báo</p>
+
+                    @if (model.Role == "Customer")
+                    {
+                        <button class="btn btn-primary">
+                            Gửi yêu cầu
+                        </button>
+                    }
+                    else if (model.Role == "Owner")
+                    {
+                        <button class="btn btn-success">
+                            Duyệt
+                        </button>
+
+                        <button class="btn btn-danger">
+                            Từ chối
+                        </button>
+                    }
+                </div>
+            }
             </div>
 
             <article class="content px-4">
@@ -27,3 +59,16 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+@code{
+     bool isVisible = false;
+    private RegisterRequest model = new();
+    void Open()
+    {
+        isVisible = true;
+    }
+
+    void Close()
+    {
+        isVisible = false;
+    }
+}

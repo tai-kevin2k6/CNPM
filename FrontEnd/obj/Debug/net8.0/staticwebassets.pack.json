@@ -1,28 +1,32 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Admin\\CNPM\\FrontEnd8.0\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MyBlazorApp.bundle.scp.css",
+      "Id": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MyBlazorApp.bundle.scp.css",
       "PackagePath": "staticwebassets\\MyBlazorApp.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\Admin\\CNPM\\FrontEnd8.0\\wwwroot\\app.css",
+      "Id": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "C:\\Users\\Admin\\CNPM\\FrontEnd8.0\\wwwroot\\background.png",
+      "Id": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\background.png",
       "PackagePath": "staticwebassets\\background.png"
     },
     {
-      "Id": "C:\\Users\\Admin\\CNPM\\FrontEnd8.0\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\Admin\\CNPM\\FrontEnd8.0\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Admin\\CNPM\\FrontEnd8.0\\wwwroot\\favicon.png",
+      "Id": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\user-icon.png",
+      "PackagePath": "staticwebassets\\user-icon.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MyBlazorApp.Microsoft.AspNetCore.StaticWebAssets.props",
