@@ -1,6 +1,0 @@
-@CNPM_HostAddress = http://localhost:5004
-
-GET {{CNPM_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
