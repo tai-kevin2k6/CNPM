@@ -146,3 +146,4 @@ C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\refint\MyBlazorApp.d
 C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\MyBlazorApp.pdb
 C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\MyBlazorApp.genruntimeconfig.cache
 C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\ref\MyBlazorApp.dll
+C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\scopedcss\Components\Pages\tra-cuu-diem-nhan-hang.razor.rz.scp.css
