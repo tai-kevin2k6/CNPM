@@ -14,7 +14,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddAuthentication("FakeScheme")
     .AddScheme<AuthenticationSchemeOptions, FakeAuthHandler>(
         "FakeScheme", options => { });
-
 builder.Services.AddAuthorization();
 var app = builder.Build();
 

@@ -203,3 +203,20 @@ main {
     font-size: 18px;
     cursor: pointer;
 }
+.btn {
+    width: 50px;
+    padding: 10px;
+    padding-top: 30px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center;
+}
+.whitebox{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+}
