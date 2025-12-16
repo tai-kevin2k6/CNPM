@@ -2,7 +2,7 @@
 .page-wrapper {
     min-height: 100vh;
     background-color: #0f3b66;
-    padding: 24px;
+    padding: 28px;
     font-family: Arial, Helvetica, sans-serif;
     color: #000;
 }
@@ -11,32 +11,32 @@
 .header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     color: white;
-    margin-bottom: 20px;
-}
-
-.header h1 {
-    font-size: 26px;
-    font-weight: 500;
+    margin-bottom: 24px;
 }
 
 .back {
-    font-size: 22px;
+    font-size: 26px;
     cursor: pointer;
+}
+
+.header-title {
+    font-size: 30px;
+    font-weight: 500;
 }
 
 /* Main card */
 .info-card {
-    background-color: #b8c0c8;
-    border-radius: 22px;
-    padding: 24px 28px;
+    background-color: #bfc6cc;
+    border-radius: 26px; /* bo góc lớn hơn */
+    padding: 32px 36px;
 }
 
 /* Title */
 .info-card h2 {
-    margin-bottom: 20px;
-    font-size: 22px;
+    margin-bottom: 26px;
+    font-size: 26px;
     font-weight: 700;
 }
 
@@ -51,36 +51,36 @@
 .left-info {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 22px;
 }
 
 .info-row {
     display: flex;
     align-items: center;
-    gap: 14px;
-    font-size: 18px;
-}
-
-.icon {
+    gap: 16px;
     font-size: 20px;
 }
 
+.icon {
+    font-size: 22px;
+}
+
 .text {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .underline {
     border-bottom: 2px solid #000;
-    padding-bottom: 2px;
+    padding-bottom: 3px;
 }
 
 /* Right box */
 .right-box {
-    width: 280px;
-    height: 160px;
-    background-color: #d9d9d9;
-    border: 1px solid #333;
-    border-radius: 6px;
+    width: 320px;
+    height: 180px;
+    background-color: #dcdcdc;
+    border: 1.5px solid #333;
+    border-radius: 8px;
 
     display: flex;
     flex-direction: column;
@@ -89,11 +89,15 @@
 }
 
 .box-title {
-    font-size: 18px;
-    margin-bottom: 14px;
+    font-size: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .box-number {
-    font-size: 36px;
-    font-weight: bold;
+    font-size: 46px;
+    font-weight: 700;
 }
+

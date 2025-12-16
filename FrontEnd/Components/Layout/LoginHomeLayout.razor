@@ -18,33 +18,7 @@
             </button>
 
             <!-- Thẻ div -->
-            @if (@isVisible)
-            {
-                <div class="popup-box">
-                    <!-- Close -->
-                    <button class="close-btn"
-                            @onclick="Close">✖</button>
-
-                    <p>Nội dung thông báo</p>
-
-                    @if (model.Role == "Customer")
-                    {
-                        <button class="btn btn-primary">
-                            Gửi yêu cầu
-                        </button>
-                    }
-                    else if (model.Role == "Owner")
-                    {
-                        <button class="btn btn-success">
-                            Duyệt
-                        </button>
-
-                        <button class="btn btn-danger">
-                            Từ chối
-                        </button>
-                    }
-                </div>
-            }
+            
             </div>
 
             <article class="content px-4">
@@ -53,7 +27,35 @@
         </main>
     </div>
 </div>
+@if (@isVisible)
+{
+    <div class="popup-box">
+        <!-- Close -->
+        <button class="close-btn"
+                @onclick="Close">
+            ✖
+        </button>
 
+        <p>Nội dung thông báo</p>
+
+        @if (model.Role == "Customer")
+        {
+            <button class="btn btn-primary">
+                Gửi yêu cầu
+            </button>
+        }
+        else if (model.Role == "Owner")
+        {
+            <button class="btn btn-success">
+                Duyệt
+            </button>
+
+            <button class="btn btn-danger">
+                Từ chối
+            </button>
+        }
+    </div>
+}
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>
