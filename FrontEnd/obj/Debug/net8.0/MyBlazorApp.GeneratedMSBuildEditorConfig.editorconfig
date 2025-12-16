@@ -9,67 +9,67 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MyBlazorApp
 build_property.RootNamespace = MyBlazorApp
-build_property.ProjectDir = C:\Users\Admin\Documents\FrontEnd\FrontEnd\
+build_property.ProjectDir = C:\Users\Admin\OneDrive\Documents\GitHub\CNPM\FrontEnd\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Admin\Documents\FrontEnd\FrontEnd
+build_property.MSBuildProjectDirectory = C:\Users\Admin\OneDrive\Documents\GitHub\CNPM\FrontEnd
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/App.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/App.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Pages/Counter.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Pages/Error.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Routes.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/_Imports.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Layout/LoginHomeLayout.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Layout/LoginHomeLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTG9naW5Ib21lTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-8rsmks82p6
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Layout/LoginLayout.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Layout/LoginLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTG9naW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-raz5ou31td
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Layout/MainLayout.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-8h0dmotat2
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Layout/NavMenu.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-wa7oawb2kj
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Pages/Home.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-huq88x9v2b
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Pages/Login.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Pages/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMb2dpbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-8jzusy9o0u
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Pages/LoginHome.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Pages/LoginHome.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMb2dpbkhvbWUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-3inmui9vzp
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Pages/Register.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Pages/Register.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWdpc3Rlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-5t3fhlf0r1
 
-[C:/Users/Admin/Documents/FrontEnd/FrontEnd/Components/Pages/Tra-cuu-diem-nhan-hang.razor]
+[C:/Users/Admin/OneDrive/Documents/GitHub/CNPM/FrontEnd/Components/Pages/Tra-cuu-diem-nhan-hang.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xUcmEtY3V1LWRpZW0tbmhhbi1oYW5nLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-rywv9i4u5c

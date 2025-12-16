@@ -1,4 +1,15 @@
 /* _content/MyBlazorApp/Components/Layout/LoginHomeLayout.razor.rz.scp.css */
+/* ĐÈ NỀN RIÊNG CHO TRANG DÙNG LAYOUT NÀY */
+.layout-bg[b-8rsmks82p6] {
+    min-height: 100vh;
+    width: 100%;
+
+    background-image: url("/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .user-icon[b-8rsmks82p6] {
     text-align: center;
     font-size: 60px;
@@ -672,7 +683,7 @@ a[b-5t3fhlf0r1] {
 .page-wrapper[b-rywv9i4u5c] {
     min-height: 100vh;
     background-color: #0f3b66;
-    padding: 24px;
+    padding: 28px;
     font-family: Arial, Helvetica, sans-serif;
     color: #000;
 }
@@ -681,32 +692,32 @@ a[b-5t3fhlf0r1] {
 .header[b-rywv9i4u5c] {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     color: white;
-    margin-bottom: 20px;
-}
-
-.header h1[b-rywv9i4u5c] {
-    font-size: 26px;
-    font-weight: 500;
+    margin-bottom: 24px;
 }
 
 .back[b-rywv9i4u5c] {
-    font-size: 22px;
+    font-size: 26px;
     cursor: pointer;
+}
+
+.header-title[b-rywv9i4u5c] {
+    font-size: 30px;
+    font-weight: 500;
 }
 
 /* Main card */
 .info-card[b-rywv9i4u5c] {
-    background-color: #b8c0c8;
-    border-radius: 22px;
-    padding: 24px 28px;
+    background-color: #bfc6cc;
+    border-radius: 26px; /* bo góc lớn hơn */
+    padding: 32px 36px;
 }
 
 /* Title */
 .info-card h2[b-rywv9i4u5c] {
-    margin-bottom: 20px;
-    font-size: 22px;
+    margin-bottom: 26px;
+    font-size: 26px;
     font-weight: 700;
 }
 
@@ -721,36 +732,36 @@ a[b-5t3fhlf0r1] {
 .left-info[b-rywv9i4u5c] {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 22px;
 }
 
 .info-row[b-rywv9i4u5c] {
     display: flex;
     align-items: center;
-    gap: 14px;
-    font-size: 18px;
-}
-
-.icon[b-rywv9i4u5c] {
+    gap: 16px;
     font-size: 20px;
 }
 
+.icon[b-rywv9i4u5c] {
+    font-size: 22px;
+}
+
 .text[b-rywv9i4u5c] {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .underline[b-rywv9i4u5c] {
     border-bottom: 2px solid #000;
-    padding-bottom: 2px;
+    padding-bottom: 3px;
 }
 
 /* Right box */
 .right-box[b-rywv9i4u5c] {
-    width: 280px;
-    height: 160px;
-    background-color: #d9d9d9;
-    border: 1px solid #333;
-    border-radius: 6px;
+    width: 320px;
+    height: 180px;
+    background-color: #dcdcdc;
+    border: 1.5px solid #333;
+    border-radius: 8px;
 
     display: flex;
     flex-direction: column;
@@ -759,11 +770,17 @@ a[b-5t3fhlf0r1] {
 }
 
 .box-title[b-rywv9i4u5c] {
-    font-size: 18px;
-    margin-bottom: 14px;
+    font-size: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .box-number[b-rywv9i4u5c] {
-    font-size: 36px;
-    font-weight: bold;
+    font-size: 46px;
+    font-weight: 700;
+}
+body[b-rywv9i4u5c] {
+    background: red !important;
 }
