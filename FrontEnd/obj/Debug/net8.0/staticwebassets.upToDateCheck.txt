@@ -4,3 +4,4 @@ wwwroot\bootstrap\bootstrap.min.css
 wwwroot\bootstrap\bootstrap.min.css.map
 wwwroot\favicon.png
 wwwroot\user-icon.png
+wwwroot\user.png

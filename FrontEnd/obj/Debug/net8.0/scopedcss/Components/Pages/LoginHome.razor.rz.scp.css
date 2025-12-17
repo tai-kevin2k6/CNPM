@@ -16,8 +16,54 @@
     justify-content: center; /* căn giữa ngang */
     align-items: center;
     font-size: 50px;
-    max-width: 600px;
+    max-width: 900px;
     color: rgb(250, 247, 247);
     text-transform: uppercase;
     font-weight: bold;
 }
+/* Container chứa cả nút X và menu */
+.header-container[b-3inmui9vzp] {
+    position: relative;
+    display: inline-block;
+}
+
+/* Nút X */
+.close-icon[b-3inmui9vzp] {
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    text-align: right;
+    padding: 10px;
+}
+
+/* Thẻ div ô trắng */
+.menu-popup[b-3inmui9vzp] {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    background: rgba(255, 255, 255, 0.8); /* Trắng mờ */
+    backdrop-filter: blur(10px); /* Hiệu ứng làm mờ nền phía sau */
+    border-radius: 20px; /* Bo góc mạnh */
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+    .menu-popup ul[b-3inmui9vzp] {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: #333;
+    }
+
+    .menu-popup li[b-3inmui9vzp] {
+        padding: 10px 0;
+        font-size: 16px;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+        .menu-popup li:last-child[b-3inmui9vzp] {
+            border-bottom: none;
+        }

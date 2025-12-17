@@ -1,4 +1,15 @@
-/* _content/MyBlazorApp/Components/Layout/LoginHomeLayout.razor.rz.scp.css */
+/* /Components/Layout/LoginHomeLayout.razor.rz.scp.css */
+/* ĐÈ NỀN RIÊNG CHO TRANG DÙNG LAYOUT NÀY */
+.layout-bg[b-8rsmks82p6] {
+    min-height: 100vh;
+    width: 100%;
+
+    background-image: url("/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .user-icon[b-8rsmks82p6] {
     text-align: center;
     font-size: 60px;
@@ -164,38 +175,53 @@ main[b-8rsmks82p6] {
         .nav-links a:hover[b-8rsmks82p6] {
             text-decoration: underline;
         }
-        .popup-box[b-8rsmks82p6] {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        
-            width: 360px;
-            padding: 24px;
-        
-            background: rgba(255, 255, 255, 0.85); /* trắng + mờ */
-            backdrop-filter: blur(10px);           /* hiệu ứng kính mờ */
-            -webkit-backdrop-filter: blur(10px);
-        
-            border-radius: 16px;                   /* bo góc */
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-        
-            z-index: 1000;
-        }
-        .close-btn[b-8rsmks82p6] {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-        
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-        
-            color: #333;
-        }
-                
-/* _content/MyBlazorApp/Components/Layout/LoginLayout.razor.rz.scp.css */
+.popup-overlay[b-8rsmks82p6] {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 9998;
+}
+
+.popup-box[b-8rsmks82p6] {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    width: 320px;
+    z-index: 9999;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+}
+
+.close-btn[b-8rsmks82p6] {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+}
+.btn[b-8rsmks82p6] {
+    width: 50px;
+    padding: 10px;
+    padding-top: 30px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center;
+}
+.whitebox[b-8rsmks82p6]{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+}
+/* /Components/Layout/LoginLayout.razor.rz.scp.css */
 .me-auto[b-raz5ou31td] {
     position: absolute;
     top: 50px;
@@ -245,7 +271,7 @@ a[b-raz5ou31td] {
     box-sizing: border-box;
 }
 
-/* _content/MyBlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
+/* /Components/Layout/MainLayout.razor.rz.scp.css */
 /* .top-row {
     display: flex;
     align-items: center;
@@ -400,7 +426,7 @@ main[b-8h0dmotat2] {
         text-decoration: underline;
     }
     
-/* _content/MyBlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
+/* /Components/Layout/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-wa7oawb2kj] {
     appearance: none;
     cursor: pointer;
@@ -506,7 +532,51 @@ main[b-8h0dmotat2] {
         overflow-y: auto;
     }
 }
-/* _content/MyBlazorApp/Components/Pages/Home.razor.rz.scp.css */
+/* /Components/Layout/SearchLayout.razor.rz.scp.css */
+.me-auto[b-lk65s99f9o] {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    font-size: 30px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.page[b-lk65s99f9o] {
+    min-height: 100vh;
+    background: #123e67;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-link .me-auto[b-lk65s99f9o] {
+    color: white;
+}
+
+.home-link[b-lk65s99f9o],
+.home-link:visited[b-lk65s99f9o],
+.home-link:hover[b-lk65s99f9o],
+.home-link:active[b-lk65s99f9o],
+.home-link.active[b-lk65s99f9o] {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+a[b-lk65s99f9o] {
+    color: var(--bs-link-color);
+    text-decoration: underline;
+}
+.login-box[b-lk65s99f9o] {
+    width: 700px;
+    height: 600px;
+    background: #8fa0b0;
+    border-radius: 40px;
+    padding: 40px 50px;
+    box-sizing: border-box;
+}
+/* /Components/Pages/Home.razor.rz.scp.css */
 .hero[b-huq88x9v2b] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -530,7 +600,7 @@ main[b-8h0dmotat2] {
     text-transform: uppercase;
     font-weight: bold;
 }
-/* _content/MyBlazorApp/Components/Pages/Login.razor.rz.scp.css */
+/* /Components/Pages/Login.razor.rz.scp.css */
 /* bọc toàn màn hình (trừ sidebar) */
 .login-wrapper[b-8jzusy9o0u] {
     height: calc(100vh - 56px); /* trừ top bar */
@@ -593,7 +663,7 @@ input[b-8jzusy9o0u] {
     margin: 0 auto;
 
 }
-/* _content/MyBlazorApp/Components/Pages/LoginHome.razor.rz.scp.css */
+/* /Components/Pages/LoginHome.razor.rz.scp.css */
 .hero[b-3inmui9vzp] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -612,12 +682,58 @@ input[b-8jzusy9o0u] {
     justify-content: center; /* căn giữa ngang */
     align-items: center;
     font-size: 50px;
-    max-width: 600px;
+    max-width: 900px;
     color: rgb(250, 247, 247);
     text-transform: uppercase;
     font-weight: bold;
 }
-/* _content/MyBlazorApp/Components/Pages/Register.razor.rz.scp.css */
+/* Container chứa cả nút X và menu */
+.header-container[b-3inmui9vzp] {
+    position: relative;
+    display: inline-block;
+}
+
+/* Nút X */
+.close-icon[b-3inmui9vzp] {
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    text-align: right;
+    padding: 10px;
+}
+
+/* Thẻ div ô trắng */
+.menu-popup[b-3inmui9vzp] {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    background: rgba(255, 255, 255, 0.8); /* Trắng mờ */
+    backdrop-filter: blur(10px); /* Hiệu ứng làm mờ nền phía sau */
+    border-radius: 20px; /* Bo góc mạnh */
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+    .menu-popup ul[b-3inmui9vzp] {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: #333;
+    }
+
+    .menu-popup li[b-3inmui9vzp] {
+        padding: 10px 0;
+        font-size: 16px;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+        .menu-popup li:last-child[b-3inmui9vzp] {
+            border-bottom: none;
+        }
+/* /Components/Pages/Register.razor.rz.scp.css */
 .title[b-5t3fhlf0r1] {
     font-size: 50px; /* làm chữ to */
     font-weight: 700; /* in đậm */
@@ -667,12 +783,12 @@ a[b-5t3fhlf0r1] {
 .textA[b-5t3fhlf0r1]{
     margin-left: 30px;
 }
-/* _content/MyBlazorApp/Components/Pages/tra-cuu-diem-nhan-hang.razor.rz.scp.css */
+/* /Components/Pages/tra-cuu-diem-nhan-hang.razor.rz.scp.css */
 /* Background */
 .page-wrapper[b-rywv9i4u5c] {
     min-height: 100vh;
     background-color: #0f3b66;
-    padding: 24px;
+    padding: 28px;
     font-family: Arial, Helvetica, sans-serif;
     color: #000;
 }
@@ -681,32 +797,32 @@ a[b-5t3fhlf0r1] {
 .header[b-rywv9i4u5c] {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     color: white;
-    margin-bottom: 20px;
-}
-
-.header h1[b-rywv9i4u5c] {
-    font-size: 26px;
-    font-weight: 500;
+    margin-bottom: 24px;
 }
 
 .back[b-rywv9i4u5c] {
-    font-size: 22px;
+    font-size: 26px;
     cursor: pointer;
+}
+
+.header-title[b-rywv9i4u5c] {
+    font-size: 30px;
+    font-weight: 500;
 }
 
 /* Main card */
 .info-card[b-rywv9i4u5c] {
-    background-color: #b8c0c8;
-    border-radius: 22px;
-    padding: 24px 28px;
+    background-color: #bfc6cc;
+    border-radius: 26px; /* bo góc lớn hơn */
+    padding: 32px 36px;
 }
 
 /* Title */
 .info-card h2[b-rywv9i4u5c] {
-    margin-bottom: 20px;
-    font-size: 22px;
+    margin-bottom: 26px;
+    font-size: 26px;
     font-weight: 700;
 }
 
@@ -721,36 +837,36 @@ a[b-5t3fhlf0r1] {
 .left-info[b-rywv9i4u5c] {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 22px;
 }
 
 .info-row[b-rywv9i4u5c] {
     display: flex;
     align-items: center;
-    gap: 14px;
-    font-size: 18px;
-}
-
-.icon[b-rywv9i4u5c] {
+    gap: 16px;
     font-size: 20px;
 }
 
+.icon[b-rywv9i4u5c] {
+    font-size: 22px;
+}
+
 .text[b-rywv9i4u5c] {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .underline[b-rywv9i4u5c] {
     border-bottom: 2px solid #000;
-    padding-bottom: 2px;
+    padding-bottom: 3px;
 }
 
 /* Right box */
 .right-box[b-rywv9i4u5c] {
-    width: 280px;
-    height: 160px;
-    background-color: #d9d9d9;
-    border: 1px solid #333;
-    border-radius: 6px;
+    width: 320px;
+    height: 180px;
+    background-color: #dcdcdc;
+    border: 1.5px solid #333;
+    border-radius: 8px;
 
     display: flex;
     flex-direction: column;
@@ -759,11 +875,15 @@ a[b-5t3fhlf0r1] {
 }
 
 .box-title[b-rywv9i4u5c] {
-    font-size: 18px;
-    margin-bottom: 14px;
+    font-size: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .box-number[b-rywv9i4u5c] {
-    font-size: 36px;
-    font-weight: bold;
+    font-size: 46px;
+    font-weight: 700;
 }
+

@@ -3,11 +3,36 @@
 <PageTitle>Trang chủ</PageTitle>
 <div class="hero">
     <h1 class="hero-content">
-        chào mừng đến với<br />
-        website quản lý<br />
-        điểm nhận - trả hàng
+        Welcome Back!<br />
+        Theo dõi và quản lý đơn hàng<br />
+        của bạn một cách dễ dàng
     </h1>
 </div>
-@code {
+<div class="header-container">
+    <div class="close-icon" @onclick="ToggleMenu">
+        <i class="oi oi-x"></i> <span>✕</span>
+    </div>
 
+    @if (isVisible)
+    {
+        <div class="menu-popup">
+            <ul>
+                <li>Xem thông tin điểm nhận hàng</li>
+                <li>Tra cứu đơn hàng</li>
+            </ul>
+            <div class="logout-icon">
+                <i class="oi oi-account-logout"></i>
+            </div>
+        </div>
+    }
+</div>
+@code {
+    // Biến điều khiển ẩn hiện
+    private bool isVisible = true;
+
+    // Hàm đảo ngược trạng thái
+    private void ToggleMenu()
+    {
+        isVisible = !isVisible;
+    }
 }

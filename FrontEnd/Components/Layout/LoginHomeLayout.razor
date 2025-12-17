@@ -13,38 +13,12 @@
                     </div>
                 </nav>
                 <!-- Button bên ngoài -->
-            <button class="btn btn-secondary" @onclick="Open">
-                Mở hộp thoại
-            </button>
-
+                <button class="btn btn-primary" @onclick="Open"> </button>
             <!-- Thẻ div -->
-            @if (isVisible)
-            {
-                <div class="popup-box">
-                    <!-- Close -->
-                    <button class="close-btn"
-                            @onclick="Close">✖</button>
-
-                    <p>Nội dung thông báo</p>
-
-                    @if (model.Role == "Customer")
-                    {
-                        <button class="btn btn-primary">
-                            Gửi yêu cầu
-                        </button>
-                    }
-                    else if (model.Role == "Owner")
-                    {
-                        <button class="btn btn-success">
-                            Duyệt
-                        </button>
-
-                        <button class="btn btn-danger">
-                            Từ chối
-                        </button>
-                    }
-                </div>
-            }
+                @if (@isVisible)
+                {
+                    <div class="whitebox"></div>
+                }
             </div>
 
             <article class="content px-4">
@@ -60,7 +34,7 @@
     <a class="dismiss">🗙</a>
 </div>
 @code{
-     bool isVisible = false;
+    public bool isVisible = false;
     private RegisterRequest model = new();
     void Open()
     {
