@@ -5,7 +5,7 @@
 @inject NavigationManager NavManager
 @using Microsoft.AspNetCore.Components.Forms
 
-<EditForm Model="model" OnValidSubmit="RegisterUser">
+<EditForm Model="model" OnValidSubmit="RegisterUser" FormName="RegisterForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
