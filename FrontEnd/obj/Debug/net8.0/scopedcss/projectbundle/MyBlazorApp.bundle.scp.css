@@ -1,4 +1,4 @@
-/* _content/MyBlazorApp/Components/Layout/LoginHomeLayout.razor.rz.scp.css */
+/* /Components/Layout/LoginHomeLayout.razor.rz.scp.css */
 /* ĐÈ NỀN RIÊNG CHO TRANG DÙNG LAYOUT NÀY */
 .layout-bg[b-8rsmks82p6] {
     min-height: 100vh;
@@ -13,11 +13,12 @@
 .user-icon[b-8rsmks82p6] {
     text-align: center;
     font-size: 60px;
+    top: 10px;
 }
 
     .user-icon img[b-8rsmks82p6] {
-        width: 7.5rem;
-        height: 7.5rem;
+        width: 6rem;
+        height: 6rem;
         object-fit: contain;
     }
 /* .top-row {
@@ -52,7 +53,10 @@
 main[b-8rsmks82p6] {
     flex: 1;
 }
-
+.home-btn[b-8rsmks82p6] {
+    margin-top: 30px;
+    display: inline-block; /* quan trọng */
+}
 .sidebar[b-8rsmks82p6] {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
@@ -221,7 +225,7 @@ main[b-8rsmks82p6] {
     height: 100px;
     background-color: white;
 }
-/* _content/MyBlazorApp/Components/Layout/LoginLayout.razor.rz.scp.css */
+/* /Components/Layout/LoginLayout.razor.rz.scp.css */
 .me-auto[b-raz5ou31td] {
     position: absolute;
     top: 50px;
@@ -271,7 +275,7 @@ a[b-raz5ou31td] {
     box-sizing: border-box;
 }
 
-/* _content/MyBlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
+/* /Components/Layout/MainLayout.razor.rz.scp.css */
 /* .top-row {
     display: flex;
     align-items: center;
@@ -426,7 +430,7 @@ main[b-8h0dmotat2] {
         text-decoration: underline;
     }
     
-/* _content/MyBlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
+/* /Components/Layout/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-wa7oawb2kj] {
     appearance: none;
     cursor: pointer;
@@ -532,7 +536,7 @@ main[b-8h0dmotat2] {
         overflow-y: auto;
     }
 }
-/* _content/MyBlazorApp/Components/Layout/SearchLayout.razor.rz.scp.css */
+/* /Components/Layout/SearchLayout.razor.rz.scp.css */
 .me-auto[b-lk65s99f9o] {
     position: absolute;
     top: 50px;
@@ -542,7 +546,14 @@ main[b-8h0dmotat2] {
     text-decoration: none;
     cursor: pointer;
 }
-
+.back[b-lk65s99f9o] {
+    font-size: 40px; /* 🔥 TO RA Ở ĐÂY */
+    font-weight: 5000; /* đậm hơn cho rõ */
+    color: black;
+    cursor: pointer;
+    padding-top: -20px;
+    margin-left: -10px;
+}
 .page[b-lk65s99f9o] {
     min-height: 100vh;
     background: #123e67;
@@ -576,7 +587,7 @@ a[b-lk65s99f9o] {
     padding: 40px 50px;
     box-sizing: border-box;
 }
-/* _content/MyBlazorApp/Components/Pages/Dang-ky-thanh-diem-nhan-hang.razor.rz.scp.css */
+/* /Components/Pages/Dang-ky-thanh-diem-nhan-hang.razor.rz.scp.css */
 /* Khung chứa 6 input */
 .input-container[b-qn1smql5ql] {
     display: grid;
@@ -607,7 +618,7 @@ a[b-lk65s99f9o] {
     align-items: center;
     justify-content: center;
 }
-/* _content/MyBlazorApp/Components/Pages/Home.razor.rz.scp.css */
+/* /Components/Pages/Home.razor.rz.scp.css */
 .hero[b-huq88x9v2b] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -631,7 +642,7 @@ a[b-lk65s99f9o] {
     text-transform: uppercase;
     font-weight: bold;
 }
-/* _content/MyBlazorApp/Components/Pages/Login.razor.rz.scp.css */
+/* /Components/Pages/Login.razor.rz.scp.css */
 /* bọc toàn màn hình (trừ sidebar) */
 .login-wrapper[b-8jzusy9o0u] {
     height: calc(100vh - 56px); /* trừ top bar */
@@ -694,7 +705,7 @@ input[b-8jzusy9o0u] {
     margin: 0 auto;
 
 }
-/* _content/MyBlazorApp/Components/Pages/LoginHome.razor.rz.scp.css */
+/* /Components/Pages/LoginHome.razor.rz.scp.css */
 .hero[b-3inmui9vzp] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -792,7 +803,7 @@ input[b-8jzusy9o0u] {
     font-size: 16px;
     font-weight: 600
 }
-/* _content/MyBlazorApp/Components/Pages/Loginhome1.razor.rz.scp.css */
+/* /Components/Pages/Loginhome1.razor.rz.scp.css */
 .hero[b-fcozzsfmcp] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -876,7 +887,7 @@ input[b-8jzusy9o0u] {
     font-size: 16px;
     font-weight: 600
 }
-/* _content/MyBlazorApp/Components/Pages/Register.razor.rz.scp.css */
+/* /Components/Pages/Register.razor.rz.scp.css */
 .title[b-5t3fhlf0r1] {
     font-size: 50px; /* làm chữ to */
     font-weight: 700; /* in đậm */
@@ -926,19 +937,12 @@ a[b-5t3fhlf0r1] {
 .textA[b-5t3fhlf0r1]{
     margin-left: 30px;
 }
-/* _content/MyBlazorApp/Components/Pages/tra-cuu-diem-nhan-hang.razor.rz.scp.css */
+/* /Components/Pages/tra-cuu-diem-nhan-hang.razor.rz.scp.css */
 /* ===== RESET ẢNH HƯỞNG LAYOUT CHA ===== */
 :host[b-rywv9i4u5c] {
     display: block;
     width: 100%;
 }
-.back[b-rywv9i4u5c] {
-    font-size: 40px;   /* 🔥 TO RA Ở ĐÂY */
-    font-weight: 5000;  /* đậm hơn cho rõ */
-    color: black;
-    cursor: pointer;
-}
-
 .page-wrapper[b-rywv9i4u5c] {
     width: 100%;
     min-height: 100vh;
@@ -1053,7 +1057,7 @@ a[b-5t3fhlf0r1] {
     line-height: 1;
 }
 
-/* _content/MyBlazorApp/Components/Pages/Tra-cuu-don-hang.razor.rz.scp.css */
+/* /Components/Pages/Tra-cuu-don-hang.razor.rz.scp.css */
 .login-box[b-qtykk89ww4] {
     width: 700px;
     height: 300px;

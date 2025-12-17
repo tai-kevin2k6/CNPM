@@ -3,13 +3,6 @@
     display: block;
     width: 100%;
 }
-.back {
-    font-size: 40px;   /* 🔥 TO RA Ở ĐÂY */
-    font-weight: 5000;  /* đậm hơn cho rõ */
-    color: black;
-    cursor: pointer;
-}
-
 .page-wrapper {
     width: 100%;
     min-height: 100vh;

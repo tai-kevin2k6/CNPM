@@ -7,7 +7,14 @@
     text-decoration: none;
     cursor: pointer;
 }
-
+.back {
+    font-size: 40px; /* 🔥 TO RA Ở ĐÂY */
+    font-weight: 5000; /* đậm hơn cho rõ */
+    color: black;
+    cursor: pointer;
+    padding-top: -20px;
+    margin-left: -10px;
+}
 .page {
     min-height: 100vh;
     background: #123e67;
