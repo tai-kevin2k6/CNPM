@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AFajf186l/PXqwUPy3rwRwyn2qPnWRgi3+RW1nuJlWs=",
+  "Hash": "XrTuaGu1bPtqt3TI2aL5MhBhAybLMausVlW5+As/AYs=",
   "Source": "MyBlazorApp",
   "BasePath": "_content/MyBlazorApp",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "MyBlazorApp\\wwwroot",
       "Source": "MyBlazorApp",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\",
       "BasePath": "_content/MyBlazorApp",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\bundle\\MyBlazorApp.styles.css",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\bundle\\MyBlazorApp.styles.css",
       "SourceId": "MyBlazorApp",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "MyBlazorApp.styles.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\bundle\\MyBlazorApp.styles.css"
+      "OriginalItemSpec": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\bundle\\MyBlazorApp.styles.css"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MyBlazorApp.bundle.scp.css",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MyBlazorApp.bundle.scp.css",
       "SourceId": "MyBlazorApp",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "MyBlazorApp.bundle.scp.css",
       "AssetKind": "All",
@@ -52,13 +52,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MyBlazorApp.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MyBlazorApp.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\app.css",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\app.css",
       "SourceId": "MyBlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "app.css",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\background.png",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\background.png",
       "SourceId": "MyBlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "background.png",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\background.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "MyBlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "MyBlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\favicon.png",
       "SourceId": "MyBlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "favicon.png",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\user-icon.png",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\user-icon.png",
       "SourceId": "MyBlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "user-icon.png",
       "AssetKind": "All",
@@ -169,10 +169,10 @@
       "OriginalItemSpec": "wwwroot\\user-icon.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\user.png",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\user.png",
       "SourceId": "MyBlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CNPM\\FrontEnd\\wwwroot\\",
       "BasePath": "_content/MyBlazorApp",
       "RelativePath": "user.png",
       "AssetKind": "All",
