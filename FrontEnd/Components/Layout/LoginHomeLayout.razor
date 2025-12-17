@@ -12,13 +12,7 @@
                         <img src="/user-icon.png" alt="user-icon" />
                     </div>
                 </nav>
-                <!-- Button bên ngoài -->
-                <button class="btn btn-primary" @onclick="Open"> </button>
-            <!-- Thẻ div -->
-                @if (@isVisible)
-                {
-                    <div class="whitebox"></div>
-                }
+                
             </div>
 
             <article class="content px-4">
@@ -38,7 +32,7 @@
     private RegisterRequest model = new();
     void Open()
     {
-        isVisible = true;
+        Navigation.NavigateTo("/");
     }
 
     void Close()

@@ -67,3 +67,31 @@
         .menu-popup li:last-child[b-3inmui9vzp] {
             border-bottom: none;
         }
+.Lef[b-3inmui9vzp] {
+    position: absolute;      /* cho phép đặt ở góc */
+    top: 30px;               /* cách mép trên */           /* cách mép trái */
+    right: 16px;
+    background-color: #0f3b66; /* nền xanh */
+    color: white;            /* chữ trắng */
+
+    padding: 8px 14px;       /* khoảng đệm quanh chữ */
+    border: 2px solid black; /* viền đen */
+
+    border-radius: 6px;      /* bo góc nhẹ */
+    font-size: 16px;
+    font-weight: 600
+}
+.Rig[b-3inmui9vzp]{
+    position: absolute;      /* cho phép đặt ở góc */
+    top: 30px;               /* cách mép trên */           /* cách mép trái */
+    right: 230px;
+    background-color: #0f3b66; /* nền xanh */
+    color: white;            /* chữ trắng */
+
+    padding: 8px 14px;       /* khoảng đệm quanh chữ */
+    border: 2px solid black; /* viền đen */
+
+    border-radius: 6px;      /* bo góc nhẹ */
+    font-size: 16px;
+    font-weight: 600
+}

@@ -1,18 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+tTOgId2vPY=",
+  "dgSpecHash": "vxf/CvmHHOg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\PC\\Documents\\V_ToDo\\Project\\FrontEnd\\MyBlazorApp.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Documents\\FrontEnd\\FrontEnd\\MyBlazorApp.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problem reading the cache file C:\\Users\\PC\\Documents\\V_ToDo\\Project\\FrontEnd\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "C:\\Users\\PC\\Documents\\V_ToDo\\Project\\FrontEnd\\MyBlazorApp.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\PC\\Documents\\V_ToDo\\Project\\FrontEnd\\MyBlazorApp.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }

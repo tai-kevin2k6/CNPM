@@ -229,3 +229,7 @@ C:\Users\Admin\OneDrive\Documents\GitHub\CNPM\FrontEnd\obj\Debug\net8.0\ref\MyBl
 >>>>>>> 6f8ba417774627e7e18998a765268be1b0e1d435
 C:\Users\PC\Documents\V_ToDo\Project\FrontEnd\obj\Debug\net8.0\scopedcss\Components\Layout\SearchLayout.razor.rz.scp.css
 C:\Users\PC\Documents\V_ToDo\Project\FrontEnd\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\scopedcss\Components\Layout\SearchLayout.razor.rz.scp.css
+C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\scopedcss\Components\Pages\Tra-cuu-don-hang.razor.rz.scp.css
+C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\scopedcss\Components\Pages\Loginhome1.razor.rz.scp.css
+C:\Users\Admin\Documents\FrontEnd\FrontEnd\obj\Debug\net8.0\scopedcss\Components\Pages\Dang-ky-thanh-diem-nhan-hang.razor.rz.scp.css

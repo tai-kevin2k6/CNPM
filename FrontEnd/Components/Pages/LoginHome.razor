@@ -7,24 +7,8 @@
         Theo dõi và quản lý đơn hàng<br />
         của bạn một cách dễ dàng
     </h1>
-</div>
-<div class="header-container">
-    <div class="close-icon" @onclick="ToggleMenu">
-        <i class="oi oi-x"></i> <span>✕</span>
-    </div>
-
-    @if (isVisible)
-    {
-        <div class="menu-popup">
-            <ul>
-                <li>Xem thông tin điểm nhận hàng</li>
-                <li>Tra cứu đơn hàng</li>
-            </ul>
-            <div class="logout-icon">
-                <i class="oi oi-account-logout"></i>
-            </div>
-        </div>
-    }
+    <a class="Feature Rig" href="/tra-cuu-diem-nhan-hang">Tra cứu điểm nhận hàng</a>
+    <a class="Feature Lef" href="/tra-cuu-don-hang">Thông tin đơn hàng</a>
 </div>
 @code {
     // Biến điều khiển ẩn hiện

@@ -1,0 +1,51 @@
+.login-box {
+    width: 700px;
+    height: 300px;
+    background: #8fa0b0;
+    border-radius: 40px;
+    padding: 40px 50px;
+    box-sizing: border-box;
+}
+.row {
+    display: contents;
+}
+.Text {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 700;                /* chữ đậm */
+    color: black;                    /* màu đen */
+    margin-bottom: 16px;
+}
+.row input {
+    width: 100%;
+    padding: 10px 14px;
+
+    background-color: rgba(255, 255, 255, 0.7); /* trắng mờ */
+    border: 2px solid #000;          /* viền đen */
+    border-radius: 8px;              /* bo góc */
+
+    font-size: 16px;
+    outline: none;
+}
+.row input:focus {
+    background-color: white;
+    border-color: #0f3b66;           /* xanh đậm khi focus */
+}
+.btn {
+    width: 120px;
+    height: 50px;
+    margin-top: 20px;
+    margin-left: 220px;
+    background-color: #0f3b66; /* xanh */
+    color: white;
+    border: 1px solid black;
+    border-radius: 6px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+}

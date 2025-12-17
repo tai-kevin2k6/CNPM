@@ -1,4 +1,4 @@
-/* /Components/Layout/LoginHomeLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/LoginHomeLayout.razor.rz.scp.css */
 /* ĐÈ NỀN RIÊNG CHO TRANG DÙNG LAYOUT NÀY */
 .layout-bg[b-8rsmks82p6] {
     min-height: 100vh;
@@ -221,7 +221,7 @@ main[b-8rsmks82p6] {
     height: 100px;
     background-color: white;
 }
-/* /Components/Layout/LoginLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/LoginLayout.razor.rz.scp.css */
 .me-auto[b-raz5ou31td] {
     position: absolute;
     top: 50px;
@@ -271,7 +271,7 @@ a[b-raz5ou31td] {
     box-sizing: border-box;
 }
 
-/* /Components/Layout/MainLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
 /* .top-row {
     display: flex;
     align-items: center;
@@ -426,7 +426,7 @@ main[b-8h0dmotat2] {
         text-decoration: underline;
     }
     
-/* /Components/Layout/NavMenu.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-wa7oawb2kj] {
     appearance: none;
     cursor: pointer;
@@ -532,7 +532,7 @@ main[b-8h0dmotat2] {
         overflow-y: auto;
     }
 }
-/* /Components/Layout/SearchLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/SearchLayout.razor.rz.scp.css */
 .me-auto[b-lk65s99f9o] {
     position: absolute;
     top: 50px;
@@ -576,7 +576,38 @@ a[b-lk65s99f9o] {
     padding: 40px 50px;
     box-sizing: border-box;
 }
-/* /Components/Pages/Home.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Dang-ky-thanh-diem-nhan-hang.razor.rz.scp.css */
+/* Khung chứa 6 input */
+.input-container[b-qn1smql5ql] {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 cột bằng nhau */
+    gap: 16px;                      /* khoảng cách giữa các ô */
+    width: 400px;                   /* bạn có thể đổi */
+}
+
+/* Style cho input */
+.input-container input[b-qn1smql5ql] {
+    padding: 10px 12px;
+    font-size: 16px;
+
+    background-color: white;        /* nền trắng */
+    border: 2px solid #000;         /* viền */
+    border-radius: 8px;             /* bo góc */
+
+    outline: none;
+}
+
+/* Khi click vào input */
+.input-container input:focus[b-qn1smql5ql] {
+    border-color: #0f3b66;          /* xanh khi focus */
+}
+.login-wrapper[b-qn1smql5ql] {
+    height: calc(100vh - 56px); /* trừ top bar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* _content/MyBlazorApp/Components/Pages/Home.razor.rz.scp.css */
 .hero[b-huq88x9v2b] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -600,7 +631,7 @@ a[b-lk65s99f9o] {
     text-transform: uppercase;
     font-weight: bold;
 }
-/* /Components/Pages/Login.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Login.razor.rz.scp.css */
 /* bọc toàn màn hình (trừ sidebar) */
 .login-wrapper[b-8jzusy9o0u] {
     height: calc(100vh - 56px); /* trừ top bar */
@@ -663,7 +694,7 @@ input[b-8jzusy9o0u] {
     margin: 0 auto;
 
 }
-/* /Components/Pages/LoginHome.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/LoginHome.razor.rz.scp.css */
 .hero[b-3inmui9vzp] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -733,7 +764,119 @@ input[b-8jzusy9o0u] {
         .menu-popup li:last-child[b-3inmui9vzp] {
             border-bottom: none;
         }
-/* /Components/Pages/Register.razor.rz.scp.css */
+.Lef[b-3inmui9vzp] {
+    position: absolute;      /* cho phép đặt ở góc */
+    top: 30px;               /* cách mép trên */           /* cách mép trái */
+    right: 16px;
+    background-color: #0f3b66; /* nền xanh */
+    color: white;            /* chữ trắng */
+
+    padding: 8px 14px;       /* khoảng đệm quanh chữ */
+    border: 2px solid black; /* viền đen */
+
+    border-radius: 6px;      /* bo góc nhẹ */
+    font-size: 16px;
+    font-weight: 600
+}
+.Rig[b-3inmui9vzp]{
+    position: absolute;      /* cho phép đặt ở góc */
+    top: 30px;               /* cách mép trên */           /* cách mép trái */
+    right: 230px;
+    background-color: #0f3b66; /* nền xanh */
+    color: white;            /* chữ trắng */
+
+    padding: 8px 14px;       /* khoảng đệm quanh chữ */
+    border: 2px solid black; /* viền đen */
+
+    border-radius: 6px;      /* bo góc nhẹ */
+    font-size: 16px;
+    font-weight: 600
+}
+/* _content/MyBlazorApp/Components/Pages/Loginhome1.razor.rz.scp.css */
+.hero[b-fcozzsfmcp] {
+    position: relative;
+    height: 100vh; /* full màn hình */
+    background-image: url("/background.png"); /* đổi thành ảnh của bạn*/
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+    display: flex;
+    align-items: center; /* căn giữa theo chiều dọc */
+    padding-left: 80px; /* đẩy chữ sang phải */
+}
+
+.hero-content[b-fcozzsfmcp] {
+    min-height: 100vh; /* cao full màn hình */
+    display: flex;
+    justify-content: center; /* căn giữa ngang */
+    align-items: center;
+    font-size: 50px;
+    max-width: 900px;
+    color: rgb(250, 247, 247);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+/* Container chứa cả nút X và menu */
+.header-container[b-fcozzsfmcp] {
+    position: relative;
+    display: inline-block;
+}
+
+/* Nút X */
+.close-icon[b-fcozzsfmcp] {
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    text-align: right;
+    padding: 10px;
+}
+
+/* Thẻ div ô trắng */
+.menu-popup[b-fcozzsfmcp] {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    background: rgba(255, 255, 255, 0.8); /* Trắng mờ */
+    backdrop-filter: blur(10px); /* Hiệu ứng làm mờ nền phía sau */
+    border-radius: 20px; /* Bo góc mạnh */
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+    .menu-popup ul[b-fcozzsfmcp] {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: #333;
+    }
+
+    .menu-popup li[b-fcozzsfmcp] {
+        padding: 10px 0;
+        font-size: 16px;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+        .menu-popup li:last-child[b-fcozzsfmcp] {
+            border-bottom: none;
+        }
+.Lef[b-fcozzsfmcp] {
+    position: absolute;      /* cho phép đặt ở góc */
+    top: 30px;               /* cách mép trên */           /* cách mép trái */
+    right: 16px;
+    background-color: #0f3b66; /* nền xanh */
+    color: white;            /* chữ trắng */
+
+    padding: 8px 14px;       /* khoảng đệm quanh chữ */
+    border: 2px solid black; /* viền đen */
+
+    border-radius: 6px;      /* bo góc nhẹ */
+    font-size: 16px;
+    font-weight: 600
+}
+/* _content/MyBlazorApp/Components/Pages/Register.razor.rz.scp.css */
 .title[b-5t3fhlf0r1] {
     font-size: 50px; /* làm chữ to */
     font-weight: 700; /* in đậm */
@@ -783,90 +926,105 @@ a[b-5t3fhlf0r1] {
 .textA[b-5t3fhlf0r1]{
     margin-left: 30px;
 }
-/* /Components/Pages/tra-cuu-diem-nhan-hang.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/tra-cuu-diem-nhan-hang.razor.rz.scp.css */
 /* Background */
-.page-wrapper[b-rywv9i4u5c] {
+.page-wrapper[b-rywv9i4u5c][b-rywv9i4u5c] {
     min-height: 100vh;
     background-color: #0f3b66;
-    padding: 28px;
+    padding: 24px;
     font-family: Arial, Helvetica, sans-serif;
     color: #000;
+    width: 100%;
+    margin-top: 100px;
+    margin-left: 50px;
 }
+
 
 /* Header */
 .header[b-rywv9i4u5c] {
+    height: 48px;
     display: flex;
     align-items: center;
-    gap: 14px;
-    color: white;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .back[b-rywv9i4u5c] {
     font-size: 26px;
+    color: white;
     cursor: pointer;
 }
 
-.header-title[b-rywv9i4u5c] {
-    font-size: 30px;
-    font-weight: 500;
-}
 
 /* Main card */
 .info-card[b-rywv9i4u5c] {
-    background-color: #bfc6cc;
-    border-radius: 26px; /* bo góc lớn hơn */
-    padding: 32px 36px;
+    background-color: #b8c0c8;
+    border-radius: 26px;
+    padding: 28px 32px;
 }
 
+
+
 /* Title */
-.info-card h2[b-rywv9i4u5c] {
-    margin-bottom: 26px;
-    font-size: 26px;
+.info-card h2[b-rywv9i4u5c][b-rywv9i4u5c] {
+    margin-bottom: 20px;
+    font-size: 22px;
     font-weight: 700;
 }
+.card-title[b-rywv9i4u5c] {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+
 
 /* Content layout */
 .card-content[b-rywv9i4u5c] {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
+
+
 
 /* Left info */
 .left-info[b-rywv9i4u5c] {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 20px;
 }
 
 .info-row[b-rywv9i4u5c] {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
+    font-size: 18px;
+}
+
+
+
+.icon[b-rywv9i4u5c][b-rywv9i4u5c] {
     font-size: 20px;
 }
 
-.icon[b-rywv9i4u5c] {
-    font-size: 22px;
+
+.text[b-rywv9i4u5c][b-rywv9i4u5c] {
+    font-size: 18px;
 }
 
-.text[b-rywv9i4u5c] {
-    font-size: 20px;
-}
 
-.underline[b-rywv9i4u5c] {
+.underline[b-rywv9i4u5c][b-rywv9i4u5c] {
     border-bottom: 2px solid #000;
-    padding-bottom: 3px;
+    padding-bottom: 2px;
 }
+
 
 /* Right box */
 .right-box[b-rywv9i4u5c] {
-    width: 320px;
-    height: 180px;
-    background-color: #dcdcdc;
-    border: 1.5px solid #333;
-    border-radius: 8px;
+    width: 300px;
+    height: 170px;
+    background-color: #d9d9d9;
+    border-radius: 12px;
 
     display: flex;
     flex-direction: column;
@@ -875,15 +1033,65 @@ a[b-5t3fhlf0r1] {
 }
 
 .box-title[b-rywv9i4u5c] {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .box-number[b-rywv9i4u5c] {
-    font-size: 46px;
+    font-size: 40px;
     font-weight: 700;
 }
 
+
+/* _content/MyBlazorApp/Components/Pages/Tra-cuu-don-hang.razor.rz.scp.css */
+.login-box[b-qtykk89ww4] {
+    width: 700px;
+    height: 300px;
+    background: #8fa0b0;
+    border-radius: 40px;
+    padding: 40px 50px;
+    box-sizing: border-box;
+}
+.row[b-qtykk89ww4] {
+    display: contents;
+}
+.Text[b-qtykk89ww4] {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 700;                /* chữ đậm */
+    color: black;                    /* màu đen */
+    margin-bottom: 16px;
+}
+.row input[b-qtykk89ww4] {
+    width: 100%;
+    padding: 10px 14px;
+
+    background-color: rgba(255, 255, 255, 0.7); /* trắng mờ */
+    border: 2px solid #000;          /* viền đen */
+    border-radius: 8px;              /* bo góc */
+
+    font-size: 16px;
+    outline: none;
+}
+.row input:focus[b-qtykk89ww4] {
+    background-color: white;
+    border-color: #0f3b66;           /* xanh đậm khi focus */
+}
+.btn[b-qtykk89ww4] {
+    width: 120px;
+    height: 50px;
+    margin-top: 20px;
+    margin-left: 220px;
+    background-color: #0f3b66; /* xanh */
+    color: white;
+    border: 1px solid black;
+    border-radius: 6px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+}

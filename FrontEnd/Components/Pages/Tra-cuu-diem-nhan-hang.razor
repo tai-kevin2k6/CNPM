@@ -1,18 +1,24 @@
 @page "/tra-cuu-diem-nhan-hang"
 @layout Layout.SearchLayout
+@inject NavigationManager Nav
 <div class="page-wrapper">
-    <!-- Header -->
+
+    <!-- HEADER: -->
     <div class="header">
-        <span class="back">←</span>
-        <span class="header-title">Điểm: 165 Thái Hà - Block A</span>
+        <span class="back" onclick="location.href='/loginhome'" >←</span>
     </div>
 
-    <!-- Card -->
+    <!-- CARD CHÍNH -->
     <div class="info-card">
-        <a href = "/login">Thông tin điểm nhận hàng</a>
+
+        <!-- TIÊU ĐỀ -->
+        <div class="card-title">
+            Thông tin điểm nhận hàng
+        </div>
 
         <div class="card-content">
-            <!-- Left info -->
+
+            <!-- CỘT TRÁI -->
             <div class="left-info">
                 <div class="info-row">
                     <span class="icon">📍</span>
@@ -30,13 +36,19 @@
                 </div>
             </div>
 
-            <!-- Right box -->
+            <!-- CỘT PHẢI -->
             <div class="right-box">
                 <div class="box-title">
                     📦 Số đơn chưa lấy của bạn
                 </div>
                 <div class="box-number">12</div>
             </div>
+
         </div>
     </div>
 </div>
+@code{
+    void GoBack(){
+        
+    }
+}

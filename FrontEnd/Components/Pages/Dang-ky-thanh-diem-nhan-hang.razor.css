@@ -1,0 +1,30 @@
+/* Khung chứa 6 input */
+.input-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 cột bằng nhau */
+    gap: 16px;                      /* khoảng cách giữa các ô */
+    width: 400px;                   /* bạn có thể đổi */
+}
+
+/* Style cho input */
+.input-container input {
+    padding: 10px 12px;
+    font-size: 16px;
+
+    background-color: white;        /* nền trắng */
+    border: 2px solid #000;         /* viền */
+    border-radius: 8px;             /* bo góc */
+
+    outline: none;
+}
+
+/* Khi click vào input */
+.input-container input:focus {
+    border-color: #0f3b66;          /* xanh khi focus */
+}
+.login-wrapper {
+    height: calc(100vh - 56px); /* trừ top bar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
