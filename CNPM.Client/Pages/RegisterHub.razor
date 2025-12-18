@@ -193,7 +193,7 @@
 
             // Bước 3: Gọi API (Lưu ý: Thay đổi đường dẫn API cho đúng với Controller của bạn)
             // Giả sử Controller của bạn là HubsController => api/hubs/register-hub
-            var response = await Http.PostAsJsonAsync("api/hubs/register-hub", hubModel);
+            var response = await Http.PostAsJsonAsync("api/PickupHub/register-hub", hubModel);
 
             if (response.IsSuccessStatusCode)
             {
