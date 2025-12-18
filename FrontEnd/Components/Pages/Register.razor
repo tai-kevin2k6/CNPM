@@ -54,29 +54,22 @@
     string message = "";
 
     async Task RegisterUser()
-    {
+    {   
+        if (string.IsNullOrEmpty(model.Role))
+        {
+            message = "Vui lòng chọn vai trò";
+            return;
+        }
         string url = model.Role == "HubOwner"
         ? "api/auth/hub-register"
         : "api/auth/user-register";
+
         var response = await Http.PostAsJsonAsync(url, model);
 
+        message = await response.Content.ReadAsStringAsync();
+
         if (response.IsSuccessStatusCode)
-        {
-            message = await response.Content.ReadAsStringAsync();
-        }
-        else
-        {
-            message = await response.Content.ReadAsStringAsync();
-        }
-        NavManager.NavigateTo("/login");
-    }
-    private void SelectRole1()
-    {
-        model.Role = "Customer";
-    }
-    private void SelectRole2()
-    {
-        model.Role = "Owner";
+            NavManager.NavigateTo("/login");
     }
 }
 

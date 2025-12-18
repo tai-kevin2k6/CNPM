@@ -1,14 +1,14 @@
 @page "/tra-cuu-don-hang"
 @layout Layout.SearchLayout
 <div class="login-box">
-    <div class="Text">Mã đơn hàng</div>
+    <div class="Text">Tra cứu đơn hàng</div>
     <div class="row">
-        <input @bind="Idbox" />
+        <input @bind="Idbox" placeholder="Nhập mã đơn hàng" />
     </div>
-    <button class="btn btn-primary" @onclick="Search">Tìm kiếm</button>
+    <button class="btn btn-primary" @onclick="Search">Nhập</button>
 </div>
 @code{
-    int Idbox;
+    string Idbox;
     void Search(){
         
     }
