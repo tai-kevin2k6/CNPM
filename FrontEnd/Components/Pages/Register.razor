@@ -3,58 +3,52 @@
 @layout Layout.LoginLayout
 @using MyBlazorApp.Components.Model
 @inject NavigationManager NavManager
-@using Microsoft.AspNetCore.Components.Forms
-
-<EditForm Model="model" OnValidSubmit="RegisterUser" FormName="RegisterForm">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
+<div class="register-page">
+<div class="register-box">
+    <div class="user-icon">
+        <img src="/user-icon.png" alt="user-icon" />
+    </div>
     <div class="form mt-4">
-
         <div class="row">
             <label>Họ và tên</label>
-            <InputText @bind-Value="model.FullName" />
+            <input @bind="model.FullName" />
         </div>
 
         <div class="row">
             <label>Số điện thoại</label>
-            <InputText @bind-Value="model.PhoneNumber" />
+            <input type="tel" @bind="model.PhoneNumber" />
         </div>
 
         <div class="row">
-            <label>Username/Email</label>
-            <InputText @bind-Value="model.Username" />
+            <label>Username/Email: </label>
+            <input type="text" @bind="model.Username" />
         </div>
-
         <div class="row">
-            <label>Mật khẩu</label>
-            <InputText type="password" @bind-Value="model.Password" />
-        </div>
-
+            <label>Mật khẩu:</label>
+            <input type="password" @bind="model.Password" />
+        </div> 
         <div class="row">
-            <label>Vai trò</label>
-            <div>
-                <input type="radio"
-                       name="Role"
-                       @bind="model.Role" /> Khách hàng
+            <label>Vai trò: </label>
+            <div class="role-group">
+                <label class="role-item">
+                    <input type="radio" name="role" class="role-radio">
+                    <span>Khách hàng</span>
+                </label>
 
-                <input type="radio"
-                       name="Role"
-                       @bind="model.Role" /> Chủ điểm
+                <label class="role-item">
+                    <input type="radio" name="role" class="role-radio">
+                    <span>Chủ điểm</span>
+                </label>
             </div>
-
-            <ValidationMessage For="@(() => model.Role)" />
         </div>
-
+        <span asp-validation-for="Role" class="text-danger"></span>
     </div>
-
-    <p class="text-danger">@message</p>
-
-    <button class="btn btn-primary mt-3 center-block-button">
-        Đăng ký
-    </button>
-</EditForm>
-
+    <p>@message</p>
+    <div class="mt-3">
+    <button class="btn btn-primary center-block-button" @onclick="RegisterUser">Đăng ký</button>
+    </div>
+</div>
+</div>
 @code {
     RegisterRequest model = new();
     string message = "";

@@ -18,7 +18,6 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Admin\Documents\GitHub\CNPM\FrontEnd
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Admin/Documents/GitHub/CNPM/FrontEnd/Components/App.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
@@ -87,5 +86,6 @@ build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xUcmEtY3V1LWRp
 build_metadata.AdditionalFiles.CssScope = b-rywv9i4u5c
 
 [C:/Users/Admin/Documents/GitHub/CNPM/FrontEnd/Components/Pages/Tra-cuu-don-hang.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xUcmEtY3V1LWRvbi1oYW5nLnJhem9y
-build_metadata.AdditionalFiles.CssScope = b-qtykk89ww4
+build_property.MSBuildProjectDirectory = C:\Users\Admin\Documents\FrontEnd\FrontEnd
+build_property._RazorSourceGeneratorDebug = 
+
