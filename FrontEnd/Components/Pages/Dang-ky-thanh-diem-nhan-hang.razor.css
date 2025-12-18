@@ -28,3 +28,58 @@
     align-items: center;
     justify-content: center;
 }
+<style >
+/* Container chính để giới hạn chiều rộng và căn giữa trang */
+.registration-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Tạo lưới 2 cột căn đều nhau */
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Chia đôi 2 cột bằng nhau */
+    gap: 20px; /* Khoảng cách giữa các ô */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+.form-control {
+    padding: 10px;
+    border-radius: 8px; /* Bo góc ô nhập liệu */
+    border: 1px solid #ccc;
+}
+
+/* Căn giữa nút Submit */
+.button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Style cho nút Submit màu xanh, bo góc */
+.btn-submit {
+    background-color: #007bff; /* Màu xanh chuẩn */
+    color: white;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 20px; /* Bo tròn viền nút */
+    font-weight: bold;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+    .btn-submit:hover {
+        background-color: #0056b3; /* Đậm hơn khi di chuột vào */
+    }
+
+</style >
