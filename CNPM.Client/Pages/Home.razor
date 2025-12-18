@@ -1,0 +1,58 @@
+﻿@page "/"
+@using Blazored.LocalStorage
+@inject ILocalStorageService LocalStorage
+
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Giao Hàng Nhanh Chóng <br /> An Toàn Tuyệt Đối</h1>
+        <p class="hero-subtitle">Hệ thống quản lý vận đơn chuyên nghiệp dành cho mọi người.</p>
+    </div>
+</div>
+
+<style>
+    /* CSS giữ nguyên, nhớ đảm bảo đường dẫn ảnh banner đúng */
+    .hero-section {
+        height: 90vh;
+        background: linear-gradient(rgba(15, 59, 102, 0.8), rgba(15, 59, 102, 0.8)), url('/images/banner.png');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+</style>
+
+@code {
+    private bool isLoggedIn = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Check token ngay khi vào trang Home
+        var token = await LocalStorage.GetItemAsync<string>("authToken");
+        if (!string.IsNullOrEmpty(token))
+        {
+            isLoggedIn = true;
+        }
+    }
+}

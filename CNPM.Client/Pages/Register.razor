@@ -1,0 +1,91 @@
+﻿@page "/register"
+@using CNPM.Client.Models
+@inject HttpClient Http
+@inject NavigationManager Nav
+
+<div class="login-page-bg">
+    <div class="glass-card" style="width: 100%; max-width: 450px;">
+        <h2 style="text-align:center; margin-bottom: 1.5rem; color: var(--primary-color); font-weight: 800;">ĐĂNG KÝ TÀI KHOẢN</h2>
+
+        <div style="margin-bottom: 15px;">
+            <label style="font-weight:600; display:block; margin-bottom:5px;">Họ và tên</label>
+            <input @bind="regModel.FullName" class="form-control-custom" placeholder="Ví dụ: Nguyễn Văn A" />
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="font-weight:600; display:block; margin-bottom:5px;">Số điện thoại</label>
+            <input @bind="regModel.PhoneNumber" class="form-control-custom" placeholder="Nhập SĐT (trên 10 số)..." />
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="font-weight:600; display:block; margin-bottom:5px;">Mật khẩu</label>
+            <input type="password" @bind="regModel.Password" class="form-control-custom" placeholder="Mật khẩu (trên 6 ký tự)..." />
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <label style="font-weight:600; display:block; margin-bottom:5px;">Vai trò</label>
+            <select @bind="regModel.Role" class="form-control-custom" style="background-color: white;">
+                <option value="User">Khách hàng cá nhân</option>
+                <option value="HubOwner">Chủ điểm giao nhận</option>
+            </select>
+        </div>
+
+        <button class="btn-primary-custom" style="width:100%" @onclick="HandleRegister">ĐĂNG KÝ NGAY</button>
+
+        <div style="text-align:center; margin-top:20px;">
+            <a href="login" style="color: var(--secondary-color); text-decoration:none;">Đã có tài khoản? <b>Đăng nhập</b></a>
+        </div>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div style="background:#fee2e2; color:#b91c1c; padding:10px; border-radius:8px; margin-top:15px; text-align:center; font-size: 14px;">
+                @errorMessage
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* Dùng chung style nền với trang Login để đồng bộ */
+    .login-page-bg {
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at top right, #2563eb, transparent 40%), radial-gradient(circle at bottom left, #fbbf24, transparent 40%), #f3f4f6;
+        padding: 20px; /* Thêm padding để trên điện thoại không bị sát lề */
+    }
+</style>
+
+@code {
+    private RegisterRequest regModel = new RegisterRequest();
+    private string errorMessage;
+
+    private async Task HandleRegister()
+    {
+        // 1. Validate nhanh
+        if (string.IsNullOrEmpty(regModel.FullName)) { errorMessage = "Vui lòng nhập họ tên!"; return; }
+        if (string.IsNullOrEmpty(regModel.PhoneNumber) || regModel.PhoneNumber.Length < 10) { errorMessage = "Số điện thoại không hợp lệ!"; return; }
+        if (string.IsNullOrEmpty(regModel.Password) || regModel.Password.Length < 6) { errorMessage = "Mật khẩu quá ngắn!"; return; }
+
+        try
+        {
+            // 2. Gọi API
+            var response = await Http.PostAsJsonAsync("api/Auth/register", regModel);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Thành công -> Chuyển về login
+                Nav.NavigateTo("/login");
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Lỗi kết nối Server: " + ex.Message;
+        }
+    }
+}

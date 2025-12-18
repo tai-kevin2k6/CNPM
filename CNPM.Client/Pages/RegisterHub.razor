@@ -1,0 +1,218 @@
+﻿@page "/register-hub"
+@using System.Net.Http.Json
+@using System.Net.Http.Headers
+@using Blazored.LocalStorage
+@inject HttpClient Http
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<div class="container-custom">
+    <div class="card-register">
+        <h2 class="title">Đăng Ký Điểm Nhận Hàng</h2>
+        <p class="subtitle">Mở rộng mạng lưới giao nhận cùng CNPM Express</p>
+
+        <EditForm Model="@hubModel" OnValidSubmit="HandleRegisterHub">
+            <DataAnnotationsValidator />
+
+            <div class="form-group">
+                <label>Tên điểm giao dịch (Hub Name)</label>
+                <InputText class="form-control" @bind-Value="hubModel.Name" placeholder="Ví dụ: Bưu cục Cầu Giấy" required />
+            </div>
+
+            <div class="form-group">
+                <label>Địa chỉ chi tiết</label>
+                <InputText class="form-control" @bind-Value="hubModel.Address" placeholder="Số nhà, đường, quận/huyện..." required />
+            </div>
+
+            <div class="row">
+                <div class="col-half">
+                    <label>Giờ mở cửa</label>
+                    <InputText type="time" class="form-control" @bind-Value="hubModel.OpeningHours" required />
+                </div>
+                <div class="col-half">
+                    <label>Giờ đóng cửa</label>
+                    <InputText type="time" class="form-control" @bind-Value="hubModel.ClosingHours" required />
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert-error">@errorMessage</div>
+            }
+
+            <button type="submit" class="btn-submit" disabled="@isLoading">
+                @if (isLoading)
+                {
+                    <span>Đang xử lý...</span>
+                }
+                else
+                {
+                    <span>Gửi Đơn Đăng Ký</span>
+                }
+            </button>
+        </EditForm>
+    </div>
+</div>
+
+<style>
+    /* CSS cho form đẹp trai */
+    .container-custom {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+        background-color: #f5f7fa;
+        min-height: 80vh;
+    }
+
+    .card-register {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .title {
+        color: #0f3b66;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .col-half {
+        flex: 1;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #0f3b66;
+            outline: none;
+        }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: #0f3b66; /* Màu xanh của CNPM Express */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+        .btn-submit:hover {
+            background-color: #0a2a4a;
+        }
+
+        .btn-submit:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+    .alert-error {
+        background-color: #fee2e2;
+        color: #ef4444;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+</style>
+
+@code {
+    // 1. Tạo Class Model trùng khớp với CreateHubRequest ở Backend
+    public class CreateHubRequest
+    {
+        public string Name { get; set; } = "";
+        public string Address { get; set; } = "";
+        public string OpeningHours { get; set; } = "08:00";
+        public string ClosingHours { get; set; } = "17:00";
+    }
+
+    private CreateHubRequest hubModel = new CreateHubRequest();
+    private string errorMessage = "";
+    private bool isLoading = false;
+
+    private async Task HandleRegisterHub()
+    {
+        isLoading = true;
+        errorMessage = "";
+
+        try
+        {
+            // Bước 1: Lấy Token từ LocalStorage
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+            if (string.IsNullOrEmpty(token))
+            {
+                errorMessage = "Bạn chưa đăng nhập hoặc phiên làm việc hết hạn.";
+                isLoading = false;
+                return;
+            }
+
+            // Bước 2: Gắn Token vào Header (Quan trọng vì backend có [Authorize])
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            // Bước 3: Gọi API (Lưu ý: Thay đổi đường dẫn API cho đúng với Controller của bạn)
+            // Giả sử Controller của bạn là HubsController => api/hubs/register-hub
+            var response = await Http.PostAsJsonAsync("api/hubs/register-hub", hubModel);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await JS.InvokeVoidAsync("alert", "Đăng ký thành công! Vui lòng chờ phê duyệt.");
+                Nav.NavigateTo("/"); // Về trang chủ
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                errorMessage = $"Lỗi: {errorContent}"; // Hiển thị lỗi từ backend trả về (ví dụ: User không tồn tại)
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Có lỗi xảy ra khi kết nối tới server.";
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

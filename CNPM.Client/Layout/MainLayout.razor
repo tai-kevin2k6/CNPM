@@ -1,0 +1,122 @@
+﻿@inherits LayoutComponentBase
+@using Blazored.LocalStorage
+@using System.Text.Json
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager Nav
+
+<div class="page">
+    <nav class="custom-navbar">
+        <a href="/" class="brand-logo">📦 CNPM Express</a>
+
+        <div class="nav-links">
+            @if (!isLoggedIn)
+            {
+                /* --- CHƯA ĐĂNG NHẬP --- */
+                <NavLink class="nav-item-custom" href="login">Đăng nhập</NavLink>
+                <NavLink class="nav-item-custom" href="register">Đăng ký</NavLink>
+            }
+            else
+            {
+                /* --- ĐÃ ĐĂNG NHẬP --- */
+
+                /* 1. Hiện nút Tra cứu */
+                <NavLink class="nav-item-custom" href="tra-cuu">Tra cứu</NavLink>
+
+                /* 2. Check Role HubOwner để hiện nút Đăng ký điểm nhận hàng */
+                @if (userRole == "HubOwner")
+                {
+                    <NavLink class="nav-item-custom" href="register-hub">Đăng ký làm điểm nhận hàng</NavLink>
+                }
+
+                <span style="color:white; margin-right:10px; margin-left:15px; font-weight:600">
+                    Xin chào, @userName!
+                </span>
+
+                <button class="btn-logout" @onclick="HandleLogout">Đăng xuất ➜</button>
+            }
+        </div>
+    </nav>
+
+    <main style="padding: 0;">
+        @Body
+    </main>
+</div>
+
+<style>
+    /* CSS giữ nguyên */
+    .btn-logout {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 6px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+        .btn-logout:hover {
+            background-color: #ef4444;
+            border-color: #ef4444;
+        }
+</style>
+
+@code {
+    private bool isLoggedIn = false;
+    private string userRole = "";
+    private string userName = ""; // Biến lưu tên
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await LocalStorage.GetItemAsync<string>("authToken");
+        if (!string.IsNullOrEmpty(token))
+        {
+            isLoggedIn = true;
+            ParseTokenInfo(token); // Gọi hàm giải mã
+        }
+    }
+
+    private async Task HandleLogout()
+    {
+        await LocalStorage.RemoveItemAsync("authToken");
+        isLoggedIn = false;
+        userRole = "";
+        userName = "";
+        Nav.NavigateTo("/login", forceLoad: true);
+    }
+
+    // Hàm giải mã Token lấy cả Role và Name
+    private void ParseTokenInfo(string token)
+    {
+        try
+        {
+            var parts = token.Split('.');
+            if (parts.Length != 3) return;
+            var payload = parts[1];
+            switch (payload.Length % 4)
+            {
+                case 2: payload += "=="; break;
+                case 3: payload += "="; break;
+            }
+            var jsonBytes = Convert.FromBase64String(payload);
+            var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
+
+            // 1. Lấy Role
+            if (keyValuePairs.TryGetValue("role", out object r) ||
+                keyValuePairs.TryGetValue("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", out r))
+            {
+                userRole = r.ToString();
+            }
+
+            // 2. Lấy Tên (Check các key phổ biến: unique_name, name, hoặc key dài ngoằng của Microsoft)
+            if (keyValuePairs.TryGetValue("unique_name", out object n) ||
+                keyValuePairs.TryGetValue("N    ame", out n) ||
+                keyValuePairs.TryGetValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", out n))
+            {
+                userName = n.ToString();
+            }
+        }
+        catch { }
+    }
+
+}

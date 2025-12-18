@@ -1,0 +1,203 @@
+﻿@page "/tra-cuu"
+@using CNPM.Client.Models
+@using Blazored.LocalStorage
+@using System.Net.Http.Headers
+@inject HttpClient Http
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager Nav
+
+<div class="container" style="max-width: 800px; margin: 50px auto; padding: 20px;">
+    <h2 style="text-align:center; color:var(--primary-color); font-weight:800; margin-bottom:30px;">TRA CỨU VẬN ĐƠN</h2>
+
+    <div class="glass-card" style="padding: 1.5rem; display:flex; gap:10px; margin-bottom: 30px;">
+        <input @bind="keyword" class="form-control-custom" placeholder="Nhập mã vận đơn hoặc số điện thoại..." />
+        <button class="btn-primary-custom" @onclick="SearchOrder">TÌM KIẾM</button>
+    </div>
+
+    @if (isLoading)
+    {
+        <p style="text-align:center">⏳ Đang tải dữ liệu...</p>
+    }
+
+    @if (orders != null && orders.Count > 0)
+    {
+        @foreach (var order in orders)
+        {
+            <div class="glass-card" style="margin-bottom: 20px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0; color:var(--primary-color)">📦 Đơn hàng #@order.Id</h3>
+                    <p style="margin:5px 0; color:#6b7280">Người nhận: <b>@order.PhoneNumber</b></p>
+                    <p style="margin:0; color:#6b7280">
+                        Kho hiện tại:
+                        <a href="javascript:void(0)" @onclick="() => ViewHubDetail(order.PickupHubId)"
+                           style="color:var(--secondary-color); font-weight:bold; text-decoration:underline; cursor:pointer;">
+                            @(string.IsNullOrEmpty(order.PickupHubName) ? $"Hub ID {order.PickupHubId}" : order.PickupHubName)
+                        </a>
+                    </p>
+                </div>
+                <div class="@GetStatusClass(order.Status) status-badge">
+                    @GetStatusText(order.Status)
+                </div>
+            </div>
+        }
+    }
+    else if (hasSearched && !isLoading)
+    {
+        <div style="text-align:center; color:#ef4444; background:#fee2e2; padding:15px; border-radius:8px;">
+            Không tìm thấy đơn hàng nào!
+        </div>
+    }
+</div>
+
+@if (showModal)
+{
+    <div class="modal-backdrop" @onclick="CloseModal">
+        <div class="modal-content glass-card" @onclick:stopPropagation="true">
+            <h3 style="color:var(--primary-color); text-align:center; margin-top:0;">THÔNG TIN BƯU CỤC</h3>
+
+            @if (selectedHub != null)
+            {
+                <div style="margin-top:20px; font-size:16px;">
+                    <p>🏢 <b>Tên kho:</b> @selectedHub.Name</p>
+                    <p>📍 <b>Địa chỉ:</b> @selectedHub.Address</p>
+                    <p>⏰ <b>Giờ mở cửa:</b> @selectedHub.OpeningHours - @selectedHub.ClosingHours</p>
+                    <p>📞 <b>Trạng thái:</b> @selectedHub.Status</p>
+                </div>
+            }
+            else
+            {
+                <p>Đang tải thông tin...</p>
+            }
+
+            <button class="btn-primary-custom" style="width:100%; margin-top:20px; background:#6b7280;" @onclick="CloseModal">Đóng</button>
+        </div>
+    </div>
+}
+
+<style>
+    /* CSS cho Modal */
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @@keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+@code {
+    private string keyword;
+    private List<OrderDto> orders;
+    private bool isLoading = false;
+    private bool hasSearched = false;
+
+    // Biến cho Modal
+    private bool showModal = false;
+    private PickupHubDto selectedHub;
+
+    // --- 1. CHẶN NGAY TỪ CỬA (Khi vừa vào trang) ---
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await LocalStorage.GetItemAsync<string>("authToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            // Nếu không có vé (token) -> Mời về trang đăng nhập
+            Nav.NavigateTo("/login");
+        }
+    }
+
+    // --- 2. HÀM TÌM KIẾM ---
+    private async Task SearchOrder()
+    {
+        if (string.IsNullOrWhiteSpace(keyword)) return;
+        isLoading = true; hasSearched = true; orders = null;
+        try
+        {
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+
+            // Check lại lần nữa cho chắc
+            if (string.IsNullOrEmpty(token))
+            {
+                Nav.NavigateTo("/login");
+                return;
+            }
+
+            // Gắn token vào để Backend cho qua cửa
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var url = $"api/Order/tracking?keyword={keyword}";
+
+            // Dùng GetAsync để check được mã lỗi
+            var response = await Http.GetAsync(url);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized) // Lỗi 401
+            {
+                // Token hết hạn hoặc không hợp lệ -> Về trang login
+                await LocalStorage.RemoveItemAsync("authToken");
+                Nav.NavigateTo("/login");
+                return;
+            }
+
+            if (response.IsSuccessStatusCode)
+            {
+                orders = await response.Content.ReadFromJsonAsync<List<OrderDto>>();
+            }
+            else
+            {
+                orders = new List<OrderDto>();
+            }
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); orders = new List<OrderDto>(); }
+        finally { isLoading = false; }
+    }
+
+    // ... Các hàm ViewHubDetail, CloseModal, GetStatusClass giữ nguyên ...
+    private async Task ViewHubDetail(int hubId)
+    {
+        selectedHub = null;
+        showModal = true;
+        try
+        {
+            // API này cũng cần token nếu PickupHubController có [Authorize]
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            selectedHub = await Http.GetFromJsonAsync<PickupHubDto>($"api/PickupHub/{hubId}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Lỗi lấy thông tin kho: " + ex.Message);
+        }
+    }
+
+    private void CloseModal() => showModal = false;
+    private string GetStatusClass(string s) => s == "Delivered" ? "status-success" : (s == "DangVanChuyen" ? "status-shipping" : "status-pending");
+    private string GetStatusText(string s) => s == "Pending" ? "⏳ Đang chờ xử lý" : (s == "DangVanChuyen" ? "🚚 Đang vận chuyển" : (s == "Delivered" ? "✅ Giao thành công" : s));
+}
