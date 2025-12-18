@@ -60,3 +60,12 @@
     align-items: center;
     justify-content: center;
 }
+@media (max-width: 768px) {
+    .login-box {
+        width: 90%;
+    }
+
+    .page-title {
+        font-size: 42px;
+    }
+}

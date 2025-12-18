@@ -1178,3 +1178,12 @@ a[b-5t3fhlf0r1] {
     align-items: center;
     justify-content: center;
 }
+@media (max-width: 768px) {
+    .login-box[b-qtykk89ww4] {
+        width: 90%;
+    }
+
+    .page-title[b-qtykk89ww4] {
+        font-size: 42px;
+    }
+}
