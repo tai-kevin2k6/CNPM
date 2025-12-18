@@ -9,7 +9,7 @@
 }
 .page[b-raz5ou31td] {
     min-height: 100vh;
-    background: #123e67;
+    background: #124171;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,21 +29,5 @@ a[b-raz5ou31td] {
     color: var(--bs-link-color);
     text-decoration: underline;
 }
-.user-icon[b-raz5ou31td] {
-    text-align: center;
-    font-size: 60px;
-}
-.user-icon img[b-raz5ou31td] {
-    width: 7.5rem;
-    height: 7.5rem;
-    object-fit: contain;
-}
-.login-box[b-raz5ou31td] {
-    width: 700px;
-    height: 600px;
-    background: #8fa0b0;
-    border-radius: 40px;
-    padding: 40px 50px;
-    box-sizing: border-box;
-}
+
 
