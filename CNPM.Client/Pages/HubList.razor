@@ -1,0 +1,255 @@
+﻿@page "/danh-sach-hub"
+@using System.Net.Http.Json
+@inject HttpClient Http
+@inject NavigationManager Nav
+
+<div class="container-custom">
+    <div class="header-section">
+        <h2 class="page-title">Xem điểm nhận hàng</h2>
+        <p class="sub-title">Tìm điểm gửi/nhận hàng gần bạn nhất</p>
+    </div>
+
+    @if (hubs == null)
+    {
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Đang tải danh sách...</p>
+        </div>
+    }
+    else if (hubs.Count == 0)
+    {
+        <div class="empty-state">
+            <p>Hiện chưa có điểm nhận hàng nào trong hệ thống.</p>
+        </div>
+    }
+    else
+    {
+        <div class="hub-grid">
+            @foreach (var hub in hubs)
+            {
+                <div class="hub-card">
+                    <div class="card-header">
+                        <span class="hub-icon">🏢</span>
+                        <h3 class="hub-name">@hub.Name</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="info-row">
+                            <span class="icon">📍</span>
+                            <span class="text">@hub.Address</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="icon">⏰</span>
+                            <span class="text">@hub.OpeningHours - @hub.ClosingHours</span>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <span class="status-badge @GetStatusClass(hub.Status)">
+                            @hub.Status
+                        </span>
+                        <button class="btn-detail">Xem bản đồ</button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .container-custom {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .header-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .page-title {
+        color: #0f3b66;
+        font-weight: 800;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .sub-title {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    /* Grid Layout */
+    .hub-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    /* Card Style */
+    .hub-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #eee;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .hub-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+    .card-header {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .hub-icon {
+        font-size: 1.5rem;
+    }
+
+    .hub-name {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .card-body {
+        padding: 20px;
+        flex-grow: 1;
+    }
+
+    .info-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+        color: #555;
+        font-size: 0.95rem;
+    }
+
+    .card-footer {
+        padding: 15px 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Status Badges */
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .status-active {
+        background-color: #d1fae5;
+        color: #059669;
+    }
+    /* Xanh lá */
+    .status-pending {
+        background-color: #fef3c7;
+        color: #d97706;
+    }
+    /* Vàng cam */
+    .status-closed {
+        background-color: #fee2e2;
+        color: #dc2626;
+    }
+    /* Đỏ */
+
+    .btn-detail {
+        border: none;
+        background: none;
+        color: #0f3b66;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+
+        .btn-detail:hover {
+            text-decoration: underline;
+        }
+
+    /* Loading */
+    .loading-state {
+        text-align: center;
+        padding: 50px;
+        color: #666;
+    }
+
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #0f3b66;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 15px;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+@code {
+    // Class DTO để hứng dữ liệu từ API
+    public class PickupHubDetailDto
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string OpeningHours { get; set; }
+        public string ClosingHours { get; set; }
+        public string Status { get; set; } // Ví dụ: "Active", "Pending", "Closed"
+    }
+
+    private List<PickupHubDetailDto> hubs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Gọi API: Đảm bảo đường dẫn khớp với Controller của bạn
+            // Controller bạn gửi là [HttpGet("all")] -> api/hubs/all (nếu controller tên HubsController)
+            hubs = await Http.GetFromJsonAsync<List<PickupHubDetailDto>>("api/PickupHub/all");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Lỗi tải danh sách: {ex.Message}");
+            hubs = new List<PickupHubDetailDto>(); // Khởi tạo list rỗng để không bị lỗi null
+        }
+    }
+
+    // Helper đổi màu CSS dựa trên status
+    private string GetStatusClass(string status)
+    {
+        if (string.IsNullOrEmpty(status)) return "";
+
+        return status.ToLower() switch
+        {
+            "active" or "hoạt động" => "status-active",
+            "pending" or "chờ duyệt" => "status-pending",
+            "closed" or "đóng cửa" => "status-closed",
+            _ => "status-pending"
+        };
+    }
+}
