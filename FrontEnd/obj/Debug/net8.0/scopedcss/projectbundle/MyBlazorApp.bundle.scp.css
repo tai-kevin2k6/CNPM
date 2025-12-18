@@ -1,4 +1,4 @@
-/* /Components/Layout/LoginHomeLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/LoginHomeLayout.razor.rz.scp.css */
 /* ĐÈ NỀN RIÊNG CHO TRANG DÙNG LAYOUT NÀY */
 .layout-bg[b-8rsmks82p6] {
     min-height: 100vh;
@@ -225,7 +225,7 @@ main[b-8rsmks82p6] {
     height: 100px;
     background-color: white;
 }
-/* /Components/Layout/LoginLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/LoginLayout.razor.rz.scp.css */
 .me-auto[b-raz5ou31td] {
     position: absolute;
     top: 50px;
@@ -275,7 +275,7 @@ a[b-raz5ou31td] {
     box-sizing: border-box;
 }
 
-/* /Components/Layout/MainLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
 /* .top-row {
     display: flex;
     align-items: center;
@@ -430,7 +430,7 @@ main[b-8h0dmotat2] {
         text-decoration: underline;
     }
     
-/* /Components/Layout/NavMenu.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-wa7oawb2kj] {
     appearance: none;
     cursor: pointer;
@@ -536,7 +536,7 @@ main[b-8h0dmotat2] {
         overflow-y: auto;
     }
 }
-/* /Components/Layout/SearchLayout.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Layout/SearchLayout.razor.rz.scp.css */
 .me-auto[b-lk65s99f9o] {
     position: absolute;
     top: 50px;
@@ -587,7 +587,7 @@ a[b-lk65s99f9o] {
     padding: 40px 50px;
     box-sizing: border-box;
 }
-/* /Components/Pages/Dang-ky-thanh-diem-nhan-hang.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Dang-ky-thanh-diem-nhan-hang.razor.rz.scp.css */
 /* Khung chứa 6 input */
 .input-container[b-qn1smql5ql] {
     display: grid;
@@ -673,7 +673,7 @@ a[b-lk65s99f9o] {
     }
 
 </style[b-qn1smql5ql] >
-/* /Components/Pages/Home.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Home.razor.rz.scp.css */
 .hero[b-huq88x9v2b] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -697,7 +697,7 @@ a[b-lk65s99f9o] {
     text-transform: uppercase;
     font-weight: bold;
 }
-/* /Components/Pages/Login.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Login.razor.rz.scp.css */
 /* bọc toàn màn hình (trừ sidebar) */
 .login-wrapper[b-8jzusy9o0u] {
     height: calc(100vh - 56px); /* trừ top bar */
@@ -760,7 +760,7 @@ input[b-8jzusy9o0u] {
     margin: 0 auto;
 
 }
-/* /Components/Pages/LoginHome.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/LoginHome.razor.rz.scp.css */
 .hero[b-3inmui9vzp] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -858,7 +858,7 @@ input[b-8jzusy9o0u] {
     font-size: 16px;
     font-weight: 600
 }
-/* /Components/Pages/Loginhome1.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Loginhome1.razor.rz.scp.css */
 .hero[b-fcozzsfmcp] {
     position: relative;
     height: 100vh; /* full màn hình */
@@ -942,7 +942,7 @@ input[b-8jzusy9o0u] {
     font-size: 16px;
     font-weight: 600
 }
-/* /Components/Pages/Register.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Register.razor.rz.scp.css */
 .title[b-5t3fhlf0r1] {
     font-size: 50px; /* làm chữ to */
     font-weight: 700; /* in đậm */
@@ -993,12 +993,14 @@ a[b-5t3fhlf0r1] {
 .textA[b-5t3fhlf0r1]{
     margin-left: 30px;
 }
-/* /Components/Pages/tra-cuu-diem-nhan-hang.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/tra-cuu-diem-nhan-hang.razor.rz.scp.css */
 /* ===== RESET ẢNH HƯỞNG LAYOUT CHA ===== */
 :host[b-rywv9i4u5c] {
     display: block;
     width: 100%;
 }
+
+
 .page-wrapper[b-rywv9i4u5c] {
     width: 100%;
     min-height: 100vh;
@@ -1113,49 +1115,59 @@ a[b-5t3fhlf0r1] {
     line-height: 1;
 }
 
-/* /Components/Pages/Tra-cuu-don-hang.razor.rz.scp.css */
+/* _content/MyBlazorApp/Components/Pages/Tra-cuu-don-hang.razor.rz.scp.css */
 .login-box[b-qtykk89ww4] {
-    width: 700px;
-    height: 300px;
-    background: #8fa0b0;
+    width: 800px;
+    height: 420px;
+    background: #a7b4c1;
     border-radius: 40px;
     padding: 40px 50px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* 🔥 căn giữa ngang */
+    justify-content: center; 
 }
 .row[b-qtykk89ww4] {
-    display: contents;
+    width: 100%;
+    display: flex;
+    justify-content: center;  /* 🔥 input ra giữa */
+    margin: 20px 0;
 }
 .Text[b-qtykk89ww4] {
     text-align: center;
-    font-size: 60px;
+    font-size: 50px;
     font-weight: 700;                /* chữ đậm */
-    color: black;                    /* màu đen */
-    margin-bottom: 16px;
+    color: rgb(255, 255, 255);                    /* màu đen */
+    margin-bottom: 38px;
 }
 .row input[b-qtykk89ww4] {
     width: 100%;
-    padding: 10px 14px;
+    max-width: 400px;        /* 🔥 không quá to trên màn lớn */
+    height: 64px;
 
-    background-color: rgba(255, 255, 255, 0.7); /* trắng mờ */
-    border: 2px solid #000;          /* viền đen */
-    border-radius: 8px;              /* bo góc */
+    padding: 0 24px;
+    text-align: left;
 
-    font-size: 16px;
-    outline: none;
+    background: white;
+    border: none;
+    border-radius: 28px;
+
+    font-size: 20px;
 }
 .row input:focus[b-qtykk89ww4] {
     background-color: white;
     border-color: #0f3b66;           /* xanh đậm khi focus */
 }
 .btn[b-qtykk89ww4] {
-    width: 120px;
-    height: 50px;
+    width: 140px;
+    height:60px;
     margin-top: 20px;
-    margin-left: 220px;
-    background-color: #0f3b66; /* xanh */
-    color: white;
-    border: 1px solid black;
-    border-radius: 6px;
+   
+    background-color: #c2c8cf; /* xanh */
+    color: rgba(17, 16, 16, 0.881);
+    border: 1px solid rgba(239, 231, 231, 0.808);
+    border-radius: 25px;
 
     font-size: 18px;
     font-weight: bold;
@@ -1163,5 +1175,6 @@ a[b-5t3fhlf0r1] {
     cursor: pointer;
 
     display: flex;
+    align-items: center;
     justify-content: center;
 }
