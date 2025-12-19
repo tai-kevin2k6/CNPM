@@ -1,55 +1,46 @@
 ﻿@page "/danh-sach-hub"
 @using System.Net.Http.Json
 @inject HttpClient Http
-@inject NavigationManager Nav
 
 <div class="container-custom">
-    <div class="header-section">
-        <h2 class="page-title">Xem điểm nhận hàng</h2>
-        <p class="sub-title">Tìm điểm gửi/nhận hàng gần bạn nhất</p>
-    </div>
+    <h2 class="page-title">Danh sách điểm nhận hàng</h2>
+    <p class="sub-title">Nhấn vào tên điểm để xem chi tiết</p>
 
     @if (hubs == null)
     {
-        <div class="loading-state">
-            <div class="spinner"></div>
-            <p>Đang tải danh sách...</p>
-        </div>
-    }
-    else if (hubs.Count == 0)
-    {
-        <div class="empty-state">
-            <p>Hiện chưa có điểm nhận hàng nào trong hệ thống.</p>
-        </div>
+        <p>Đang tải...</p>
     }
     else
     {
-        <div class="hub-grid">
+        <div class="hub-list">
             @foreach (var hub in hubs)
             {
-                <div class="hub-card">
-                    <div class="card-header">
-                        <span class="hub-icon">🏢</span>
-                        <h3 class="hub-name">@hub.Name</h3>
-                    </div>
+                <div class="hub-item @(hub.IsExpanded ? "expanded" : "")">
+                    <div class="hub-header" @onclick="() => ToggleDetail(hub)">
+                        <span class="hub-name">@hub.Name</span>
 
-                    <div class="card-body">
-                        <div class="info-row">
-                            <span class="icon">📍</span>
-                            <span class="text">@hub.Address</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="icon">⏰</span>
-                            <span class="text">@hub.OpeningHours - @hub.ClosingHours</span>
-                        </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <span class="status-badge @GetStatusClass(hub.Status)">
-                            @hub.Status
+                        <span class="arrow-icon">
+                            @(hub.IsExpanded ? "▲" : "▼")
                         </span>
-                        @* <button class="btn-detail">Xem bản đồ</button> *@
                     </div>
+
+                    @if (hub.IsExpanded)
+                    {
+                        <div class="hub-body">
+                            <div class="detail-row">
+                                <strong>Địa chỉ:</strong> <span>@hub.Address</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Giờ mở cửa:</strong> <span>@hub.OpeningHours - @hub.ClosingHours</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Trạng thái:</strong>
+                                <span class="status-badge @GetStatusClass(hub.Status)">
+                                    @GetStatusLabel(hub.Status)
+                                </span>
+                            </div>
+                        </div>
+                    }
                 </div>
             }
         </div>
@@ -57,199 +48,202 @@
 </div>
 
 <style>
-    .container-custom {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 40px 20px;
+    /* --- SỬA LỖI Ở ĐÂY --- */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        line-height: 1;
+        white-space: nowrap;
+        /* QUAN TRỌNG: Ngăn không cho flexbox kéo dãn chiều rộng */
+        flex: none;
+        width: fit-content;
     }
 
-    .header-section {
-        text-align: center;
-        margin-bottom: 40px;
+    /* Các trạng thái cụ thể */
+    .status-active {
+        background-color: #d1fae5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+    }
+
+    .status-pending {
+        background-color: #ffedd5;
+        color: #c2410c;
+        border: 1px solid #fed7aa;
+    }
+
+    .status-closed {
+        background-color: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+    }
+
+    .status-badge::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        margin-right: 6px;
+        background-color: currentColor;
+        opacity: 0.7;
+    }
+
+    /* --- CÁC STYLE KHÁC GIỮ NGUYÊN --- */
+    .container-custom {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-family: sans-serif;
     }
 
     .page-title {
         color: #0f3b66;
-        font-weight: 800;
-        font-size: 2rem;
-        margin-bottom: 10px;
+        text-align: center;
     }
 
     .sub-title {
+        text-align: center;
         color: #666;
-        font-size: 1.1rem;
+        margin-bottom: 30px;
+        font-style: italic;
     }
 
-    /* Grid Layout */
-    .hub-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-    }
-
-    /* Card Style */
-    .hub-card {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        transition: transform 0.3s, box-shadow 0.3s;
-        border: 1px solid #eee;
+    .hub-item {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 10px;
         overflow: hidden;
-        display: flex;
-        flex-direction: column;
+        background: white;
+        transition: all 0.3s;
     }
 
-        .hub-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        .hub-item.expanded {
+            border-color: #0f3b66;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-    .card-header {
-        padding: 20px;
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .hub-icon {
-        font-size: 1.5rem;
-    }
-
-    .hub-name {
-        margin: 0;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #333;
-    }
-
-    .card-body {
-        padding: 20px;
-        flex-grow: 1;
-    }
-
-    .info-row {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 12px;
-        color: #555;
-        font-size: 0.95rem;
-    }
-
-    .card-footer {
+    .hub-header {
         padding: 15px 20px;
-        border-top: 1px solid #eee;
+        background-color: #f8f9fa;
+        cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        font-weight: bold;
+        color: #333;
     }
 
-    /* Status Badges */
-    .status-badge {
-        padding: 5px 12px;
-        border-radius: 20px;
+        .hub-header:hover {
+            background-color: #e9ecef;
+            color: #0f3b66;
+        }
+
+    .hub-name {
+        font-size: 1.1rem;
+    }
+
+    .arrow-icon {
+        color: #999;
         font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
     }
 
-    .status-active {
-        background-color: #d1fae5;
-        color: #059669;
-    }
-    /* Xanh lá */
-    .status-pending {
-        background-color: #fef3c7;
-        color: #d97706;
-    }
-    /* Vàng cam */
-    .status-closed {
-        background-color: #fee2e2;
-        color: #dc2626;
-    }
-    /* Đỏ */
-
-    .btn-detail {
-        border: none;
-        background: none;
-        color: #0f3b66;
-        font-weight: 600;
-        cursor: pointer;
-        font-size: 0.9rem;
+    .hub-body {
+        padding: 20px;
+        background-color: white;
+        border-top: 1px solid #eee;
+        animation: slideDown 0.3s ease-out;
     }
 
-        .btn-detail:hover {
-            text-decoration: underline;
+    .detail-row {
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+        display: flex; /* Flex container */
+        align-items: center; /* Căn giữa theo chiều dọc */
+    }
+
+        .detail-row strong {
+            width: 120px;
+            color: #555;
         }
 
-    /* Loading */
-    .loading-state {
-        text-align: center;
-        padding: 50px;
-        color: #666;
-    }
-
-    .spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #0f3b66;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 15px;
-    }
-
-    @@keyframes spin {
-        0% {
-            transform: rotate(0deg);
+        /* Đây là nguyên nhân cũ gây lỗi, nhưng class .status-badge đã override lại bằng flex: none */
+        .detail-row span {
+            flex: none;
+            color: #333;
         }
 
-        100% {
-            transform: rotate(360deg);
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
     }
 </style>
 
 @code {
-    // Class DTO để hứng dữ liệu từ API
-    public class PickupHubDetailDto
+    public class PickupHubDto
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public string OwnerName { get; set; }
         public string OpeningHours { get; set; }
         public string ClosingHours { get; set; }
-        public string Status { get; set; } // Ví dụ: "Active", "Pending", "Closed"
+        public string Status { get; set; }
+        public bool IsExpanded { get; set; } = false;
     }
 
-    private List<PickupHubDetailDto> hubs;
+    private List<PickupHubDto> hubs;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            // Gọi API: Đảm bảo đường dẫn khớp với Controller của bạn
-            // Controller bạn gửi là [HttpGet("all")] -> api/hubs/all (nếu controller tên HubsController)
-            hubs = await Http.GetFromJsonAsync<List<PickupHubDetailDto>>("api/PickupHub/all");
+            hubs = await Http.GetFromJsonAsync<List<PickupHubDto>>("api/PickupHub/all");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Lỗi tải danh sách: {ex.Message}");
-            hubs = new List<PickupHubDetailDto>(); // Khởi tạo list rỗng để không bị lỗi null
+            hubs = new List<PickupHubDto>();
         }
     }
 
-    // Helper đổi màu CSS dựa trên status
+    private void ToggleDetail(PickupHubDto hub)
+    {
+        hub.IsExpanded = !hub.IsExpanded;
+    }
+
     private string GetStatusClass(string status)
     {
-        if (string.IsNullOrEmpty(status)) return "";
-
-        return status.ToLower() switch
+        if (string.IsNullOrEmpty(status)) return "status-closed";
+        return status.ToLower().Trim() switch
         {
-            "active" or "hoạt động" => "status-active",
-            "pending" or "chờ duyệt" => "status-pending",
-            "closed" or "đóng cửa" => "status-closed",
-            _ => "status-pending"
+            "active" => "status-active",
+            "pending" => "status-pending",
+            "closed" => "status-closed",
+            _ => "status-closed"
+        };
+    }
+
+    private string GetStatusLabel(string status)
+    {
+        if (string.IsNullOrEmpty(status)) return "Không xác định";
+        return status.ToLower().Trim() switch
+        {
+            "active" => "Đang hoạt động",
+            "pending" => "Chờ phê duyệt",
+            "closed" => "Đóng cửa/Ngừng",
+            _ => status
         };
     }
 }
