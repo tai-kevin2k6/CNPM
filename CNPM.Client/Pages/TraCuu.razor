@@ -152,6 +152,26 @@
         animation: slideDown 0.3s ease-out;
     }
 
+    .status-intransit {
+        background-color: #dbeafe; /* Xanh dương nhạt */
+        color: #1e40af; /* Chữ xanh đậm */
+        border: 1px solid #bfdbfe;
+    }
+
+    /* Màu Vàng cam: Hàng đã đến kho/Chờ lấy (ready) */
+    .status-ready {
+        background-color: #fef9c3; /* Vàng nhạt */
+        color: #854d0e; /* Chữ vàng nâu */
+        border: 1px solid #fde047;
+    }
+
+    /* Màu Xanh lá: Đã lấy hàng/Hoàn thành (pickedup) */
+    .status-pickedup {
+        background-color: #dcfce7; /* Xanh lá nhạt */
+        color: #166534; /* Chữ xanh đậm */
+        border: 1px solid #86efac;
+    }
+
     @@keyframes slideDown {
         from {
             transform: translateY(-50px);
@@ -279,6 +299,6 @@
     }
 
     private void CloseModal() => showModal = false;
-    private string GetStatusClass(string s) => s == "Delivered" ? "status-success" : (s == "DangVanChuyen" ? "status-shipping" : "status-pending");
-    private string GetStatusText(string s) => s == "Pending" ? "⏳ Đang chờ xử lý" : (s == "DangVanChuyen" ? "🚚 Đang vận chuyển" : (s == "Delivered" ? "✅ Giao thành công" : s));
+    private string GetStatusClass(string s) => s == "pickedup" ? "status-success" : (s == "ready" ? "status-shipping" : "status-pending");
+    private string GetStatusText(string s) => s == "intransit" ? "🚚 Đang chờ xử lý" : (s == "ready" ? "⏳ Chờ lấy hàng" : (s == "pickedup" ? "✅ Giao thành công" : s));
 }

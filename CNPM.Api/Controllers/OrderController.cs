@@ -40,7 +40,6 @@ namespace CNPM.Controllers
             if (string.IsNullOrWhiteSpace(keyword))
                 return BadRequest("Vui lòng nhập từ khóa tìm kiếm.");
 
-            // 1. Join bảng Order với bảng PickupHub để lấy tên
             var query = from o in _context.Orders
                         join h in _context.PickupHubs on o.PickupHubId equals h.Id
                         select new
@@ -49,7 +48,7 @@ namespace CNPM.Controllers
                             o.PickupHubId,
                             o.Status,
                             o.PhoneNumber,
-                            PickupHubName = h.Name // Lấy thêm tên kho
+                            PickupHubName = h.Name
                         };
 
             // 2. Lọc dữ liệu

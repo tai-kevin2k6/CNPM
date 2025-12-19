@@ -1,6 +1,5 @@
 ﻿namespace CNPM.DTOs
 {
-    // DTO cho đăng ký (US01)
     public class RegisterRequest
     {
         public string PhoneNumber { get; set; }
@@ -9,7 +8,6 @@
         public string Role { get; set; }
     }
 
-    // DTO cho đăng nhập (US01)
     public class LoginRequest
     {
         public string PhoneNumber { get; set; }
