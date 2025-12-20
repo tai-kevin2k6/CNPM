@@ -6,7 +6,7 @@
 
 <div class="page">
     <nav class="custom-navbar">
-        <a href="/" class="brand-logo">📦Home</a>
+        <a href="/" class="brand-logo">Home</a>
 
         <div class="nav-links">
             @if (!isLoggedIn)
@@ -136,7 +136,7 @@
         isLoggedIn = false;
         userRole = "";
         userName = "";
-        Nav.NavigateTo("/login", forceLoad: true);
+        Nav.NavigateTo("/", forceLoad: true);
     }
 
     private void ParseTokenInfo(string token)

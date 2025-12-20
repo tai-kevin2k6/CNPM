@@ -6,17 +6,20 @@
 @inject ILocalStorageService LocalStorage
 
 <div class="login-page-bg">
-    <div class="glass-card" style="width: 100%; max-width: 400px;">
+    <div class="glass-card" style="width: 100%; max-width: 600px;">
+        <div class="login-icon-wrapper">
+            <img src="/images/user-icon.png" alt="User Icon" class="login-icon" />
+        </div>
         <h2 style="text-align:center; margin-bottom: 1.5rem; color: var(--primary-color); font-weight: 800;">ĐĂNG NHẬP</h2>
 
         <div style="margin-bottom: 15px;">
             <label style="font-weight:600; display:block; margin-bottom:5px;">Số điện thoại</label>
-            <input @bind="loginModel.PhoneNumber" class="form-control-custom" placeholder="09xxxxxx" />
+            <input @bind="loginModel.PhoneNumber" class="form-control-custom" placeholder="Nhập số điện thoại" />
         </div>
 
         <div style="margin-bottom: 25px;">
-            <label style="font-weight:600; display:block; margin-bottom:5px;">Mật khẩu</label>
-            <input type="password" @bind="loginModel.Password" class="form-control-custom" placeholder="••••••" />
+            <label style="font-weight:600; display:block; margin-bottom:5px; font-size: 16px;">Mật khẩu</label>
+            <input type="password" @bind="loginModel.Password" class="form-control-custom" placeholder="Nhập mật khẩu" />
         </div>
 
         <button class="btn-primary-custom" style="width:100%" @onclick="HandleLogin">ĐĂNG NHẬP</button>
@@ -35,12 +38,30 @@
 </div>
 
 <style>
+    /*icon*/
+    .login-icon-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .login-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.6);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
     .login-page-bg {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: radial-gradient(circle at top right, #2563eb, transparent 40%), radial-gradient(circle at bottom left, #fbbf24, transparent 40%), #f3f4f6;
+        background: linear-gradient( to bottom, #2563eb 0%, #60a5fa 40%, #ffffff 100% );
     }
 </style>
 

@@ -4,11 +4,14 @@
 @inject NavigationManager Nav
 
 <div class="login-page-bg">
-    <div class="glass-card" style="width: 100%; max-width: 450px;">
-        <h2 style="text-align:center; margin-bottom: 1.5rem; color: var(--primary-color); font-weight: 800;">ĐĂNG KÝ TÀI KHOẢN</h2>
+    <div class="glass-card" style="width: 100%; max-width: 750px;">
+        <div class="login-icon-wrapper">
+            <img src="/images/user-icon.png" alt="User Icon" class="login-icon" />
+        </div>
+        <h2 style="text-align:center; margin-bottom: 1.5rem; color: var(--primary-color); font-weight: 800; font-size: 25px;">ĐĂNG KÝ TÀI KHOẢN</h2>
 
         <div style="margin-bottom: 15px;">
-            <label style="font-weight:600; display:block; margin-bottom:5px;">Họ và tên</label>
+            <label style="font-weight:600; display:block; margin-bottom:5px; border-radius: 16px;">Họ và tên</label>
             <input @bind="regModel.FullName" class="form-control-custom" placeholder="Ví dụ: Nguyễn Văn A" />
         </div>
 
@@ -46,14 +49,30 @@
 </div>
 
 <style>
+    /*icon*/
+    .login-icon-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .login-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.6);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
     /* Dùng chung style nền với trang Login để đồng bộ */
     .login-page-bg {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: radial-gradient(circle at top right, #2563eb, transparent 40%), radial-gradient(circle at bottom left, #fbbf24, transparent 40%), #f3f4f6;
-        padding: 20px; /* Thêm padding để trên điện thoại không bị sát lề */
+        background: linear-gradient( to bottom, #2563eb 0%, #60a5fa 40%, #ffffff 100% );
     }
 </style>
 

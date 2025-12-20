@@ -9,9 +9,19 @@
 <div class="container" style="max-width: 800px; margin: 50px auto; padding: 20px;">
     <h2 style="text-align:center; color:var(--primary-color); font-weight:800; margin-bottom:30px;">TRA CỨU VẬN ĐƠN</h2>
 
-    <div class="glass-card" style="padding: 1.5rem; display:flex; gap:10px; margin-bottom: 30px;">
-        <input @bind="keyword" class="form-control-custom" placeholder="Nhập mã vận đơn hoặc số điện thoại..." />
-        <button class="btn-primary-custom" @onclick="SearchOrder">TÌM KIẾM</button>
+    <div class="glass-card" style="padding: 1.5rem; display:flex; flex-direction:column; gap:10px; margin-bottom: 30px;">
+        <div style="display:flex; gap:10px;">
+            <input @bind="keyword" class="form-control-custom" placeholder="Nhập mã vận đơn hoặc số điện thoại..." />
+            <button class="btn-primary-custom" @onclick="SearchOrder">TÌM KIẾM</button>
+        </div>
+
+        @* --- PHẦN HIỂN THỊ LỖI MỚI THÊM --- *@
+        @if (!string.IsNullOrEmpty(searchError))
+        {
+            <div style="color: #dc3545; background-color: #f8d7da; padding: 10px; border-radius: 8px; border: 1px solid #f5c6cb; text-align: center;">
+                ⚠️ @searchError
+            </div>
+        }
     </div>
 
     @if (isLoading)
@@ -41,7 +51,7 @@
             </div>
         }
     }
-    else if (hasSearched && !isLoading)
+    else if (hasSearched && !isLoading && string.IsNullOrEmpty(searchError))
     {
         <div style="text-align:center; color:#ef4444; background:#fee2e2; padding:15px; border-radius:8px;">
             Không tìm thấy đơn hàng nào!
@@ -81,7 +91,6 @@
 }
 
 <style>
-
     /* --- CSS CHO BADGE TRẠNG THÁI --- */
     .status-badge {
         display: inline-flex;
@@ -153,22 +162,32 @@
     }
 
     .status-intransit {
-        background-color: #dbeafe; /* Xanh dương nhạt */
-        color: #1e40af; /* Chữ xanh đậm */
+        background-color: #dbeafe;
+        color: #1e40af;
         border: 1px solid #bfdbfe;
     }
 
-    /* Màu Vàng cam: Hàng đã đến kho/Chờ lấy (ready) */
     .status-ready {
-        background-color: #fef9c3; /* Vàng nhạt */
-        color: #854d0e; /* Chữ vàng nâu */
+        background-color: #fef9c3;
+        color: #854d0e;
         border: 1px solid #fde047;
     }
 
-    /* Màu Xanh lá: Đã lấy hàng/Hoàn thành (pickedup) */
     .status-pickedup {
-        background-color: #dcfce7; /* Xanh lá nhạt */
-        color: #166534; /* Chữ xanh đậm */
+        background-color: #dcfce7;
+        color: #166534;
+        border: 1px solid #86efac;
+    }
+
+    .status-shipping {
+        background-color: #e0f2fe;
+        color: #0369a1;
+        border: 1px solid #bae6fd;
+    }
+    /* Thêm màu cho shipping */
+    .status-success {
+        background-color: #dcfce7;
+        color: #166534;
         border: 1px solid #86efac;
     }
 
@@ -190,49 +209,55 @@
     private List<OrderDto> orders;
     private bool isLoading = false;
     private bool hasSearched = false;
+    private string searchError = ""; // --- BIẾN LƯU LỖI ---
 
-    // Biến cho Modal
     private bool showModal = false;
     private PickupHubDto selectedHub;
 
-    // --- 1. CHẶN NGAY TỪ CỬA (Khi vừa vào trang) ---
     protected override async Task OnInitializedAsync()
     {
         var token = await LocalStorage.GetItemAsync<string>("authToken");
         if (string.IsNullOrEmpty(token))
         {
-            // Nếu không có vé (token) -> Mời về trang đăng nhập
             Nav.NavigateTo("/login");
         }
     }
 
-    // --- 2. HÀM TÌM KIẾM ---
+    // --- 2. HÀM TÌM KIẾM ĐÃ SỬA ---
     private async Task SearchOrder()
     {
-        if (string.IsNullOrWhiteSpace(keyword)) return;
-        isLoading = true; hasSearched = true; orders = null;
+        // Reset trạng thái
+        searchError = "";
+        orders = null;
+        hasSearched = false;
+
+        // Validation: Kiểm tra rỗng hoặc space
+        if (string.IsNullOrWhiteSpace(keyword))
+        {
+            searchError = "Vui lòng nhập mã vận đơn hoặc số điện thoại!";
+            return;
+        }
+
+        isLoading = true;
+        hasSearched = true;
+
         try
         {
             var token = await LocalStorage.GetItemAsync<string>("authToken");
-
-            // Check lại lần nữa cho chắc
             if (string.IsNullOrEmpty(token))
             {
                 Nav.NavigateTo("/login");
                 return;
             }
 
-            // Gắn token vào để Backend cho qua cửa
             Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var url = $"api/Order/tracking?keyword={keyword}";
-
-            // Dùng GetAsync để check được mã lỗi
+            // Trim() để xóa khoảng trắng thừa 2 đầu
+            var url = $"api/Order/tracking?keyword={keyword.Trim()}";
             var response = await Http.GetAsync(url);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized) // Lỗi 401
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                // Token hết hạn hoặc không hợp lệ -> Về trang login
                 await LocalStorage.RemoveItemAsync("authToken");
                 Nav.NavigateTo("/login");
                 return;
@@ -245,34 +270,34 @@
             else
             {
                 orders = new List<OrderDto>();
+                searchError = "Không tồn tại đơn hàng."; // Báo lỗi kết nối
             }
         }
-        catch (Exception ex) { Console.WriteLine(ex.Message); orders = new List<OrderDto>(); }
-        finally { isLoading = false; }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            orders = new List<OrderDto>();
+            searchError = "Lỗi hệ thống: " + ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
 
-    // ... Các hàm ViewHubDetail, CloseModal, GetStatusClass giữ nguyên ...
     private async Task ViewHubDetail(int hubId)
     {
         selectedHub = null;
         showModal = true;
         try
         {
-            // API này cũng cần token nếu PickupHubController có [Authorize]
             var token = await LocalStorage.GetItemAsync<string>("authToken");
             Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
             selectedHub = await Http.GetFromJsonAsync<PickupHubDto>($"api/PickupHub/{hubId}");
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Lỗi lấy thông tin kho: " + ex.Message);
-        }
+        catch (Exception ex) { Console.WriteLine("Lỗi lấy thông tin kho: " + ex.Message); }
     }
 
-    // --- LOGIC MỚI CHO HUB STATUS ---
-
-    // 1. Lấy class màu sắc cho Hub
     private string GetHubStatusClass(string status)
     {
         if (string.IsNullOrEmpty(status)) return "status-closed";
@@ -285,7 +310,6 @@
         };
     }
 
-    // 2. Hiển thị tên tiếng Việt cho Hub
     private string GetHubStatusLabel(string status)
     {
         if (string.IsNullOrEmpty(status)) return "Không xác định";

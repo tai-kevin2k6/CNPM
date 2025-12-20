@@ -48,6 +48,11 @@ namespace CNPM.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
+            if (string.IsNullOrWhiteSpace(request.PhoneNumber))
+                return Unauthorized("Chưa nhập SĐT");
+            if (string.IsNullOrWhiteSpace(request.Password))
+                return Unauthorized("Chưa nhập mật khẩu");
+
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.PhoneNumber == request.PhoneNumber && u.Password == request.Password);
 

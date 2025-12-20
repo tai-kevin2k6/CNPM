@@ -14,12 +14,77 @@
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div class="loading-container">
+            <div class="dual-ring"></div>
+            <div class="loading-text">Đang tải dữ liệu...</div>
+        </div>
     </div>
+
+    <style>
+        /* 1. Căn giữa toàn màn hình tuyệt đối */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa; /* Màu nền xám nhẹ dịu mắt */
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* 2. Tạo vòng xoay */
+        .dual-ring {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+        }
+
+            .dual-ring:after {
+                content: " ";
+                display: block;
+                width: 50px;
+                height: 50px;
+                margin: 8px;
+                border-radius: 50%;
+                border: 5px solid #0d6efd; /* Màu xanh chủ đạo */
+                border-color: #0d6efd transparent #0d6efd transparent; /* Tạo hiệu ứng khuyết */
+                animation: dual-ring-spin 1.2s linear infinite;
+            }
+
+        /* 3. Chữ loading đẹp hơn */
+        .loading-text {
+            margin-top: 20px;
+            color: #6c757d;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes dual-ring-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+    </style>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
