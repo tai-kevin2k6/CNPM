@@ -27,7 +27,6 @@ namespace CNPM.Controllers
         public async Task<IActionResult> UserRegister([FromBody] RegisterRequest request)
         {
             if ((request.PhoneNumber).Length < 10) return BadRequest("SĐT phải dài hơn 10 kí tự");
-            if ((request.Password).Length < 6) return BadRequest("Mật khẩu phải dài hơn 6 kí tự");
             if (await _context.Users.AnyAsync(u => u.PhoneNumber == request.PhoneNumber))
                 return BadRequest("SĐT đã tồn tại");
 

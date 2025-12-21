@@ -223,20 +223,12 @@
         }
     }
 
-    // --- 2. HÀM TÌM KIẾM ĐÃ SỬA ---
     private async Task SearchOrder()
     {
         // Reset trạng thái
         searchError = "";
         orders = null;
         hasSearched = false;
-
-        // Validation: Kiểm tra rỗng hoặc space
-        if (string.IsNullOrWhiteSpace(keyword))
-        {
-            searchError = "Vui lòng nhập mã vận đơn hoặc số điện thoại!";
-            return;
-        }
 
         isLoading = true;
         hasSearched = true;
@@ -275,7 +267,6 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
             orders = new List<OrderDto>();
             searchError = "Lỗi hệ thống: " + ex.Message;
         }

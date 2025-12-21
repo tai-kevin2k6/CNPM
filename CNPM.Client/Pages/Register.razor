@@ -85,7 +85,7 @@
         // 1. Validate nhanh
         if (string.IsNullOrEmpty(regModel.FullName)) { errorMessage = "Vui lòng nhập họ tên!"; return; }
         if (string.IsNullOrEmpty(regModel.PhoneNumber) || regModel.PhoneNumber.Length < 10) { errorMessage = "Số điện thoại không hợp lệ!"; return; }
-        if (string.IsNullOrEmpty(regModel.Password) || regModel.Password.Length < 6) { errorMessage = "Mật khẩu quá ngắn!"; return; }
+        if (string.IsNullOrEmpty(regModel.Password)) { errorMessage = "Mật khẩu quá ngắn!"; return; }
 
         try
         {
