@@ -4,44 +4,44 @@
 @inject NavigationManager Nav
 
 <div class="login-page-bg">
-    <div class="glass-card" style="width: 100%; max-width: 750px;">
+    <div class="glass-card register-card">
         <div class="login-icon-wrapper">
             <img src="/images/user-icon.png" alt="User Icon" class="login-icon" />
         </div>
-        <h2 style="text-align:center; margin-bottom: 1.5rem; color: var(--primary-color); font-weight: 800; font-size: 25px;">ĐĂNG KÝ TÀI KHOẢN</h2>
+        <h2 class="register-title">ĐĂNG KÝ TÀI KHOẢN</h2>
 
-        <div style="margin-bottom: 15px;">
-            <label style="font-weight:600; display:block; margin-bottom:5px; border-radius: 16px;">Họ và tên</label>
+        <div class="form-group">
+            <label class="form-label">Họ và tên</label>
             <input @bind="regModel.FullName" class="form-control-custom" placeholder="Ví dụ: Nguyễn Văn A" />
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="font-weight:600; display:block; margin-bottom:5px;">Số điện thoại</label>
+        <div class="form-group">
+            <label class="form-label">Số điện thoại</label>
             <input @bind="regModel.PhoneNumber" class="form-control-custom" placeholder="Nhập SĐT (trên 10 số)..." />
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="font-weight:600; display:block; margin-bottom:5px;">Mật khẩu</label>
+        <div class="form-group">
+            <label class="form-label">Mật khẩu</label>
             <input type="password" @bind="regModel.Password" class="form-control-custom" placeholder="Mật khẩu (trên 6 ký tự)..." />
         </div>
 
-        <div style="margin-bottom: 25px;">
-            <label style="font-weight:600; display:block; margin-bottom:5px;">Vai trò</label>
-            <select @bind="regModel.Role" class="form-control-custom" style="background-color: white;">
+        <div class="form-group-lg">
+            <label class="form-label">Vai trò</label>
+            <select @bind="regModel.Role" class="form-control-custom select-custom">
                 <option value="User">Khách hàng cá nhân</option>
                 <option value="HubOwner">Chủ điểm giao nhận</option>
             </select>
         </div>
 
-        <button class="btn-primary-custom" style="width:100%" @onclick="HandleRegister">ĐĂNG KÝ NGAY</button>
+        <button class="btn-primary-custom btn-full-width" @onclick="HandleRegister">ĐĂNG KÝ NGAY</button>
 
-        <div style="text-align:center; margin-top:20px;">
-            <a href="login" style="color: var(--secondary-color); text-decoration:none;">Đã có tài khoản? <b>Đăng nhập</b></a>
+        <div class="login-link-container">
+            <a href="login" class="login-link">Đã có tài khoản? <b>Đăng nhập</b></a>
         </div>
 
         @if (!string.IsNullOrEmpty(errorMessage))
         {
-            <div style="background:#fee2e2; color:#b91c1c; padding:10px; border-radius:8px; margin-top:15px; text-align:center; font-size: 14px;">
+            <div class="alert-error">
                 @errorMessage
             </div>
         }
@@ -49,7 +49,22 @@
 </div>
 
 <style>
-    /*icon*/
+    /* --- PAGE LAYOUT & BACKGROUND --- */
+    /* Dùng chung style nền với trang Login để đồng bộ */
+    .login-page-bg {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient( to bottom, #2563eb 0%, #60a5fa 40%, #ffffff 100% );
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 750px;
+    }
+
+    /* --- ICONS --- */
     .login-icon-wrapper {
         width: 100%;
         display: flex;
@@ -66,13 +81,60 @@
         background: rgba(255, 255, 255, 0.6);
         box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
-    /* Dùng chung style nền với trang Login để đồng bộ */
-    .login-page-bg {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient( to bottom, #2563eb 0%, #60a5fa 40%, #ffffff 100% );
+
+    /* --- TYPOGRAPHY --- */
+    .register-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        font-weight: 800;
+        font-size: 25px;
+    }
+
+    /* --- FORM ELEMENTS --- */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group-lg {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        border-radius: 16px;
+    }
+
+    .select-custom {
+        background-color: white;
+    }
+
+    .btn-full-width {
+        width: 100%;
+    }
+
+    /* --- LINKS --- */
+    .login-link-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .login-link {
+        color: var(--secondary-color);
+        text-decoration: none;
+    }
+
+    /* --- ALERTS --- */
+    .alert-error {
+        background: #fee2e2;
+        color: #b91c1c;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 14px;
     }
 </style>
 

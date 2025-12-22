@@ -6,19 +6,18 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager Nav
 
-<div class="container" style="max-width: 800px; margin: 50px auto; padding: 20px;">
-    <h2 style="text-align:center; color:var(--primary-color); font-weight:800; margin-bottom:30px;">TRA CỨU VẬN ĐƠN</h2>
+<div class="container tracking-container">
+    <h2 class="page-title">TRA CỨU VẬN ĐƠN</h2>
 
-    <div class="glass-card" style="padding: 1.5rem; display:flex; flex-direction:column; gap:10px; margin-bottom: 30px;">
-        <div style="display:flex; gap:10px;">
+    <div class="glass-card search-section">
+        <div class="search-input-group">
             <input @bind="keyword" class="form-control-custom" placeholder="Nhập mã vận đơn hoặc số điện thoại..." />
             <button class="btn-primary-custom" @onclick="SearchOrder">TÌM KIẾM</button>
         </div>
 
-        @* --- PHẦN HIỂN THỊ LỖI MỚI THÊM --- *@
         @if (!string.IsNullOrEmpty(searchError))
         {
-            <div style="color: #dc3545; background-color: #f8d7da; padding: 10px; border-radius: 8px; border: 1px solid #f5c6cb; text-align: center;">
+            <div class="alert-error">
                 ⚠️ @searchError
             </div>
         }
@@ -26,21 +25,20 @@
 
     @if (isLoading)
     {
-        <p style="text-align:center">⏳ Đang tải dữ liệu...</p>
+        <p class="text-center">⏳ Đang tải dữ liệu...</p>
     }
 
     @if (orders != null && orders.Count > 0)
     {
         @foreach (var order in orders)
         {
-            <div class="glass-card" style="margin-bottom: 20px; display:flex; justify-content:space-between; align-items:center;">
+            <div class="glass-card order-card">
                 <div>
-                    <h3 style="margin:0; color:var(--primary-color)">📦 Đơn hàng #@order.Id</h3>
-                    <p style="margin:5px 0; color:#6b7280">Người nhận: <b>@order.PhoneNumber</b></p>
-                    <p style="margin:0; color:#6b7280">
+                    <h3 class="order-id">📦 Đơn hàng #@order.Id</h3>
+                    <p class="order-info">Người nhận: <b>@order.PhoneNumber</b></p>
+                    <p class="order-sub-info">
                         Kho hiện tại:
-                        <a href="javascript:void(0)" @onclick="() => ViewHubDetail(order.PickupHubId)"
-                           style="color:var(--secondary-color); font-weight:bold; text-decoration:underline; cursor:pointer;">
+                        <a href="javascript:void(0)" @onclick="() => ViewHubDetail(order.PickupHubId)" class="hub-link">
                             @(string.IsNullOrEmpty(order.PickupHubName) ? $"Hub ID {order.PickupHubId}" : order.PickupHubName)
                         </a>
                     </p>
@@ -53,7 +51,7 @@
     }
     else if (hasSearched && !isLoading && string.IsNullOrEmpty(searchError))
     {
-        <div style="text-align:center; color:#ef4444; background:#fee2e2; padding:15px; border-radius:8px;">
+        <div class="alert-not-found">
             Không tìm thấy đơn hàng nào!
         </div>
     }
@@ -63,17 +61,17 @@
 {
     <div class="modal-backdrop" @onclick="CloseModal">
         <div class="modal-content glass-card" @onclick:stopPropagation="true">
-            <h3 style="color:var(--primary-color); text-align:center; margin-top:0;">THÔNG TIN BƯU CỤC</h3>
+            <h3 class="modal-title">THÔNG TIN BƯU CỤC</h3>
 
             @if (selectedHub != null)
             {
-                <div style="margin-top:20px; font-size:16px;">
+                <div class="hub-details">
                     <p>🏢 <b>Tên kho:</b> @selectedHub.Name</p>
                     <p>📍 <b>Địa chỉ:</b> @selectedHub.Address</p>
                     <p>⏰ <b>Giờ mở cửa:</b> @selectedHub.OpeningHours - @selectedHub.ClosingHours</p>
 
-                    <div style="display: flex; align-items: center; margin-top: 10px;">
-                        <b style="margin-right: 8px;">Trạng thái:</b>
+                    <div class="hub-status-row">
+                        <b class="label-margin">Trạng thái:</b>
                         <span class="status-badge @GetHubStatusClass(selectedHub.Status)">
                             @GetHubStatusLabel(selectedHub.Status)
                         </span>
@@ -85,59 +83,93 @@
                 <p>Đang tải thông tin...</p>
             }
 
-            <button class="btn-primary-custom" style="width:100%; margin-top:20px; background:#6b7280;" @onclick="CloseModal">Đóng</button>
+            <button class="btn-primary-custom btn-close-modal" @onclick="CloseModal">Đóng</button>
         </div>
     </div>
 }
 
 <style>
-    /* --- CSS CHO BADGE TRẠNG THÁI --- */
-    .status-badge {
-        display: inline-flex;
+    /* --- LAYOUT & CONTAINER --- */
+    .tracking-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    .page-title {
+        text-align: center;
+        color: var(--primary-color);
+        font-weight: 800;
+        margin-bottom: 30px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    /* --- SEARCH SECTION --- */
+    .search-section {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .search-input-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    /* --- ALERTS --- */
+    .alert-error {
+        color: #dc3545;
+        background-color: #f8d7da;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #f5c6cb;
+        text-align: center;
+    }
+
+    .alert-not-found {
+        text-align: center;
+        color: #ef4444;
+        background: #fee2e2;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    /* --- ORDER CARD --- */
+    .order-card {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        padding: 4px 12px;
-        border-radius: 50px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-transform: capitalize;
-        line-height: 1.5;
-        white-space: nowrap;
-        width: fit-content;
-        flex: none; /* Quan trọng: chống bị kéo giãn */
     }
 
-    /* Màu sắc */
-    .status-active {
-        background-color: #d1fae5;
-        color: #047857;
-        border: 1px solid #a7f3d0;
+    .order-id {
+        margin: 0;
+        color: var(--primary-color);
     }
 
-    .status-pending {
-        background-color: #ffedd5;
-        color: #c2410c;
-        border: 1px solid #fed7aa;
+    .order-info {
+        margin: 5px 0;
+        color: #6b7280;
     }
 
-    .status-closed {
-        background-color: #fee2e2;
-        color: #b91c1c;
-        border: 1px solid #fecaca;
+    .order-sub-info {
+        margin: 0;
+        color: #6b7280;
     }
 
-    /* Chấm tròn nhỏ */
-    .status-badge::before {
-        content: "";
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        margin-right: 6px;
-        background-color: currentColor;
-        opacity: 0.7;
+    .hub-link {
+        color: var(--secondary-color);
+        font-weight: bold;
+        text-decoration: underline;
+        cursor: pointer;
     }
 
-    /* CSS cho Modal */
+    /* --- MODAL STYLES --- */
     .modal-backdrop {
         position: fixed;
         top: 0;
@@ -157,8 +189,79 @@
         border-radius: 30px;
         width: 90%;
         max-width: 400px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         animation: slideDown 0.3s ease-out;
+    }
+
+    .modal-title {
+        color: var(--primary-color);
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .hub-details {
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .hub-status-row {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .label-margin {
+        margin-right: 8px;
+    }
+
+    .btn-close-modal {
+        width: 100%;
+        margin-top: 20px;
+        background: #6b7280;
+    }
+
+    /* --- STATUS BADGES (Original CSS) --- */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        line-height: 1.5;
+        white-space: nowrap;
+        width: fit-content;
+        flex: none;
+    }
+
+        .status-badge::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 6px;
+            background-color: currentColor;
+            opacity: 0.7;
+        }
+
+    .status-active {
+        background-color: #d1fae5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+    }
+
+    .status-pending {
+        background-color: #ffedd5;
+        color: #c2410c;
+        border: 1px solid #fed7aa;
+    }
+
+    .status-closed {
+        background-color: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
     }
 
     .status-intransit {
@@ -184,7 +287,7 @@
         color: #0369a1;
         border: 1px solid #bae6fd;
     }
-    /* Thêm màu cho shipping */
+
     .status-success {
         background-color: #dcfce7;
         color: #166534;
@@ -209,7 +312,7 @@
     private List<OrderDto> orders;
     private bool isLoading = false;
     private bool hasSearched = false;
-    private string searchError = ""; // --- BIẾN LƯU LỖI ---
+    private string searchError = "";
 
     private bool showModal = false;
     private PickupHubDto selectedHub;
@@ -225,7 +328,6 @@
 
     private async Task SearchOrder()
     {
-        // Reset trạng thái
         searchError = "";
         orders = null;
         hasSearched = false;
@@ -244,7 +346,6 @@
 
             Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            // Trim() để xóa khoảng trắng thừa 2 đầu
             var url = $"api/Order/tracking?keyword={keyword.Trim()}";
             var response = await Http.GetAsync(url);
 
@@ -262,7 +363,7 @@
             else
             {
                 orders = new List<OrderDto>();
-                searchError = "Không tồn tại đơn hàng."; // Báo lỗi kết nối
+                searchError = "Không tồn tại đơn hàng.";
             }
         }
         catch (Exception ex)

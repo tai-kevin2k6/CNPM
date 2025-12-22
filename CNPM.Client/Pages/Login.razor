@@ -6,31 +6,31 @@
 @inject ILocalStorageService LocalStorage
 
 <div class="login-page-bg">
-    <div class="glass-card" style="width: 100%; max-width: 600px;">
+    <div class="glass-card login-card">
         <div class="login-icon-wrapper">
             <img src="/images/user-icon.png" alt="User Icon" class="login-icon" />
         </div>
-        <h2 style="text-align:center; margin-bottom: 1.5rem; color: var(--primary-color); font-weight: 800;">ĐĂNG NHẬP</h2>
+        <h2 class="login-title">ĐĂNG NHẬP</h2>
 
-        <div style="margin-bottom: 15px;">
-            <label style="font-weight:600; display:block; margin-bottom:5px;">Số điện thoại</label>
+        <div class="form-group">
+            <label class="form-label">Số điện thoại</label>
             <input @bind="loginModel.PhoneNumber" class="form-control-custom" placeholder="Nhập số điện thoại" />
         </div>
 
-        <div style="margin-bottom: 25px;">
-            <label style="font-weight:600; display:block; margin-bottom:5px; font-size: 16px;">Mật khẩu</label>
+        <div class="form-group-lg">
+            <label class="form-label label-lg">Mật khẩu</label>
             <input type="password" @bind="loginModel.Password" class="form-control-custom" placeholder="Nhập mật khẩu" />
         </div>
 
-        <button class="btn-primary-custom" style="width:100%" @onclick="HandleLogin">ĐĂNG NHẬP</button>
+        <button class="btn-primary-custom btn-full-width" @onclick="HandleLogin">ĐĂNG NHẬP</button>
 
-        <div style="text-align:center; margin-top:20px;">
-            <a href="register" style="color: var(--secondary-color); text-decoration:none;">Chưa có tài khoản? Đăng ký ngay</a>
+        <div class="register-link-container">
+            <a href="register" class="register-link">Chưa có tài khoản? Đăng ký ngay</a>
         </div>
 
         @if (!string.IsNullOrEmpty(errorMessage))
         {
-            <div style="background:#fee2e2; color:#b91c1c; padding:10px; border-radius:8px; margin-top:15px; text-align:left; font-size:12px; overflow-wrap: break-word;">
+            <div class="alert-error">
                 <b>Lỗi:</b> @errorMessage
             </div>
         }
@@ -38,7 +38,21 @@
 </div>
 
 <style>
-    /*icon*/
+    /* --- PAGE LAYOUT & BACKGROUND --- */
+    .login-page-bg {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient( to bottom, #2563eb 0%, #60a5fa 40%, #ffffff 100% );
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    /* --- ICONS --- */
     .login-icon-wrapper {
         width: 100%;
         display: flex;
@@ -56,12 +70,58 @@
         box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
-    .login-page-bg {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient( to bottom, #2563eb 0%, #60a5fa 40%, #ffffff 100% );
+    /* --- TYPOGRAPHY --- */
+    .login-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        font-weight: 800;
+    }
+
+    /* --- FORM ELEMENTS --- */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group-lg {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .label-lg {
+        font-size: 16px;
+    }
+
+    .btn-full-width {
+        width: 100%;
+    }
+
+    /* --- LINKS --- */
+    .register-link-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .register-link {
+        color: var(--secondary-color);
+        text-decoration: none;
+    }
+
+    /* --- ALERTS --- */
+    .alert-error {
+        background: #fee2e2;
+        color: #b91c1c;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: left;
+        font-size: 12px;
+        overflow-wrap: break-word;
     }
 </style>
 
