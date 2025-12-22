@@ -6,6 +6,7 @@
     {
         public string PhoneNumber { get; set; } // Backend dùng PhoneNumber
         public string Password { get; set; }
+        public string Password_2 { get; set; }
         public string FullName { get; set; }
         public string Role { get; set; } = "User"; // Mặc định là User
     }

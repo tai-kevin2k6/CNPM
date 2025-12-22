@@ -25,6 +25,11 @@
             <input type="password" @bind="regModel.Password" class="form-control-custom" placeholder="Mật khẩu (trên 6 ký tự)..." />
         </div>
 
+        <div class="form-group">
+            <label class="form-label">Nhập lại mật khẩu</label>
+            <input type="password" @bind="regModel.Password_2" class="form-control-custom" placeholder="Mật khẩu (trên 6 ký tự)..." />
+        </div>
+
         <div class="form-group-lg">
             <label class="form-label">Vai trò</label>
             <select @bind="regModel.Role" class="form-control-custom select-custom">
@@ -147,8 +152,8 @@
         // 1. Validate nhanh
         if (string.IsNullOrEmpty(regModel.FullName)) { errorMessage = "Vui lòng nhập họ tên!"; return; }
         if (string.IsNullOrEmpty(regModel.PhoneNumber) || regModel.PhoneNumber.Length < 10) { errorMessage = "Số điện thoại không hợp lệ!"; return; }
-        if (string.IsNullOrEmpty(regModel.Password)) { errorMessage = "Mật khẩu quá ngắn!"; return; }
-
+        if (string.IsNullOrEmpty(regModel.Password) || regModel.Password.Length < 6) { errorMessage = "Mật khẩu quá ngắn!"; return; }
+        if (regModel.Password != regModel.Password_2) { errorMessage = "Xác nhận mật khẩu không đúng!"; return; }
         try
         {
             // 2. Gọi API
