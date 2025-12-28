@@ -1,9 +1,16 @@
-﻿using CNPM.DTOs;
+﻿using CNPM.Api.Dtos;
+using CNPM.Api.Services;
+using CNPM.Api.Services.HubManage;
+using CNPM.DTOs;
 using CNPM.Entities;
 using CNPM.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using static CNPM.Api.Dtos.Reponse;
 
 namespace CNPM.Controllers
 {
@@ -13,10 +20,12 @@ namespace CNPM.Controllers
     public class OrderController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IServiceWrapper _service;
 
-        public OrderController(ApplicationDbContext context)
+        public OrderController(ApplicationDbContext context, IServiceWrapper service)
         {
             _context = context;
+            _service = service;
         }
 
         [HttpPost("create-order")]
@@ -61,6 +70,34 @@ namespace CNPM.Controllers
                 return NotFound("Không tìm thấy đơn hàng nào.");
 
             return Ok(orders);
+        }
+
+        [Authorize]
+        [HttpGet("manage-orders")]
+        public async Task<IActionResult> GetOrdersForManagement([FromQuery] OrderFilterRequest request)
+        {
+            try
+            {
+                // 1. Lấy claim ra trước
+                var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+                // 2. Kiểm tra xem có lấy được không
+                if (idClaim == null)
+                {
+                    // Nếu không tìm thấy ID trong token -> Trả về lỗi 401 hoặc 403
+                    return Unauthorized("Token không hợp lệ hoặc thiếu thông tin ID.");
+                }
+
+                // 3. Parse sang số an toàn
+                var id = int.Parse(idClaim.Value);
+
+                // --- Sau đó dùng biến 'id' này để query ---
+                return  Ok(await _service.HubManage.GetOrdersForHubOwnerAsync(id, request));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Lỗi Server: " + ex.Message);
+            }
         }
     }
 }

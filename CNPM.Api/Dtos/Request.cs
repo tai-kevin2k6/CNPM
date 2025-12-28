@@ -30,4 +30,18 @@
         public string Status { get; set; }
 
     }
+
+    public class ApproveHubRequest
+    {
+        public int HubId { get; set; }
+        public bool IsLocked { get; set; }
+        public string? Reason { get; set; }
+    }
+
+    public class ApproveUserRequest
+    {
+        public int UserId { get; set; }
+        public bool IsLocked { get; set; } // true = Khóa, false = Mở
+        public string? Reason { get; set; }
+    }
 }

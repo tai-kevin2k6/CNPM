@@ -47,8 +47,6 @@ namespace CNPM.Controllers
                 ClosingHours = request.ClosingHours,
                 Status = "Pending",
                 OwnerId = ownerIdFromToken 
-
-
             };
 
             _context.PickupHubs.Add(hub);

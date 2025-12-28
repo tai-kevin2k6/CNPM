@@ -10,4 +10,10 @@ namespace CNPM.Api.Dtos
         public string? ClosingHours { get; set; }
         public string? Status { get; set; }
     }
+
+    public class HubOptionDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }
