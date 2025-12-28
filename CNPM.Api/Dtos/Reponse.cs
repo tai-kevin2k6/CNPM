@@ -1,10 +1,13 @@
-﻿namespace CNPM.Api.Dtos
+﻿using Microsoft.AspNetCore.Http.Features;
+
+namespace CNPM.Api.Dtos
 {
     public class Reponse
     {
         // 1. Dữ liệu gửi lên (Payload)
         public class OrderFilterRequest
         {
+            public string? OrderKeyword { get; set; } = null;
             public string? HubNameKeyword { get; set; } = "all"; // Tìm kiếm theo Tên Kho
             public string? Status { get; set; } = "all";    // Lọc theo trạng thái (Ready, PickedUp...)
             public int PageIndex { get; set; } = 1;     // Trang số mấy
@@ -15,7 +18,7 @@
         public class OrderManagementDto
         {
             public int Id { get; set; }
-            public int OrderCode { get; set; }    // Mã đơn
+            public int HubId { get; set; } 
             public string HubName { get; set; }      // Tên kho đang giữ đơn này
             public string ReceiverName { get; set; }
             public string ReceiverPhone { get; set; }
@@ -23,15 +26,20 @@
         }
 
         // 3. Wrapper phân trang (để FE biết tổng số trang)
+        // 3. Wrapper phân trang (SỬA LẠI)
         public class PagedResult<T>
         {
-            public PagedResult(List<T> items, int totalRecords)
+            public List<T> Items { get; set; }
+            public int TotalRecords { get; set; }
+            public List<HubOptionDto>? HubOptions { get; set; }
+
+            // Constructor đầy đủ
+            public PagedResult(List<T> items, int totalRecords, List<HubOptionDto>? hubOptions = null)
             {
                 Items = items;
                 TotalRecords = totalRecords;
+                HubOptions = hubOptions ?? new List<HubOptionDto>();
             }
-            public List<T> Items { get; set; }
-            public int TotalRecords { get; set; }
         }
 
         // 1. DTO cho danh sách (Hiện ở bảng bên ngoài)
@@ -53,6 +61,12 @@
 
             // Thông tin người sở hữu (để Admin liên hệ nếu cần)
             public int OwnerId { get; set; }
+        }
+
+        public class HubOptionDto
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
         }
     }
 }

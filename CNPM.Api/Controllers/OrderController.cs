@@ -72,6 +72,28 @@ namespace CNPM.Controllers
             return Ok(orders);
         }
 
+        [HttpPost("update-status")] // Hoặc dùng [HttpPut]
+        public async Task<IActionResult> UpdateStatus([FromBody] UpdateOrderStatusRequest request)
+        {
+            try
+            {
+                // Kiểm tra status gửi lên có nằm trong danh sách cho phép không
+                var allowedStatuses = new[] { "pending", "ready", "pickedup", "cancelled" };
+                if (!allowedStatuses.Contains(request.NewStatus.ToLower()))
+                {
+                    return BadRequest(new { Success = false, Message = "Trạng thái không hợp lệ." });
+                }
+
+                await _service.HubManage.UpdateOrderStatusAsync(request); // Nhớ gọi đúng Service của bạn
+
+                return Ok(new { Success = true, Message = "Cập nhật trạng thái thành công." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
+        }
+
         [Authorize]
         [HttpGet("manage-orders")]
         public async Task<IActionResult> GetOrdersForManagement([FromQuery] OrderFilterRequest request)

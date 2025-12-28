@@ -34,40 +34,37 @@ namespace CNPM.Api.Services.HubManage
 
         public async Task<PagedResult<OrderManagementDto>> GetOrdersForHubOwnerAsync(int userId, OrderFilterRequest request)
         {
-            // 1. Lấy danh sách ID Hub
-            var option = await GetHubOptionsForOwnerAsync(userId);
-            var ownedHubIds = option.Select(x => x.Id).ToList();
+            // 1. Lấy danh sách Hub (để dùng cho Dropdown VÀ để lọc dữ liệu)
+            var hubOptions = await GetHubOptionsForOwnerAsync(userId);
 
-            // Nếu user không quản lý kho nào, trả về rỗng ngay để đỡ tốn resource query
+            // Lấy list ID để query
+            var ownedHubIds = hubOptions.Select(x => x.Id).ToList();
+
+            // Nếu user không quản lý kho nào
             if (!ownedHubIds.Any())
             {
-                return new PagedResult<OrderManagementDto>(new List<OrderManagementDto>(), 0);
+                // Trả về rỗng nhưng VẪN TRẢ VỀ OPTION (để dropdown không bị null)
+                return new PagedResult<OrderManagementDto>(new List<OrderManagementDto>(), 0, hubOptions);
             }
 
-            // 2. Bắt đầu query
+            // 2. Query dữ liệu (Phần này giữ nguyên logic lọc cũ của bạn)
             var query = _context.Orders
-                .Include(o => o.PickupHub) 
+                .Include(o => o.PickupHub)
                 .Include(o => o.User)
                 .Where(o => ownedHubIds.Contains(o.PickupHubId));
 
-            // 3. Lọc theo Keyword
-            //if (!string.IsNullOrEmpty(request.HubNameKeyword) && request.HubNameKeyword != "all")
-            //{
-            //    // Lưu ý: Cần xử lý trường hợp PickupHub bị null nếu database có dữ liệu rác
-            //    query = query.Where(o => o.OrderCode.Contains(request.)
-            //                          || (o.PickupHub != null && o.PickupHub.Name.Contains(request.HubNameKeyword)));
-            //}
+            if (!string.IsNullOrEmpty(request.OrderKeyword))
+                query = query.Where(o => o.Id.ToString() == request.OrderKeyword);
 
-            // 4. Lọc theo trạng thái
+            if (!string.IsNullOrEmpty(request.HubNameKeyword) && request.HubNameKeyword != "all")
+                query = query.Where(o => o.PickupHub != null && o.PickupHub.Name == request.HubNameKeyword);
+
             if (!string.IsNullOrEmpty(request.Status) && request.Status != "all")
-            {
                 query = query.Where(o => o.Status == request.Status);
-            }
 
-            // 5. Đếm tổng số bản ghi
+            // 3. Đếm & Lấy dữ liệu
             int totalRecords = await query.CountAsync();
 
-            // 6. Phân trang và Mapping
             var items = await query
                 .OrderByDescending(o => o.Id)
                 .Skip((request.PageIndex - 1) * request.PageSize)
@@ -75,21 +72,16 @@ namespace CNPM.Api.Services.HubManage
                 .Select(o => new OrderManagementDto
                 {
                     Id = o.Id,
-                    OrderCode = o.Id,
-
-                    // Lấy tên Kho
+                    HubId = o.PickupHubId,
                     HubName = o.PickupHub != null ? o.PickupHub.Name : "Chưa gán kho",
-
-                    // Logic: Nếu tìm thấy User thì lấy FullName, nếu không thì để trống hoặc hiện text khác
                     ReceiverName = o.User != null ? o.User.FullName : "Khách vãng lai",
-
                     ReceiverPhone = o.PhoneNumber,
                     Status = o.Status
                 })
                 .ToListAsync();
 
-            // 7. Trả về kết quả
-            return new PagedResult<OrderManagementDto>(items, totalRecords);
+            // 4. RETURN: Nhét cả Items, TotalRecords VÀ HubOptions vào chung 1 gói
+            return new PagedResult<OrderManagementDto>(items, totalRecords, hubOptions);
         }
         public async Task<List<HubSummaryDto>> GetPendingHubsAsync()
         {
@@ -176,6 +168,21 @@ namespace CNPM.Api.Services.HubManage
             return result > 0; // Trả về true nếu lưu thành công
         }
 
+        public async Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusRequest request)
+        {
+            // 1. Tìm đơn hàng
+            var order = await _context.Orders.FindAsync(request.OrderId);
+            if (order == null)
+            {
+                throw new Exception("Không tìm thấy đơn hàng.");
+            }
 
+            // 2. Cập nhật trạng thái
+            order.Status = request.NewStatus;
+
+            // 3. Lưu vào DB
+            _context.Orders.Update(order);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

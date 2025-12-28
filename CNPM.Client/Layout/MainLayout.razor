@@ -23,6 +23,12 @@
                 if (userRole == "HubOwner")
                 {
                     <NavLink class="nav-item-custom" href="register-hub">Đăng ký làm điểm nhận hàng</NavLink>
+                    <NavLink class="nav-item-custom" href="order-list">Danh sách đơn hàng</NavLink>
+                }
+                else if (userRole == "admin")
+                {
+                    <NavLink class="nav-item-custom" href="duyet-diem">Duyệt điểm</NavLink>
+                    <NavLink class="nav-item-custom" href="dashboard">Dashboard</NavLink>
                 }
                 else
                 {
@@ -35,6 +41,10 @@
                     @if (userRole == "HubOwner")
                     {
                         <span>Chào Hub, @userName!</span>
+                    }
+                    else if (userRole == "admin")
+                    {
+                        <span>Chào ADMIN!</span>
                     }
                     else
                     {

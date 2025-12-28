@@ -1,4 +1,6 @@
-﻿namespace CNPM.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CNPM.DTOs
 {
     public class RegisterRequest
     {
@@ -43,5 +45,13 @@
         public int UserId { get; set; }
         public bool IsLocked { get; set; } // true = Khóa, false = Mở
         public string? Reason { get; set; }
+    }
+    public class UpdateOrderStatusRequest
+    {
+        [Required]
+        public int OrderId { get; set; }
+
+        [Required]
+        public string NewStatus { get; set; } // "pending", "ready", "pickedup", "cancelled"
     }
 }

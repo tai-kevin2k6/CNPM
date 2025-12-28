@@ -13,5 +13,6 @@ namespace CNPM.Api.Services.HubManage
         Task<HubDetailDto> GetHubDetailForAdminAsync(int hubId);
         Task<bool> ApproveHubAsync(ApproveHubRequest request);
         Task<List<HubSummaryDto>> GetAllHubsAsync(); // Xem danh sách
+        Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusRequest request);
     }
 }

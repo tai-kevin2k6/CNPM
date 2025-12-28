@@ -60,4 +60,40 @@
         public string ClosingHours { get; set; }
     }
 
+    // Models/OrderFilterRequest.cs
+    public class OrderFilterRequest
+    {
+        public string? OrderKeyword { get; set; } = null;
+        public string? HubNameKeyword { get; set; } = "all";
+        public string Status { get; set; } = "all";
+        public int PageIndex { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+    }
+
+    // Models/OrderManagementDto.cs
+    public class OrderManagementDto
+    {
+        public int Id { get; set; }
+        public int HubId { get; set; }
+        public string HubName { get; set; }
+        public string ReceiverName { get; set; }
+        public string ReceiverPhone { get; set; }
+        public string Status { get; set; } // "pending", "arrived", "picked_up", "overdue"
+    }
+
+    // Models/PagedResult.cs
+    public class PagedResult<T>
+    {
+        public List<T> Items { get; set; } = new List<T>();
+        public int TotalRecords { get; set; }
+        public List<HubOptionDto> HubOptions { get; set; } = new List<HubOptionDto>();
+    }
+
+    // Models/HubOptionDto.cs (Cho dropdown chọn kho)
+    public class HubOptionDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
 }
