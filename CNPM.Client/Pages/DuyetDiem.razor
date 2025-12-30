@@ -88,13 +88,22 @@
                 <p>Bạn đang thao tác với điểm: <strong>@selectedHub?.Name</strong></p>
 
                 <div class="form-group">
-                    <label>Lý do / Ghi chú:</label>
-                    <textarea class="form-control" @bind="reasonInput" placeholder="Nhập ghi chú (nếu có)..."></textarea>
+                    <label>
+                        Lý do / Ghi chú:
+                        @if (!isApproveAction)
+                        {
+                            <span class="text-danger fw-bold">(*) Bắt buộc</span>
+                        }
+                    </label>
+                    <textarea class="form-control"
+                              @bind="reasonInput"
+                              rows="3"
+                              placeholder="@(isApproveAction ? "Nhập ghi chú (nếu có)..." : "Vui lòng nhập lý do từ chối...")"></textarea>
                 </div>
 
                 @if (!isApproveAction)
                 {
-                    <div class="alert alert-warning">
+                    <div class="alert alert-warning mt-3">
                         ⚠️ <strong>Lưu ý:</strong> Điểm này sẽ bị từ chối và không thể hoạt động trên hệ thống.
                     </div>
                 }
@@ -525,15 +534,11 @@
 
     private async Task SubmitDecision()
     {
-        // 1. Kiểm tra an toàn: Nếu chưa chọn Hub thì dừng luôn
-        if (selectedHub == null) return;
-
-        // 2. VALIDATE LOGIC (Xử lý ngay tại Client, không cần try/catch)
-        // Nếu hành động là TỪ CHỐI (isApproveAction == false) mà lý do trống -> Báo lỗi
+        // Kiểm tra đầu vào: Nếu là TỪ CHỐI và Lý do để trống -> Báo lỗi
         if (!isApproveAction && string.IsNullOrWhiteSpace(reasonInput))
         {
             await JS.InvokeVoidAsync("alert", "Vui lòng nhập lý do từ chối!");
-            return; // Dừng hàm tại đây, không gọi API
+            return; // Dừng lại, không gửi API
         }
 
         try
@@ -541,41 +546,32 @@
             var token = await LocalStorage.GetItemAsync<string>("authToken");
             Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            // 3. Chuẩn bị Request
             var request = new ApproveHubRequest
             {
                 HubId = selectedHub.Id,
-                // Logic: Nếu Duyệt (True) -> IsLocked = False (Mở).
-                //        Nếu Từ chối (False) -> IsLocked = True (Khóa).
                 IsLocked = !isApproveAction,
-
-                // Logic: Nếu Duyệt -> Ghi mặc định. Nếu Từ chối -> Lấy lý do admin nhập.
-                Reason = isApproveAction ? "Admin đã duyệt yêu cầu" : reasonInput
+                Reason = reasonInput
             };
 
-            // 4. Gọi API
+            // Gửi API...
             var response = await Http.PostAsJsonAsync("api/Admin/approve-pending", request);
 
             if (response.IsSuccessStatusCode)
             {
-                await JS.InvokeVoidAsync("alert", isApproveAction ? "Đã duyệt điểm nhận hàng!" : "Đã từ chối yêu cầu!");
-
-                CloseModal();           // Đóng popup
-                await LoadPendingHubs(); // Tải lại danh sách (để Hub vừa duyệt biến mất khỏi list Pending)
-                StateHasChanged();       // Ép giao diện vẽ lại ngay lập tức
+                await JS.InvokeVoidAsync("alert", isApproveAction ? "Đã duyệt thành công!" : "Đã từ chối yêu cầu!");
+                CloseModal();
+                await LoadPendingHubs();
             }
             else
             {
-                // Lỗi từ Backend trả về (Ví dụ: Hub không tồn tại, DB lỗi...)
                 var error = await response.Content.ReadAsStringAsync();
-                await JS.InvokeVoidAsync("alert", "Thất bại: " + error);
+                await JS.InvokeVoidAsync("alert", "Lỗi: " + error);
             }
         }
         catch (Exception ex)
         {
-            // Lỗi hệ thống thực sự (Mất mạng, Code sai...)
-            Console.WriteLine("System Error: " + ex.Message);
-            await JS.InvokeVoidAsync("alert", "Lỗi hệ thống hoặc mất kết nối mạng.");
+            Console.WriteLine("Lỗi: " + ex.Message);
+            await JS.InvokeVoidAsync("alert", "Có lỗi xảy ra.");
         }
     }
 

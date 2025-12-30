@@ -56,6 +56,10 @@ namespace CNPM.Api.Services.HubManage
                 .Include(o => o.PickupHub)
                 .Include(o => o.User)
                 .Where(o => ownedHubIds.Contains(o.PickupHubId));
+            //if (request.OrderKeyword == " " || string.IsNullOrEmpty(request.OrderKeyword))
+            //{
+            //    return new PagedResult<OrderManagementDto>(new List<OrderManagementDto>(), 0, hubOptions);
+            //}
 
             if (!string.IsNullOrEmpty(request.OrderKeyword))
                 query = query.Where(o => o.Id.ToString() == request.OrderKeyword);
