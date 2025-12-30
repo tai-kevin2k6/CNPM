@@ -128,6 +128,11 @@
 @code {
     private LoginRequest loginModel = new();
     private string errorMessage;
+    public class ApiErrorResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
 
     private async Task HandleLogin()
     {
@@ -139,31 +144,53 @@
 
             if (response.IsSuccessStatusCode)
             {
-                // 2. Đọc kết quả
+                // --- TRƯỜNG HỢP THÀNH CÔNG ---
                 var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
 
-                // 3. Lưu Token (Nghi ngờ lỗi ở đây nếu chưa cài LocalStorage)
                 if (result != null && !string.IsNullOrEmpty(result.Token))
                 {
                     await LocalStorage.SetItemAsync("authToken", result.Token);
-                    // 4. Chuyển trang
-                    // Thêm forceLoad: true
+                    // Chuyển trang và reload để cập nhật trạng thái đăng nhập
                     Nav.NavigateTo("/", forceLoad: true);
                 }
                 else
                 {
-                    errorMessage = "API trả về thành công nhưng không có Token!";
+                    errorMessage = "Lỗi: Server không trả về Token.";
                 }
             }
             else
             {
-                errorMessage = "Đăng nhập thất bại: " + await response.Content.ReadAsStringAsync();
+                // --- TRƯỜNG HỢP THẤT BẠI (400, 401...) ---
+                // Đọc chuỗi JSON thô từ server (VD: {"success":false, "message":"..."})
+                var errorContent = await response.Content.ReadAsStringAsync();
+
+                try
+                {
+                    // Cố gắng dịch JSON sang Object C# để lấy chữ "Message"
+                    var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var errorObj = System.Text.Json.JsonSerializer.Deserialize<ApiErrorResponse>(errorContent, options);
+
+                    if (errorObj != null && !string.IsNullOrEmpty(errorObj.Message))
+                    {
+                        // Gán thông báo sạch đẹp
+                        errorMessage = errorObj.Message;
+                    }
+                    else
+                    {
+                        // Nếu JSON không có field Message thì hiện mặc định
+                        errorMessage = "Đăng nhập thất bại.";
+                    }
+                }
+                catch
+                {
+                    // Nếu server trả về HTML (lỗi 500) hoặc text thường, không parse được JSON thì hiện nguyên gốc
+                    errorMessage = "Lỗi: " + errorContent;
+                }
             }
         }
         catch (Exception ex)
         {
-            // Bắt lỗi và hiện lên màn hình thay vì crash
-            errorMessage = $"Lỗi hệ thống: {ex.Message} \n {ex.StackTrace}";
+            errorMessage = $"Lỗi hệ thống: {ex.Message}";
         }
     }
 }

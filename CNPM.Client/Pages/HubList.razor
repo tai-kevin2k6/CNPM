@@ -1,249 +1,382 @@
-﻿@page "/danh-sach-hub"
+﻿@page "/admin/hubs"
 @using System.Net.Http.Json
+@using System.Net.Http.Headers
 @inject HttpClient Http
+@inject IJSRuntime JS
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
-<div class="container-custom">
-    <h2 class="page-title">Danh sách điểm nhận hàng</h2>
-    <p class="sub-title">Nhấn vào tên điểm để xem chi tiết</p>
+<PageTitle>Quản lý Hub</PageTitle>
 
-    @if (hubs == null)
-    {
-        <p>Đang tải...</p>
-    }
-    else
-    {
-        <div class="hub-list">
-            @foreach (var hub in hubs)
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bolder display-6 text-primary-dark">DANH SÁCH ĐIỂM NHẬN HÀNG</h2>
+        <div class="divider mx-auto mb-3"></div>
+    </div>
+
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+        <div class="card-header bg-white border-0 p-4">
+            <div class="d-flex shadow-sm rounded-pill border p-1 bg-light w-100">
+                <div class="input-group flex-grow-1">
+                    <span class="input-group-text bg-transparent border-0 ps-3 text-muted">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control bg-transparent border-0 shadow-none"
+                           placeholder="Tìm kiếm id Hub"
+                           @bind="searchTerm" @bind:event="oninput" @onkeyup="HandleSearch" />
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            @if (isLoading)
             {
-                <div class="hub-item @(hub.IsExpanded ? "expanded" : "")">
-                    <div class="hub-header" @onclick="() => ToggleDetail(hub)">
-                        <span class="hub-name">@hub.Name</span>
+                <div class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table align-middle table-hover mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4 text-secondary text-uppercase text-xs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Tên Hub</th>
+                                <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7" style="width: 30%;">Địa chỉ</th>
+                                <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Chủ Hub</th>
+                                <th class="text-center text-secondary text-uppercase text-xs font-weight-bolder opacity-7" style="min-width: 150px;">Trạng thái / Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var hub in PagedList)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-bold text-dark">#@hub.id</td>
 
-                        <span class="arrow-icon">
-                            @(hub.IsExpanded ? "▲" : "▼")
-                        </span>
-                    </div>
+                                    <td>
+                                        <span class="fw-bold text-dark text-sm">@hub.name</span>
+                                    </td>
 
-                    @if (hub.IsExpanded)
-                    {
-                        <div class="hub-body">
-                            <div class="detail-row">
-                                <strong>Địa chỉ:</strong> <span>@hub.Address</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong>Giờ mở cửa:</strong> <span>@hub.OpeningHours - @hub.ClosingHours</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong>Trạng thái:</strong>
-                                <span class="status-badge @GetStatusClass(hub.Status)">
-                                    @GetStatusLabel(hub.Status)
-                                </span>
-                            </div>
-                        </div>
-                    }
+                                    <td class="text-secondary text-sm text-wrap">@hub.address</td>
+
+                                    <td>
+                                        <button class="btn btn-link text-decoration-none p-0 fw-bold text-primary"
+                                                @onclick="() => ShowOwnerDetail(hub)">
+                                            @hub.ownerName <i class="fas fa-info-circle ms-1 small"></i>
+                                        </button>
+                                    </td>
+
+                                    <td class="text-center">
+                                        @if (hub.status == "active")
+                                        {
+                                            <button class="btn-status status-active shadow-sm"
+                                                    @onclick="() => ToggleHubStatus(hub)">
+                                                <i class="fas fa-check-circle me-2"></i><span>Hoạt động</span>
+                                            </button>
+                                        }
+                                        else if (hub.status == "locked")
+                                        {
+                                            <button class="btn-status status-closed shadow-sm"
+                                                    @onclick="() => ToggleHubStatus(hub)">
+                                                <i class="fas fa-lock me-2"></i><span>Đóng cửa</span>
+                                            </button>
+                                        }
+
+                                        else if (hub.status == "closed")
+                                        {
+                                            <button class="btn-status status-closed shadow-sm"
+                                                    @onclick="() => ToggleHubStatus(hub)">
+                                                <i class="fas fa-lock me-2"></i><span>Đóng cửa</span>
+                                            </button>
+                                        }
+                                        else if (hub.status == "pending")
+                                        {
+                                            <button class="btn-status status-pending shadow-sm"
+                                                    @onclick="() => ToggleHubStatus(hub)">
+                                                <i class="fas fa-clock me-2"></i><span>Chờ duyệt</span>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             }
         </div>
-    }
+    </div>
 </div>
 
+@if (isOwnerModalOpen && selectedHub != null)
+{
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow px-3 py-2">
+                <div class="modal-header border-0 pb-0 justify-content-center">
+                    <h5 class="modal-title fw-bold text-primary-dark">Thông tin Chủ Hub</h5>
+                </div>
+                <div class="modal-body text-center pt-4 pb-2">
+                    <div class="avatar-lg bg-light rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center shadow-sm"
+                         style="width: 80px; height: 80px; font-size: 2rem; color: #0f3b66; border: 3px solid #fff;">
+                        @GetInitials(selectedHub.ownerName)
+                    </div>
+
+                    <h5 class="text-primary fw-bold mb-1">
+                        <i class="fas fa-phone-alt me-2 small"></i>@selectedHub.ownerPhone
+                    </h5>
+
+                    <h4 class="fw-bolder text-dark mb-2">@selectedHub.ownerName</h4>
+
+                    <p class="text-muted mb-4">Đang quản lý Hub: <strong>@selectedHub.name</strong></p>
+
+                    <div class="d-flex justify-content-center mt-4">
+                        <button class="btn btn-secondary rounded-pill px-5 py-2 fw-bold" @onclick="CloseModal">
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <style>
-    /* --- SỬA LỖI Ở ĐÂY --- */
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 12px;
-        border-radius: 50px;
+    /* CSS CƠ BẢN */
+    body {
+        background-color: #f4f7fc;
+    }
+
+    .text-primary-dark {
+        color: #0f3b66;
+    }
+
+    .divider {
+        height: 4px;
+        width: 60px;
+        background: #0f3b66;
+        border-radius: 10px;
+    }
+
+    /* === CSS CHO NÚT TRẠNG THÁI (Copy style từ User Page) === */
+    .btn-status {
+        border: none;
+        padding: 8px 20px;
+        border-radius: 30px;
         font-size: 0.85rem;
         font-weight: 600;
-        text-transform: capitalize;
-        line-height: 1;
-        white-space: nowrap;
-        /* QUAN TRỌNG: Ngăn không cho flexbox kéo dãn chiều rộng */
-        flex: none;
-        width: fit-content;
-    }
-
-    /* Các trạng thái cụ thể */
-    .status-active {
-        background-color: #d1fae5;
-        color: #047857;
-        border: 1px solid #a7f3d0;
-    }
-
-    .status-pending {
-        background-color: #ffedd5;
-        color: #c2410c;
-        border: 1px solid #fed7aa;
-    }
-
-    .status-closed {
-        background-color: #fee2e2;
-        color: #b91c1c;
-        border: 1px solid #fecaca;
-    }
-
-    .status-badge::before {
-        content: "";
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        margin-right: 6px;
-        background-color: currentColor;
-        opacity: 0.7;
-    }
-
-    /* --- CÁC STYLE KHÁC GIỮ NGUYÊN --- */
-    .container-custom {
-        max-width: 800px;
-        margin: 40px auto;
-        padding: 0 20px;
-        font-family: sans-serif;
-    }
-
-    .page-title {
-        color: #0f3b66;
-        text-align: center;
-    }
-
-    .sub-title {
-        text-align: center;
-        color: #666;
-        margin-bottom: 30px;
-        font-style: italic;
-    }
-
-    .hub-item {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        overflow: hidden;
-        background: white;
-        transition: all 0.3s;
-    }
-
-        .hub-item.expanded {
-            border-color: #0f3b66;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-    .hub-header {
-        padding: 15px 20px;
-        background-color: #f8f9fa;
         cursor: pointer;
-        display: flex;
-        justify-content: space-between;
+        transition: all 0.2s ease-in-out;
+        display: inline-flex;
         align-items: center;
-        font-weight: bold;
-        color: #333;
+        justify-content: center;
+        min-width: 140px; /* Độ rộng cố định để không bị nhảy */
     }
 
-        .hub-header:hover {
-            background-color: #e9ecef;
-            color: #0f3b66;
-        }
-
-    .hub-name {
-        font-size: 1.1rem;
+    /* 1. Trạng thái Active (Xanh) */
+    .status-active {
+        background-color: #e6f8f0;
+        color: #0d9459;
     }
 
-    .arrow-icon {
-        color: #999;
-        font-size: 0.8rem;
+        .status-active:hover {
+            background-color: #fff5f5;
+            color: #e03131; /* Hover đổi sang đỏ */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(224, 49, 49, 0.2);
+        }
+
+    /* 2. Trạng thái Closed (Đỏ) */
+    .status-closed {
+        background-color: #fff5f5;
+        color: #e03131;
     }
 
-    .hub-body {
-        padding: 20px;
-        background-color: white;
-        border-top: 1px solid #eee;
-        animation: slideDown 0.3s ease-out;
+        .status-closed:hover {
+            background-color: #e6f8f0;
+            color: #0d9459; /* Hover đổi sang xanh */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(13, 148, 89, 0.2);
+        }
+
+    /* 3. Trạng thái Pending (Vàng) */
+    .status-pending {
+        background-color: #fff9db;
+        color: #f08c00;
     }
 
-    .detail-row {
-        margin-bottom: 10px;
-        font-size: 0.95rem;
-        display: flex; /* Flex container */
-        align-items: center; /* Căn giữa theo chiều dọc */
+        .status-pending:hover {
+            background-color: #e6f8f0;
+            color: #0d9459; /* Hover đổi sang xanh (Duyệt) */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(13, 148, 89, 0.2);
+        }
+
+    /* === KỸ THUẬT "MAGIC BUTTON" (Hover đổi chữ) === */
+    /* Khi hover: Ẩn icon và chữ cũ */
+    .btn-status:hover i, .btn-status:hover span {
+        display: none;
     }
 
-        .detail-row strong {
-            width: 120px;
-            color: #555;
-        }
+    /* Hiện chữ mới tương ứng hành động tiếp theo */
+    .status-active:hover::after {
+        content: "Khóa Hub";
+    }
 
-        /* Đây là nguyên nhân cũ gây lỗi, nhưng class .status-badge đã override lại bằng flex: none */
-        .detail-row span {
-            flex: none;
-            color: #333;
-        }
+    .status-closed:hover::after {
+        content: "Mở lại Hub";
+    }
 
-    @@keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .status-pending:hover::after {
+        content: "Duyệt ngay";
     }
 </style>
 
 @code {
-    public class PickupHubDto
+    // DTO
+    public class HubDto
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string OwnerName { get; set; }
-        public string OpeningHours { get; set; }
-        public string ClosingHours { get; set; }
-        public string Status { get; set; }
-        public bool IsExpanded { get; set; } = false;
+        public int id { get; set; }
+        public string name { get; set; }
+        public string address { get; set; }
+        public string status { get; set; } // "active", "closed", "pending"
+        public string ownerName { get; set; }
+        public string ownerPhone { get; set; }
     }
 
-    private List<PickupHubDto> hubs;
+    // Request update
+    public class LockHubRequest
+    {
+        public int HubId { get; set; }
+        public bool IsLocked { get; set; } // true = khóa, false = mở
+        public string Reason { get; set; }
+    }
+
+    private List<HubDto> allHubs = new();
+    private List<HubDto> filteredHubs = new();
+    private bool isLoading = true;
+    private string searchTerm = "";
+
+    // -- Modal Variables --
+    private bool isOwnerModalOpen = false;
+    private HubDto? selectedHub = null;
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
         try
         {
-            hubs = await Http.GetFromJsonAsync<List<PickupHubDto>>("api/PickupHub/all");
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+            if (!string.IsNullOrEmpty(token)) Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            allHubs = await Http.GetFromJsonAsync<List<HubDto>>("api/Admin/all-hubs") ?? new();
+            filteredHubs = allHubs;
+        }
+        catch { }
+        finally { isLoading = false; }
+    }
+
+    private void HandleSearch()
+    {
+        // 1. Nếu ô tìm kiếm trống -> Hiển thị lại tất cả (Reset danh sách)
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            filteredHubs = allHubs;
+        }
+        else
+        {
+            // 2. Nếu có dữ liệu -> Tìm chính xác theo ID (giữ nguyên logic của bạn)
+            var term = searchTerm.ToLower().Trim(); // Thêm Trim() để xóa khoảng trắng thừa nếu có
+            filteredHubs = allHubs.Where(h =>
+                h.id.ToString() == term
+            ).ToList();
+        }
+    }
+
+    // --- XỬ LÝ MODAL ---
+    private void ShowOwnerDetail(HubDto hub)
+    {
+        selectedHub = hub;
+        isOwnerModalOpen = true;
+    }
+    private void CloseModal() => isOwnerModalOpen = false;
+
+    // --- XỬ LÝ TOGGLE TRẠNG THÁI (Logic mới) ---
+    private async Task ToggleHubStatus(HubDto hub)
+    {
+        bool willLock = false; // Biến xác định xem hành động là Khóa hay Mở
+        string actionName = "";
+        string nextStatusString = ""; // Dùng để cập nhật UI sau khi thành công
+
+        // Phân tích trạng thái hiện tại để quyết định hành động tiếp theo
+        if (hub.status == "active")
+        {
+            willLock = true; // Đang Active -> Muốn Khóa
+            actionName = "KHÓA (Đóng cửa)";
+            nextStatusString = "closed";
+        }
+        else if (hub.status == "closed" || hub.status == "locked")
+        {
+            willLock = false; // Đang Khóa -> Muốn Mở
+            actionName = "MỞ LẠI (Hoạt động)";
+            nextStatusString = "active";
+        }
+        else if (hub.status == "pending")
+        {
+            willLock = false; // Đang Pending -> Muốn Duyệt (Mở)
+            actionName = "DUYỆT (Hoạt động)";
+            nextStatusString = "active";
+        }
+        else return;
+
+        // Hỏi xác nhận
+        if (!await JS.InvokeAsync<bool>("confirm", $"Bạn có chắc muốn {actionName} Hub '{hub.name}'?"))
+        {
+            return;
+        }
+
+        // Tạo Request đúng định dạng Backend yêu cầu
+        var request = new LockHubRequest
+        {
+            HubId = hub.id,
+            IsLocked = willLock, // Gửi true/false thay vì string
+            Reason = willLock ? "Admin khóa từ trang quản lý" : "Admin duyệt/mở khóa"
+        };
+
+        try
+        {
+            // Gọi API
+            var res = await Http.PostAsJsonAsync("api/Admin/hubs/lock", request);
+
+            if (res.IsSuccessStatusCode)
+            {
+                // Cập nhật giao diện ngay lập tức
+                hub.status = nextStatusString;
+                StateHasChanged();
+            }
+            else
+            {
+                // Đọc lỗi từ backend trả về (nếu có)
+                var errorMsg = await res.Content.ReadAsStringAsync();
+                await JS.InvokeVoidAsync("alert", $"Lỗi cập nhật: {errorMsg}");
+            }
         }
         catch (Exception ex)
         {
-            hubs = new List<PickupHubDto>();
+            await JS.InvokeVoidAsync("alert", "Lỗi hệ thống: " + ex.Message);
         }
     }
 
-    private void ToggleDetail(PickupHubDto hub)
+    private string GetInitials(string name)
     {
-        hub.IsExpanded = !hub.IsExpanded;
+        if (string.IsNullOrEmpty(name)) return "H";
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length == 1 ? parts[0][0].ToString().ToUpper() : $"{parts[0][0]}{parts[^1][0]}".ToUpper();
     }
 
-    private string GetStatusClass(string status)
-    {
-        if (string.IsNullOrEmpty(status)) return "status-closed";
-        return status.ToLower().Trim() switch
-        {
-            "active" => "status-active",
-            "pending" => "status-pending",
-            "closed" => "status-closed",
-            _ => "status-closed"
-        };
-    }
-
-    private string GetStatusLabel(string status)
-    {
-        if (string.IsNullOrEmpty(status)) return "Không xác định";
-        return status.ToLower().Trim() switch
-        {
-            "active" => "Đang hoạt động",
-            "pending" => "Chờ phê duyệt",
-            "closed" => "Đóng cửa/Ngừng",
-            _ => status
-        };
-    }
+    // Pagination placeholder
+    private List<HubDto> PagedList => filteredHubs;
 }

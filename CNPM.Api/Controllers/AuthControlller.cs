@@ -51,10 +51,19 @@ namespace CNPM.Controllers
                 return Unauthorized("Chưa nhập SĐT");
             if (string.IsNullOrWhiteSpace(request.Password))
                 return Unauthorized("Chưa nhập mật khẩu");
+            if (request.PhoneNumber.Length < 10)
+                return Unauthorized("Số điện thoại đăng nhập không hợp lệ");
+            if (request.Password.Length < 6)
+                return Unauthorized("Mật khẩu có độ dài không hợp lệ");
 
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.PhoneNumber == request.PhoneNumber && u.Password == request.Password);
-
+            if (user.Status == "locked")
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = $"Tài khoản đã bị khóa."
+                });
             if (user == null)
                 return Unauthorized("Sai SĐT hoặc mật khẩu");
 

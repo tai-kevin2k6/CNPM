@@ -30,7 +30,7 @@ namespace CNPM.Controllers
             return Ok(result);
         }
 
-        [HttpGet("hub/{id}")]
+        [HttpGet("get-detail-hub/{id}")]
         public async Task<IActionResult> GetDetail(int id)
         {
             var result = await _service.HubManage.GetHubDetailForAdminAsync(id);
@@ -97,7 +97,7 @@ namespace CNPM.Controllers
         {
             try
             {
-                await _service.HubManage.ApproveHubAsync(request);
+                await _service.HubManage.LockHubAsync(request);
                 var msg = request.IsLocked ? "Đã khóa điểm nhận hàng." : "Đã mở lại hoạt động.";
                 return Ok(new { Success = true, Message = msg });
             }

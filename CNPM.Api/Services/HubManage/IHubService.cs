@@ -14,5 +14,6 @@ namespace CNPM.Api.Services.HubManage
         Task<bool> ApproveHubAsync(ApproveHubRequest request);
         Task<List<HubSummaryDto>> GetAllHubsAsync(); // Xem danh sách
         Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusRequest request);
+        Task<bool> LockHubAsync(ApproveHubRequest request);
     }
 }

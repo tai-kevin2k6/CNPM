@@ -1,0 +1,249 @@
+﻿@page "/danh-sach-hub"
+@using System.Net.Http.Json
+@inject HttpClient Http
+
+<div class="container-custom">
+    <h2 class="page-title">Danh sách điểm nhận hàng</h2>
+    <p class="sub-title">Nhấn vào tên điểm để xem chi tiết</p>
+
+    @if (hubs == null)
+    {
+        <p>Đang tải...</p>
+    }
+    else
+    {
+        <div class="hub-list">
+            @foreach (var hub in hubs)
+            {
+                <div class="hub-item @(hub.IsExpanded ? "expanded" : "")">
+                    <div class="hub-header" @onclick="() => ToggleDetail(hub)">
+                        <span class="hub-name">@hub.Name</span>
+
+                        <span class="arrow-icon">
+                            @(hub.IsExpanded ? "▲" : "▼")
+                        </span>
+                    </div>
+
+                    @if (hub.IsExpanded)
+                    {
+                        <div class="hub-body">
+                            <div class="detail-row">
+                                <strong>Địa chỉ:</strong> <span>@hub.Address</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Giờ mở cửa:</strong> <span>@hub.OpeningHours - @hub.ClosingHours</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Trạng thái:</strong>
+                                <span class="status-badge @GetStatusClass(hub.Status)">
+                                    @GetStatusLabel(hub.Status)
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    /* --- SỬA LỖI Ở ĐÂY --- */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        line-height: 1;
+        white-space: nowrap;
+        /* QUAN TRỌNG: Ngăn không cho flexbox kéo dãn chiều rộng */
+        flex: none;
+        width: fit-content;
+    }
+
+    /* Các trạng thái cụ thể */
+    .status-active {
+        background-color: #d1fae5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+    }
+
+    .status-pending {
+        background-color: #ffedd5;
+        color: #c2410c;
+        border: 1px solid #fed7aa;
+    }
+
+    .status-closed {
+        background-color: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+    }
+
+    .status-badge::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        margin-right: 6px;
+        background-color: currentColor;
+        opacity: 0.7;
+    }
+
+    /* --- CÁC STYLE KHÁC GIỮ NGUYÊN --- */
+    .container-custom {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-family: sans-serif;
+    }
+
+    .page-title {
+        color: #0f3b66;
+        text-align: center;
+    }
+
+    .sub-title {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+        font-style: italic;
+    }
+
+    .hub-item {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        background: white;
+        transition: all 0.3s;
+    }
+
+        .hub-item.expanded {
+            border-color: #0f3b66;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+    .hub-header {
+        padding: 15px 20px;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        color: #333;
+    }
+
+        .hub-header:hover {
+            background-color: #e9ecef;
+            color: #0f3b66;
+        }
+
+    .hub-name {
+        font-size: 1.1rem;
+    }
+
+    .arrow-icon {
+        color: #999;
+        font-size: 0.8rem;
+    }
+
+    .hub-body {
+        padding: 20px;
+        background-color: white;
+        border-top: 1px solid #eee;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    .detail-row {
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+        display: flex; /* Flex container */
+        align-items: center; /* Căn giữa theo chiều dọc */
+    }
+
+        .detail-row strong {
+            width: 120px;
+            color: #555;
+        }
+
+        /* Đây là nguyên nhân cũ gây lỗi, nhưng class .status-badge đã override lại bằng flex: none */
+        .detail-row span {
+            flex: none;
+            color: #333;
+        }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+@code {
+    public class PickupHubDto
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string OwnerName { get; set; }
+        public string OpeningHours { get; set; }
+        public string ClosingHours { get; set; }
+        public string Status { get; set; }
+        public bool IsExpanded { get; set; } = false;
+    }
+
+    private List<PickupHubDto> hubs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            hubs = await Http.GetFromJsonAsync<List<PickupHubDto>>("api/PickupHub/all");
+        }
+        catch (Exception ex)
+        {
+            hubs = new List<PickupHubDto>();
+        }
+    }
+
+    private void ToggleDetail(PickupHubDto hub)
+    {
+        hub.IsExpanded = !hub.IsExpanded;
+    }
+
+    private string GetStatusClass(string status)
+    {
+        if (string.IsNullOrEmpty(status)) return "status-closed";
+        return status.ToLower().Trim() switch
+        {
+            "active" => "status-active",
+            "pending" => "status-pending",
+            "closed" => "status-closed",
+            _ => "status-closed"
+        };
+    }
+
+    private string GetStatusLabel(string status)
+    {
+        if (string.IsNullOrEmpty(status)) return "Không xác định";
+        return status.ToLower().Trim() switch
+        {
+            "active" => "Đang hoạt động",
+            "pending" => "Chờ phê duyệt",
+            "closed" => "Đóng cửa/Ngừng",
+            _ => status
+        };
+    }
+}

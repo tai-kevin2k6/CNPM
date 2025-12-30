@@ -1,5 +1,106 @@
-﻿<h3>Dashboard</h3>
+﻿@page "/dashboard"
+@* Nếu MainLayout chưa phải là default trong App.razor thì uncomment dòng dưới *@
+@* @layout MainLayout *@
 
-@code {
+<PageTitle>Admin Dashboard</PageTitle>
 
-}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="dashboard-wrapper">
+    <div class="container py-5">
+        <div class="row mb-4 text-center">
+            <div class="col-12">
+                <h2 class="fw-bold text-uppercase" style="color: #0f3b66;">Quản lý hệ thống</h2>
+                <div class="divider mx-auto"></div>
+                <p class="text-muted fs-5">Lựa chọn chức năng quản trị</p>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <NavLink href="/admin/users" class="admin-card">
+                    <div class="card-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h4 class="card-title">Quản lý tài khoản<br>người dùng</h4>
+                    <p class="card-desc">Xem danh sách, khóa tài khoản</p>
+                </NavLink>
+            </div>
+
+            <div class="col-md-6 col-lg-5">
+                <NavLink href="/admin/hubs" class="admin-card">
+                    <div class="card-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h4 class="card-title">Quản lý<br>điểm nhận hàng</h4>
+                    <p class="card-desc">Xem danh sách, khóa hub</p>
+                </NavLink>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Các style CSS vẫn giữ nguyên như cũ */
+    .dashboard-wrapper {
+        background-color: #f4f6f9;
+        min-height: calc(100vh - 60px);
+    }
+
+    .admin-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border-radius: 15px;
+        padding: 40px 20px;
+        text-decoration: none;
+        color: #333;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid rgba(0,0,0,0.02);
+    }
+
+        .admin-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(15, 59, 102, 0.15);
+            border-bottom: 5px solid #0f3b66;
+        }
+
+    .card-icon {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        color: #adb5bd;
+        transition: color 0.3s;
+    }
+
+    .admin-card:hover .card-icon {
+        color: #0f3b66;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 10px;
+        color: #2c3e50;
+    }
+
+    .card-desc {
+        font-size: 0.9rem;
+        color: #6c757d;
+        text-align: center;
+        margin: 0;
+    }
+
+    .divider {
+        height: 4px;
+        width: 60px;
+        background-color: #0f3b66;
+        margin: 10px 0 20px 0;
+        border-radius: 2px;
+    }
+</style>

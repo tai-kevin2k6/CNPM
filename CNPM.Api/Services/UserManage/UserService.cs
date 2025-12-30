@@ -19,6 +19,7 @@ namespace CNPM.Api.Services.UserManage
         {
             return await _context.Users
                 .AsNoTracking()
+                .Where(u => u.Role != "admin")
                 .Select(u => new UserSummaryDto
                 {
                     Id = u.Id,

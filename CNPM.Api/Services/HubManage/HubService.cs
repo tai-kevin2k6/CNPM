@@ -24,10 +24,14 @@ namespace CNPM.Api.Services.HubManage
             return await _context.PickupHubs
                 .AsNoTracking()
                 .Where(h => h.OwnerId == userId)
+                // Bỏ comment dòng Where cũ để lấy tất cả trạng thái
                 .Select(h => new HubOptionDto
                 {
                     Id = h.Id,
-                    Name = h.Name
+                    // Logic: Nếu khóa thì cộng chuỗi, nếu reject thì cộng chuỗi, còn lại giữ nguyên
+                    Name = (h.Status == "locked" || h.Status == "closed") ? h.Name + " (bị khóa)" :
+                           h.Status == "reject" ? h.Name + " (bị từ chối)" :
+                           h.Name
                 })
                 .ToListAsync();
         }
@@ -103,35 +107,52 @@ namespace CNPM.Api.Services.HubManage
         {
             return await _context.PickupHubs
                 .AsNoTracking()
+                .Include(h => h.User) // <--- KẾT NỐI (JOIN) BẢNG USER TẠI ĐÂY
+                .OrderByDescending(h => h.Id)
+                .Where(h => h.Status != "pending")
+                .Where(h => h.Status != "reject")
                 .Select(h => new HubSummaryDto
                 {
                     Id = h.Id,
                     Name = h.Name,
-                    Address = h.Address
+                    Address = h.Address,
+                    Status = h.Status,
+
+                    // Lấy dữ liệu từ bảng User đã Include
+                    // Dùng dấu ? (h.Owner?) để tránh lỗi nếu Hub chưa có chủ
+                    OwnerName = h.User != null ? h.User.FullName : "Chưa có chủ",
+                    OwnerPhone = h.User != null ? h.User.PhoneNumber : ""
                 })
                 .ToListAsync();
         }
 
         public async Task<HubDetailDto> GetHubDetailForAdminAsync(int hubId)
         {
-            // Lấy chi tiết 1 Hub
+            // 1. Query 1 lần duy nhất lấy cả Hub lẫn User
             var hub = await _context.PickupHubs
                 .AsNoTracking()
-                .Include(h => h.User) // Quan trọng: Phải lấy thông tin chủ shop
+                .Include(h => h.User) // <--- Key logic: Load luôn User dựa trên ForeignKey OwnerId
                 .FirstOrDefaultAsync(h => h.Id == hubId);
 
+            // 2. Kiểm tra null
             if (hub == null) return null;
 
+            // 3. Map dữ liệu trả về
             return new HubDetailDto
             {
                 Name = hub.Name,
                 Address = hub.Address,
-                Status = hub.Status.ToString(), 
+                Status = hub.Status, // Class PickupHub của bạn Status là string nên không cần .ToString()
                 OpeningHours = hub.OpeningHours,
                 ClosingHours = hub.ClosingHours,
 
-                // Map thông tin chủ sở hữu
-                OwnerId = hub.OwnerId
+                // Thông tin chủ sở hữu (Lấy từ navigation property 'User')
+                OwnerId = hub.OwnerId,
+
+                // Kiểm tra null bằng ?. (User có thể null nếu data cũ bị lỗi)
+                // Giả sử class User của bạn có trường FullName hoặc Name
+                OwnerName = hub.User?.FullName ?? "Không xác định",
+                PhoneNumber = hub.User?.PhoneNumber ?? ""
             };
         }
 
@@ -151,14 +172,54 @@ namespace CNPM.Api.Services.HubManage
             if (request.IsLocked == true)
             {
                 // TRƯỜNG HỢP DUYỆT
-                hub.Status = "closed";
-                hub.Reason = request.Reason; // Lưu lý do vào DB
+                hub.Status = "reject";
+                if (request.Reason != null)
+                    hub.Reason = request.Reason; // Lưu lý do vào DB
+                else hub.Reason = null;
             }
             else
             {
                 // TRƯỜNG HỢP TỪ CHỐI
                 hub.Status = "active";
-                hub.Reason = null; // Xóa lý do cũ (nếu có)
+                if (request.Reason != null)
+                    hub.Reason = request.Reason; // Lưu lý do vào DB
+                else hub.Reason = null;
+            }
+
+            // 5. Lưu thay đổi
+            _context.PickupHubs.Update(hub);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0; // Trả về true nếu lưu thành công
+        }
+
+        public async Task<bool> LockHubAsync(ApproveHubRequest request)
+        {
+            // 1. Tìm Hub trong Database
+            var hub = await _context.PickupHubs.FindAsync(request.HubId);
+
+            // 2. Kiểm tra tồn tại
+            if (hub == null)
+            {
+                throw new Exception("Không tìm thấy điểm nhận hàng này.");
+            }
+
+            // 4. Xử lý Logic chính
+            if (request.IsLocked == true)
+            {
+                // TRƯỜNG HỢP KHÓA
+                hub.Status = "closed";
+                if (request.Reason != null)
+                    hub.Reason = request.Reason; // Lưu lý do vào DB
+                else hub.Reason = null;
+            }
+            else
+            {
+                // TRƯỜNG HỢP TỪ CHỐI
+                hub.Status = "active";
+                if (request.Reason != null)
+                    hub.Reason = request.Reason; // Lưu lý do vào DB
+                else hub.Reason = null;
             }
 
             // 5. Lưu thay đổi

@@ -1,0 +1,439 @@
+﻿@page "/admin/users"
+@using System.Net.Http.Json
+@using System.Net.Http.Headers
+@inject HttpClient Http
+@inject IJSRuntime JS
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+
+<PageTitle>Quản lý người dùng</PageTitle>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bolder display-6 text-primary-dark">
+            DANH SÁCH NGƯỜI DÙNG
+        </h2>
+        <div class="divider mx-auto mb-3"></div>
+        <p class="text-muted fs-5">Quản lý và kiểm soát trạng thái tài khoản hệ thống</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-white border-0 p-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex shadow-sm rounded-pill border p-1 bg-light toolbar-wrapper w-100">
+                                <div class="input-group flex-grow-1">
+                                    <span class="input-group-text bg-transparent border-0 ps-3 text-muted">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control bg-transparent border-0 shadow-none"
+                                           placeholder="Tìm kiếm ID, Số điện thoại"
+                                           @bind="searchTerm" @bind:event="oninput" @onkeyup="HandleSearch" />
+                                </div>
+
+                                <div class="vertical-divider my-2"></div>
+
+                                <div class="role-select-wrapper">
+                                    <select class="form-select bg-transparent border-0 shadow-none fw-bold text-secondary ps-3 pe-5 h-100"
+                                            @onchange="OnRoleChanged" style="cursor: pointer;">
+                                        <option value="">-- Tất cả Role --</option>
+                                        <option value="user">Người dùng (User)</option>
+                                        <option value="HubOwner">Chủ điểm (Hub Owner)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    @if (isLoading)
+                    {
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status"></div>
+                            <p class="text-muted mt-2">Đang tải dữ liệu...</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table align-middle table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="ps-5 py-3 text-secondary text-uppercase text-xs font-weight-bolder opacity-7">ID</th>
+                                        <th class="py-3 text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Họ và tên</th>
+                                        <th class="py-3 text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Số điện thoại</th>
+                                        <th class="py-3 text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Vai trò</th>
+                                        <th class="py-3 text-center text-secondary text-uppercase text-xs font-weight-bolder opacity-7" style="min-width: 150px;">
+                                            Trạng thái / Đổi
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in PagedList)
+                                    {
+                                        <tr>
+                                            <td class="ps-5 fw-bold text-dark">#@user.Id</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle me-3">@GetInitials(user.FullName)</div>
+                                                    <h6 class="mb-0 text-sm fw-bold text-dark">@user.FullName</h6>
+                                                </div>
+                                            </td>
+                                            <td class="text-secondary fw-bold text-sm">@user.PhoneNumber</td>
+                                            <td>
+                                                @if (user.Role == "HubOwner")
+                                                {
+                                                    <span class="badge bg-light text-info border border-info rounded-pill px-3">Hub Owner</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-light text-secondary border rounded-pill px-3">User</span>
+                                                }
+                                            </td>
+
+                                            <td class="text-center">
+                                                @if (IsActive(user.Status))
+                                                {
+                                                    <button class="btn-status status-active shadow-sm"
+                                                            @onclick="() => ToggleUserStatus(user)">
+                                                        <i class="fas fa-check-circle me-2"></i><span>Hoạt động</span>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn-status status-locked shadow-sm"
+                                                            @onclick="() => ToggleUserStatus(user)">
+                                                        <i class="fas fa-lock me-2"></i><span>Đã khóa</span>
+                                                    </button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        @if (totalPages > 1)
+                        {
+                            <div class="d-flex justify-content-between align-items-center p-4 bg-white border-top">
+                                <span class="text-muted small">
+                                    Hiển thị <strong>@((currentPage - 1) * itemsPerPage + 1)</strong> -
+                                    <strong>@(Math.Min(currentPage * itemsPerPage, filteredUsers.Count))</strong>
+                                    trên <strong>@filteredUsers.Count</strong>
+                                </span>
+
+                                <nav>
+                                    <ul class="pagination pagination-sm mb-0">
+                                        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                            <button class="page-link border-0 rounded-circle mx-1" @onclick="() => ChangePage(currentPage - 1)">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <span class="page-link border-0 fw-bold text-dark">@currentPage</span>
+                                        </li>
+                                        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                            <button class="page-link border-0 rounded-circle mx-1" @onclick="() => ChangePage(currentPage + 1)">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* CSS CƠ BẢN */
+    body {
+        background-color: #f4f7fc;
+    }
+
+    .text-primary-dark {
+        color: #0f3b66;
+    }
+
+    .divider {
+        height: 4px;
+        width: 60px;
+        background: #0f3b66;
+        border-radius: 10px;
+    }
+
+    .ls-2 {
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+    }
+
+    /* TOOLBAR STYLE MỚI */
+    .toolbar-wrapper {
+        transition: all 0.3s;
+    }
+
+        .toolbar-wrapper:focus-within {
+            box-shadow: 0 0 0 4px rgba(15, 59, 102, 0.1) !important;
+            border-color: #0f3b66 !important;
+        }
+
+    .vertical-divider {
+        width: 1px;
+        background-color: #dee2e6;
+    }
+
+    /* CSS POINTER & SELECT ĐÃ SỬA */
+    .role-select-wrapper {
+        position: relative;
+        min-width: 250px;
+    }
+
+        .role-select-wrapper select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: none !important;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        .role-select-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            border: solid #6c757d;
+            border-width: 0 2px 2px 0;
+            transform: translateY(-65%) rotate(45deg);
+            pointer-events: none;
+        }
+
+    /* CSS NÚT TRẠNG THÁI */
+    .btn-status {
+        border: none;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 140px;
+    }
+
+    .status-active {
+        background-color: #e6f8f0;
+        color: #0d9459;
+    }
+
+        .status-active:hover {
+            background-color: #fff5f5;
+            color: #e03131;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(224, 49, 49, 0.2);
+        }
+
+    .status-locked {
+        background-color: #fff5f5;
+        color: #e03131;
+    }
+
+        .status-locked:hover {
+            background-color: #e6f8f0;
+            color: #0d9459;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(13, 148, 89, 0.2);
+        }
+
+    .btn-status:hover i, .btn-status:hover span {
+        display: none;
+    }
+
+    .status-active:hover::after {
+        content: "Khóa";
+    }
+
+    .status-locked:hover::after {
+        content: "Mở khóa";
+    }
+
+    /* Avatar */
+    .avatar-circle {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #0f3b66 0%, #3282b8 100%);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+</style>
+
+@code {
+    public class UserSummaryDto
+    {
+        public int Id { get; set; }
+        public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Status { get; set; }
+        public string Role { get; set; }
+    }
+
+    public class ApproveUserRequest
+    {
+        public int UserId { get; set; }
+        public bool IsLocked { get; set; }
+        public string Reason { get; set; }
+    }
+
+    private List<UserSummaryDto> allUsers = new();
+    private List<UserSummaryDto> filteredUsers = new();
+    private bool isLoading = true;
+    private string searchTerm = "";
+    private string selectedRole = "";
+
+    private int currentPage = 1;
+    private int itemsPerPage = 50;
+    private int totalPages = 1;
+
+    private List<UserSummaryDto> PagedList => filteredUsers
+        .Skip((currentPage - 1) * itemsPerPage)
+        .Take(itemsPerPage)
+        .ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataWithRetry();
+    }
+
+    private async Task LoadDataWithRetry()
+    {
+        isLoading = true;
+        int retryCount = 0;
+        while (retryCount <= 2)
+        {
+            try
+            {
+                var token = await LocalStorage.GetItemAsync<string>("authToken");
+                if (!string.IsNullOrEmpty(token))
+                    Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                allUsers = await Http.GetFromJsonAsync<List<UserSummaryDto>>("api/Admin/all-users") ?? new();
+                FilterData(); // Lọc lần đầu
+                isLoading = false; return;
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized) { retryCount++; await Task.Delay(500); }
+                else break;
+            }
+            catch { break; }
+        }
+        isLoading = false;
+    }
+
+    // Khi gõ tìm kiếm -> Reset về trang 1 và lọc lại
+    private void HandleSearch()
+    {
+        currentPage = 1;
+        FilterData();
+    }
+
+    // Khi đổi Role -> Reset về trang 1 và lọc lại
+    private void OnRoleChanged(ChangeEventArgs e)
+    {
+        selectedRole = e.Value?.ToString() ?? "";
+        currentPage = 1;
+        FilterData();
+    }
+
+    // --- LOGIC LỌC KẾT HỢP ĐÃ SỬA ---
+    private void FilterData()
+    {
+        // Chuẩn hóa từ khóa tìm kiếm về chữ thường để so sánh không phân biệt hoa thường
+        var term = searchTerm.ToLower();
+
+        filteredUsers = allUsers.Where(u =>
+        {
+            // 1. Logic Tìm kiếm (Kết hợp OR): ID chứa từ khóa HOẶC Tên chứa từ khóa HOẶC SĐT chứa từ khóa
+            bool matchesSearch = string.IsNullOrEmpty(searchTerm) ||
+                                 u.Id.ToString() == (term) ||
+                                 //(u.FullName != null && u.FullName.ToLower().Contains(term)) ||
+                                 (u.PhoneNumber != null && u.PhoneNumber == term);
+
+            // 2. Logic Lọc Role (Kết hợp AND với logic trên):
+            // Nếu không chọn role (selectedRole rỗng) thì lấy hết.
+            // Nếu có chọn thì Role phải khớp (So sánh không phân biệt hoa thường)
+            bool matchesRole = string.IsNullOrEmpty(selectedRole) ||
+                               (u.Role != null && u.Role.Equals(selectedRole, StringComparison.OrdinalIgnoreCase));
+
+            // Chỉ lấy user thỏa mãn CẢ 2 điều kiện
+            return matchesSearch && matchesRole;
+        }).ToList();
+
+        // Tính lại số trang
+        totalPages = (int)Math.Ceiling((double)filteredUsers.Count / itemsPerPage);
+        if (totalPages < 1) totalPages = 1;
+
+        // Nếu đang ở trang xa mà lọc xong dữ liệu ít đi, phải reset về trang 1 để không bị lỗi hiển thị
+        if (currentPage > totalPages) currentPage = 1;
+    }
+
+    private void ChangePage(int newPage) { if (newPage >= 1 && newPage <= totalPages) currentPage = newPage; }
+    private bool IsActive(string status) => !string.IsNullOrEmpty(status) && status.ToLower() == "active";
+    private string GetInitials(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return "U";
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length == 1 ? parts[0][0].ToString() : $"{parts[0][0]}{parts[^1][0]}";
+    }
+
+    private async Task ToggleUserStatus(UserSummaryDto user)
+    {
+        bool currentActive = IsActive(user.Status);
+        bool willLock = currentActive;
+
+        string actionName = willLock ? "KHÓA" : "MỞ KHÓA";
+        string confirmMsg = $"Bạn có chắc muốn {actionName} tài khoản: {user.FullName}?";
+
+        if (!await JS.InvokeAsync<bool>("confirm", confirmMsg)) return;
+
+        var request = new ApproveUserRequest
+        {
+            UserId = user.Id,
+            IsLocked = willLock,
+            Reason = willLock ? "Admin changed status" : ""
+        };
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/Admin/users/lock", request);
+            if (response.IsSuccessStatusCode)
+            {
+                user.Status = willLock ? "locked" : "active";
+                StateHasChanged();
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("alert", "Lỗi cập nhật!");
+            }
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Lỗi: {ex.Message}");
+        }
+    }
+}

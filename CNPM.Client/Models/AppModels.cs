@@ -96,4 +96,41 @@
         public string Name { get; set; }
     }
 
+    public class ApproveHubRequest
+    {
+        public int HubId { get; set; }
+        public bool IsLocked { get; set; } // True = Duyệt, False = Từ chối (Theo logic backend của bạn)
+        public string Reason { get; set; } = "";
+    }
+
+    public class HubSummaryDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+    }
+
+    public class HubDetailDto
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Status { get; set; }
+        public TimeSpan OpeningHours { get; set; }
+        public TimeSpan ClosingHours { get; set; }
+
+        // Thông tin User
+        public int OwnerId { get; set; }
+        public string OwnerName { get; set; }
+        public string PhoneNumber { get; set; }
+    }
+
+    // Class DTO để hứng dữ liệu từ API
+    public class UserSummaryDto
+    {
+        public int Id { get; set; }
+        public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Status { get; set; }
+        public string Role { get; set; }
+    }
 }

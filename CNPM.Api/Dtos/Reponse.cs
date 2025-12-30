@@ -46,8 +46,13 @@ namespace CNPM.Api.Dtos
         public class HubSummaryDto
         {
             public int Id { get; set; }
-            public string Name { get; set; }        // Tên kho
-            public string Address { get; set; }     // Địa chỉ ngắn gọn
+            public string Name { get; set; }
+            public string Address { get; set; }
+
+            // --- CÁC TRƯỜNG MỚI ---
+            public string Status { get; set; }      // Trạng thái Hub
+            public string OwnerName { get; set; }   // Tên chủ sở hữu
+            public string OwnerPhone { get; set; }  // SĐT chủ sở hữu
         }
 
         // 2. DTO cho chi tiết (Hiện khi bấm vào xem)
@@ -61,6 +66,8 @@ namespace CNPM.Api.Dtos
 
             // Thông tin người sở hữu (để Admin liên hệ nếu cần)
             public int OwnerId { get; set; }
+            public string OwnerName { get; set; }
+            public string PhoneNumber { get; set; }
         }
 
         public class HubOptionDto
